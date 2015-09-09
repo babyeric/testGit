@@ -41,3 +41,8 @@ $RECYCLE.BIN/
 Network Trash Folder
 Temporary Items
 .apdisk
+
+#IDE generated files and folder
+.idea/
+*.iml
+*.log
