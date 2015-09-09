@@ -44,5 +44,6 @@ Temporary Items
 
 #IDE generated files and folder
 .idea/
+target/
 *.iml
 *.log
