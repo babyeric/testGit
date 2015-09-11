@@ -37,12 +37,12 @@ import javax.sql.DataSource;
 @Configuration
 public class DBConfiguration {
 
-    @Bean(name="dataService")
+    @Bean(name="dataService2")
     public DataService dataService() {
         return new DataService();
     }
 
-    @Bean(name="databaseConfig")
+    @Bean(name="dataSourceConfig")
     public DataSourceConfig databaseConfig() {
         DataSourceConfig databaseConfig = new DataSourceConfig();
         LogicalDatabase logicalDatabase = new LogicalDatabase("test");

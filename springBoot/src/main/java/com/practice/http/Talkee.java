@@ -27,7 +27,7 @@ public class Talkee {
     private DataService dataService;
     private UserMapper userMapper;
 
-    @Resource(name="dataService")
+    @Resource(name="dataService2")
     public void setDataService(DataService dataService) {
         this.dataService = dataService;
     }

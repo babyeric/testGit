@@ -32,7 +32,7 @@ public class AbcDataSourceManager {
             DriverManagerDataSource dataSource = new DriverManagerDataSource();
             dataSource.setDriverClassName("com.mysql.jdbc.Driver");
             dataSource.setUsername("root");
-            dataSource.setUrl("jdbc:mysql://"+ physicalShard.getHost()+"/"+ physicalShard.getDatabase());
+            dataSource.setUrl("jdbc:mysql://"+ physicalShard.getHost()+"/"+ physicalShard.getSchema());
             dataSource.setPassword("#Bugsfor$");
             dataSourceMap.putIfAbsent(physicalShard, dataSource);
         }
