@@ -40,19 +40,24 @@ public class MigrationManager {
     }
 
     public void migrate() {
-        for (LogicalDatabase logicalDatabase : dataSourceConfig.getAllLogicalDatabase()) {
-            for(int physicalShardId : logicalDatabase.getPhysicalShardIds()) {
-                PhysicalShard physicalShard = logicalDatabase.getPhysicalShard(physicalShardId);
-                try {
+        try {
+            for (LogicalDatabase logicalDatabase : dataSourceConfig.getAllLogicalDatabase()) {
+                for(int physicalShardId : logicalDatabase.getPhysicalShardIds()) {
+                    PhysicalShard physicalShard = logicalDatabase.getPhysicalShard(physicalShardId);
                     createSchemaIfNotExist(physicalShard);
-                } catch (SQLException e) {
-                    throw new IllegalStateException(e);
+                    DataSource dataSource = dataSourceManager.get(logicalDatabase.getName(), physicalShardId);
+                    migrate(logicalDatabase.getName(), dataSource);
                 }
-                DataSource dataSource = dataSourceManager.get(logicalDatabase.getName(), physicalShardId);
-                migrate(logicalDatabase.getName(), dataSource);
             }
+
+            for(String host : connectionMap.keySet()) {
+                connectionMap.get(host).close();
+            }
+        } catch (SQLException e) {
+            throw new IllegalStateException(e);
+        } finally {
+            connectionMap.clear();
         }
-        return;
     }
 
     private void createSchemaIfNotExist(PhysicalShard physicalShard) throws SQLException {
