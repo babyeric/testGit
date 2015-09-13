@@ -55,6 +55,11 @@
 				<artifactId>springDB</artifactId>
 				<version>${com.practice.version}</version>
 			</dependency>
+			<dependency>
+				<groupId>com.practice</groupId>
+				<artifactId>configuration</artifactId>
+				<version>${com.practice.version}</version>
+			</dependency>
 		</dependencies>
 	</dependencyManagement>	
 </project>

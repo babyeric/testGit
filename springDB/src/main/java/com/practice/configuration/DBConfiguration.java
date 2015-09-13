@@ -9,7 +9,6 @@ import com.practice.abc.lazyPop.config.LogicalDatabase;
 import com.practice.abc.lazyPop.config.LogicalIdRange;
 import com.practice.abc.lazyPop.config.PhysicalShard;
 import com.practice.abc.transactional.mybatis.AbcSpringManagedTransactionFactory;
-import com.practice.abc.transactional.multiShard.AbcDataSourceProxy;
 import com.practice.abc.transactional.spring.AbcTransactionManager;
 import com.practice.db.DataService;
 import com.practice.user.UserMapper;
@@ -17,11 +16,11 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.transaction.TransactionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 import org.springframework.transaction.support.AbstractPlatformTransactionManager;
 
 import javax.sql.DataSource;
@@ -35,7 +34,15 @@ import javax.sql.DataSource;
  */
 
 @Configuration
-public class DBConfiguration {
+public class DBConfiguration{
+    @Value("${mysql.port}")
+    private String port;
+
+    @Value("${mysql.test1}")
+    private String test1;
+
+    @Value("${mysql.test2}")
+    private String test2;
 
     @Bean(name="dataService2")
     public DataService dataService() {
@@ -47,8 +54,8 @@ public class DBConfiguration {
         DataSourceConfig databaseConfig = new DataSourceConfig();
         LogicalDatabase logicalDatabase = new LogicalDatabase("test");
         databaseConfig.addLogicalDatabase(logicalDatabase);
-        logicalDatabase.addPhysicalShard(new PhysicalShard(new LogicalIdRange(0, 49999), "localhost:3306", "test"));
-        logicalDatabase.addPhysicalShard(new PhysicalShard(new LogicalIdRange(50000, 99999), "localhost:3306", "test2"));
+        logicalDatabase.addPhysicalShard(new PhysicalShard(new LogicalIdRange(0, 49999), "localhost:" + port, test1));
+        logicalDatabase.addPhysicalShard(new PhysicalShard(new LogicalIdRange(50000, 99999), "localhost:" + port, test2));
         return databaseConfig;
     }
 
