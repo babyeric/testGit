@@ -29,6 +29,10 @@
             <groupId>com.practice</groupId>
             <artifactId>springDB</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.practice</groupId>
+            <artifactId>configuration</artifactId>
+        </dependency>
     </dependencies>
 
     <build>
