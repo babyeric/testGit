@@ -2,6 +2,8 @@ package com.practice.user;
 
 import com.practice.abc.lazyPop.annotation.ShardAwareId;
 import com.practice.abc.lazyPop.annotation.ShardParam;
+import com.practice.def.ShardGeneratedIdGroup;
+import com.practice.def.annotation.ShardGeneratedId;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -23,6 +25,7 @@ public class UserDB implements Serializable {
         return userId;
     }
 
+    @ShardGeneratedId(ShardGeneratedIdGroup.USER_ID_GROUP)
     public void setUserId(Long userId) {
         this.userId = userId;
     }

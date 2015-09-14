@@ -3,7 +3,6 @@ package com.practice.abc.lazyPop;
 import com.practice.abc.lazyPop.annotation.AbcDBName;
 import com.practice.abc.lazyPop.annotation.ShardMethod;
 import com.practice.abc.lazyPop.strategy.ShardingStrategy;
-import com.practice.abc.lazyPop.strategy.StrategyConstant;
 import com.practice.abc.lazyPop.strategy.StrategyRegistry;
 import com.practice.abc.lazyPop.strategy.StrategyResult;
 import org.apache.ibatis.exceptions.TooManyResultsException;
@@ -17,7 +16,6 @@ import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.lang.reflect.InvocationHandler;
 import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
 import java.util.*;
 
 /**
@@ -38,13 +36,6 @@ public class AbcMapperProxyHandler<T> implements InvocationHandler, Serializable
         Out execute(In input);
     }
 
-    public static <T> T createProxyObject(Class<T> mapper, SqlSession sqlSession) {
-        ClassLoader classLoader = mapper.getClassLoader();
-        Class<?>[] interfaces = new Class[]{mapper};
-        AbcMapperProxyHandler handler = new AbcMapperProxyHandler(mapper, sqlSession);
-        return (T) Proxy.newProxyInstance(classLoader, interfaces, handler);
-    }
-
     public AbcMapperProxyHandler(Class<T> mapper, SqlSession sqlSession) {
         this.sqlSession = sqlSession;
         this.imp = sqlSession.getMapper(mapper);
@@ -60,6 +51,8 @@ public class AbcMapperProxyHandler<T> implements InvocationHandler, Serializable
         StrategyResult strategyResult = shardingStrategy.resolve(logicalDbName, method, args);
 
         SqlCommandType sqlCommandType =  resolveSqlCommandType(mapperInterface, method, sqlSession.getConfiguration());
+        beforeMethodInvoke(sqlCommandType, strategyResult, method, args);
+
         Map<String, Object> extraParam = buildExtraParams(strategyResult, sqlCommandType == SqlCommandType.INSERT);
 
         int[] shardIds = strategyResult.getPhysicalShardIds();
@@ -100,7 +93,7 @@ public class AbcMapperProxyHandler<T> implements InvocationHandler, Serializable
         Map<String, Object> extraParam = new HashMap<>();
         extraParam.put(PARAM_NOW, new Date());
         if(isInsert) {
-            if (strategyResult.getLogicalShardId() == StrategyConstant.INVALID_ID) {
+            if (strategyResult.getLogicalShardId() == null) {
                 throw new IllegalArgumentException();
             }
             extraParam.put(PARAM_LOGICAL_SHARD_ID, strategyResult.getLogicalShardId());
@@ -190,5 +183,9 @@ public class AbcMapperProxyHandler<T> implements InvocationHandler, Serializable
         }
 
         return mergedResult;
+    }
+
+    protected void beforeMethodInvoke(SqlCommandType sqlCommandType, StrategyResult strategyResult, Method method, Object[] args) {
+
     }
 }

@@ -11,6 +11,7 @@ import com.practice.abc.lazyPop.config.PhysicalShard;
 import com.practice.abc.transactional.mybatis.AbcSpringManagedTransactionFactory;
 import com.practice.abc.transactional.spring.AbcTransactionManager;
 import com.practice.db.DataService;
+import com.practice.def.DefMapperFactory;
 import com.practice.user.UserMapper;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.transaction.TransactionFactory;
@@ -89,7 +90,7 @@ public class DBConfiguration{
     @Bean (name="mapperFactory")
     public AbcMapperFactory mapperFactory() throws Exception {
         SqlSessionTemplate sessionTemplate = new SqlSessionTemplate(sqlSessionFactory());
-        AbcMapperFactory mapperFactory = new AbcMapperFactory();
+        DefMapperFactory mapperFactory = new DefMapperFactory();
         mapperFactory.setSqlSession(sessionTemplate);
         return mapperFactory;
     }

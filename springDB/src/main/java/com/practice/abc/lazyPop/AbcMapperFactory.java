@@ -2,6 +2,8 @@ package com.practice.abc.lazyPop;
 
 import org.apache.ibatis.session.SqlSession;
 
+import java.lang.reflect.Proxy;
+
 /**
  * Created with IntelliJ IDEA.
  * User: EricChen
@@ -11,13 +13,16 @@ import org.apache.ibatis.session.SqlSession;
  */
 public class AbcMapperFactory {
 
-    private SqlSession sqlSession;
+    protected SqlSession sqlSession;
 
     public void setSqlSession(SqlSession sqlSession) {
         this.sqlSession = sqlSession;
     }
 
-    public <T> T resolve(Class<T> cls) {
-        return AbcMapperProxyHandler.createProxyObject(cls, sqlSession);
+    public <T> T resolve(Class<T> mapper) {
+        ClassLoader classLoader = mapper.getClassLoader();
+        Class<?>[] interfaces = new Class[]{mapper};
+        AbcMapperProxyHandler handler = new AbcMapperProxyHandler(mapper, sqlSession);
+        return (T) Proxy.newProxyInstance(classLoader, interfaces, handler);
     }
 }

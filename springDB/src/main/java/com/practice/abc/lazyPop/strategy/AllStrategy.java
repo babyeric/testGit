@@ -15,6 +15,6 @@ public class AllStrategy implements ShardingStrategy {
     @Override
     public StrategyResult resolve(String logcailDbName, Method method, Object[] args) {
         int[] physicalShardIds = AbcMapperUtils.getPhysicalShardIds(logcailDbName);
-        return new StrategyResult(StrategyConstant.INVALID_ID, physicalShardIds);
+        return new StrategyResult(null, physicalShardIds);
     }
 }

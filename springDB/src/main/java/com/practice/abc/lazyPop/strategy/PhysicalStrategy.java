@@ -13,6 +13,6 @@ public class PhysicalStrategy extends AbstractShardingStrategy {
         if (!(arg instanceof Integer)) {
             throw new IllegalArgumentException();
         }
-        return new StrategyResult(StrategyConstant.INVALID_ID, new int[((Integer) arg).intValue()]);
+        return new StrategyResult(null, new int[((Integer) arg).intValue()]);
     }
 }

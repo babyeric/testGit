@@ -8,15 +8,15 @@ package com.practice.abc.lazyPop.strategy;
  * To change this template use File | Settings | File Templates.
  */
 public class StrategyResult {
-    private int logicalShardId;
+    private Integer logicalShardId;
     private int[] physicalShardIds;
 
-    public StrategyResult(int logicalShardId, int[] physicalShardIds) {
+    public StrategyResult(Integer logicalShardId, int[] physicalShardIds) {
         this.logicalShardId = logicalShardId;
         this.physicalShardIds = physicalShardIds;
     }
 
-    public int getLogicalShardId() {
+    public Integer getLogicalShardId() {
         return logicalShardId;
     }
 
