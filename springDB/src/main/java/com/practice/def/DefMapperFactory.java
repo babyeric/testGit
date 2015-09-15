@@ -4,6 +4,7 @@ import com.practice.abc.lazyPop.AbcMapperFactory;
 import com.practice.abc.lazyPop.AbcMapperProxyHandler;
 import org.springframework.beans.factory.annotation.Required;
 
+import javax.annotation.Resource;
 import java.lang.reflect.Proxy;
 
 /**
@@ -14,7 +15,8 @@ public class DefMapperFactory extends AbcMapperFactory {
     private DefShardIdGenerator defShardIdGenerator;
 
     @Required
-    void setDefShardIdGenerator(DefShardIdGenerator defShardIdGenerator) {
+    //@Resource(name = "defShardIdGenerator")
+    public void setDefShardIdGenerator(DefShardIdGenerator defShardIdGenerator) {
         this.defShardIdGenerator = defShardIdGenerator;
     }
 

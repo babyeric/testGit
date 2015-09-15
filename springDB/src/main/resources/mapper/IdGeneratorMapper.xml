@@ -4,9 +4,9 @@
 
     <select id="getSequenceNextValue" parameterType="map" statementType="CALLABLE">
     <![CDATA[
-    CALL [GET_SEQUENCE_ID_NEXT_VALUE](
+    CALL GET_SEQUENCE_ID_NEXT_VALUE(
         #{logicalShardId, mode=IN, jdbcType=INTEGER},
-        #{idGroup, mode=IN, jdbcType=INTEGER},
+        #{groupId, mode=IN, jdbcType=INTEGER},
         #{batchSize, mode=IN, jdbcType=INTEGER},
         #{nextValue, mode=OUT, jdbcType=BIGINT})
         ]]>

@@ -11,7 +11,10 @@ import com.practice.abc.lazyPop.config.PhysicalShard;
 import com.practice.abc.transactional.mybatis.AbcSpringManagedTransactionFactory;
 import com.practice.abc.transactional.spring.AbcTransactionManager;
 import com.practice.db.DataService;
+import com.practice.def.DefCachedShardIdGenerator;
 import com.practice.def.DefMapperFactory;
+import com.practice.def.DefShardIdGenerator;
+import com.practice.def.IdGeneratorMapper;
 import com.practice.user.UserMapper;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.transaction.TransactionFactory;
@@ -71,7 +74,7 @@ public class DBConfiguration{
     public SqlSessionFactory sqlSessionFactory() throws Exception {
         SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
         sqlSessionFactory.setDataSource(new AbcDummyDataSource());
-        sqlSessionFactory.setMapperLocations(new Resource[] {new ClassPathResource("mapper/userMapper.xml")});
+        sqlSessionFactory.setMapperLocations(new Resource[] {new ClassPathResource("mapper/userMapper.xml"),new ClassPathResource("mapper/IdGeneratorMapper.xml")});
         sqlSessionFactory.setTransactionFactory(transactionFactory());
         return sqlSessionFactory.getObject();
     }
@@ -87,11 +90,22 @@ public class DBConfiguration{
         return mapperFactory().resolve(UserMapper.class);
     }
 
+    @Bean (name="idGeneratorMapper")
+    public IdGeneratorMapper idGeneratorMapper() {
+        try {
+            return mapperFactory().resolve(IdGeneratorMapper.class);
+        } catch (Exception e) {
+            throw new IllegalStateException(e);
+        }
+    }
+
+
     @Bean (name="mapperFactory")
     public AbcMapperFactory mapperFactory() throws Exception {
         SqlSessionTemplate sessionTemplate = new SqlSessionTemplate(sqlSessionFactory());
         DefMapperFactory mapperFactory = new DefMapperFactory();
         mapperFactory.setSqlSession(sessionTemplate);
+        mapperFactory.setDefShardIdGenerator(defShardIdGenerator());
         return mapperFactory;
     }
 
@@ -100,6 +114,13 @@ public class DBConfiguration{
         AbcDataSourceManager dataSourceManager = new AbcDataSourceManager();
         dataSourceManager.setDataSourceConfig(databaseConfig());
         return dataSourceManager;
+    }
+
+    @Bean (name="defShardIdGenerator")
+    public DefShardIdGenerator defShardIdGenerator() {
+        DefShardIdGenerator defShardIdGenerator = new DefCachedShardIdGenerator();
+        defShardIdGenerator.setBatchSize(20);
+        return defShardIdGenerator;
     }
 
     @Bean

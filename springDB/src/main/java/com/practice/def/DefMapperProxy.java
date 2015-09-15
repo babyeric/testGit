@@ -74,7 +74,7 @@ public class DefMapperProxy<T> extends AbcMapperProxyHandler{
                     validateSetterAndGetter(setter, getter);
                     Long id = (Long)getter.invoke(arg);
                     if (id == null) {
-                        id = DefShardIdGenerator.generate(shardGeneratedId.value(), logicalSharidId);
+                        id = defShardIdGenerator.generate(shardGeneratedId.value(), logicalSharidId);
                         setter.invoke(arg, id);
                     }
                 }

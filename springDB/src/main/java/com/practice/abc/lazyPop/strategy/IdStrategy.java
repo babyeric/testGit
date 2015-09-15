@@ -4,6 +4,7 @@ import com.practice.abc.lazyPop.annotation.ShardAwareId;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
+import java.util.Random;
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,7 +14,7 @@ import java.lang.reflect.Method;
  * To change this template use File | Settings | File Templates.
  */
 public class IdStrategy extends AbstractShardingStrategy {
-    private final static int MOD = 100000;
+    public final static int LOGICAL_SHARD_COUNT = 100000;
     @Override
     public StrategyResult resolve(String logcailDbName, Object arg) {
         if (!arg.getClass().isPrimitive()) {
@@ -33,10 +34,15 @@ public class IdStrategy extends AbstractShardingStrategy {
             }
         }
 
+        if (arg == null) {
+            //trigger shard aware id generation
+            Random rn = new Random();
+            return new StrategyResult(rn.nextInt(LOGICAL_SHARD_COUNT), null);
+        }
         if (arg instanceof Long) {
-           return new StrategyResult((int)((Long) arg).longValue() % MOD, null);
+           return new StrategyResult((int)((Long) arg).longValue() % LOGICAL_SHARD_COUNT, null);
         } else if (arg instanceof Integer) {
-            return new StrategyResult( ((Integer) arg).intValue() % MOD, null);
+            return new StrategyResult( ((Integer) arg).intValue() % LOGICAL_SHARD_COUNT, null);
         } else {
             throw new IllegalStateException();
         }

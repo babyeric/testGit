@@ -47,7 +47,7 @@ public class DataService {
                     @Override
                     public String doInTransaction(TransactionStatus status) {
                         UserDB user = new UserDB();
-                        user.setUserId(5002L);
+                        //user.setUserId(5002L);
                         user.setName("user_100");
                         userMapper.insert(user);
                         //status.setRollbackOnly();
