@@ -25,6 +25,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.transaction.support.AbstractPlatformTransactionManager;
 
 import javax.sql.DataSource;
@@ -72,9 +73,10 @@ public class DBConfiguration{
 
     @Bean(name="sqlSessionFactory")
     public SqlSessionFactory sqlSessionFactory() throws Exception {
+        PathMatchingResourcePatternResolver scanner = new PathMatchingResourcePatternResolver();
         SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
         sqlSessionFactory.setDataSource(new AbcDummyDataSource());
-        sqlSessionFactory.setMapperLocations(new Resource[] {new ClassPathResource("mapper/userMapper.xml"),new ClassPathResource("mapper/IdGeneratorMapper.xml")});
+        sqlSessionFactory.setMapperLocations(scanner.getResources("classpath:mapper/*.xml"));
         sqlSessionFactory.setTransactionFactory(transactionFactory());
         return sqlSessionFactory.getObject();
     }
