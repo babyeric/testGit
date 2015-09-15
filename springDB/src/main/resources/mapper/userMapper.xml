@@ -18,7 +18,6 @@
     #{_now_}
     </sql>
 
-    <!-- 查询学生，根据id -->
     <insert id="insert" parameterType="com.practice.user.UserDB">
         insert into user (
             LOGICAL_SHARD_ID,
