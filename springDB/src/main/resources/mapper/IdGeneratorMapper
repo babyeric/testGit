@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.practice.def.IdGeneratorMapper">
+
+    <select id="getSequenceNextValue" parameterType="map" statementType="CALLABLE">
+    <![CDATA[
+    CALL [GET_SEQUENCE_ID_NEXT_VALUE](
+        #{logicalShardId, mode=IN, jdbcType=INTEGER},
+        #{idGroup, mode=IN, jdbcType=INTEGER},
+        #{batchSize, mode=IN, jdbcType=INTEGER},
+        #{nextValue, mode=OUT, jdbcType=BIGINT})
+        ]]>
+    </select>
+
+</mapper>
