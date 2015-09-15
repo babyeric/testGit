@@ -30,7 +30,12 @@ public class DefShardIdGenerator {
     }
 
     protected long doGenerateSequence(ShardGeneratedIdGroup idGroup, int logicalShardId) {
-        return idGeneratorMapper.getSequenceNextValue(logicalShardId, idGroup.value(), batchSize);
+        IdGeneratorParam param = new IdGeneratorParam();
+        param.setGroupId(idGroup.value());
+        param.setLogicalShardId(logicalShardId);
+        param.setBatchSize(batchSize);
+        idGeneratorMapper.getSequenceNextValue(param);
+        return param.getNextValue();
     }
 
     protected long convertSequenceToId(long sequence, int logicalShardId) {

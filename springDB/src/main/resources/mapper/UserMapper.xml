@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.practice.user.UserMapper">
+
+    <resultMap type="com.practice.user.UserDB" id="userDBMap">
+        <id property="userId" column="USER_ID" jdbcType="BIGINT" />
+        <result property="name" column="NAME" jdbcType="VARCHAR" />
+        <result property="birthday" column="BIRTHDAY" jdbcType="DATE" />
+    </resultMap>
+
+    <sql id="*">
+    USER_ID, NAME, BIRTHDAY
+    </sql>
+
+    <sql id="values">
+    #{userDB.userId},
+    #{userDB.name},
+    #{_now_}
+    </sql>
+
+    <!-- 查询学生，根据id -->
+    <insert id="insert" parameterType="com.practice.user.UserDB">
+        insert into user (
+            LOGICAL_SHARD_ID,
+            <include refid="*" />
+        ) values (
+            #{_logicalShardId_},
+            <include refid="values" />
+        )
+    </insert>
+
+
+    <select id="getById"  resultType="com.practice.user.UserDB" resultMap="userDBMap">
+        select
+          <include refid="*" />
+        from
+          user
+        where
+          USER_ID=#{userId}
+    </select>
+
+</mapper>

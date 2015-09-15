@@ -17,5 +17,5 @@ import org.apache.ibatis.annotations.Param;
 public interface IdGeneratorMapper {
 
     @ShardMethod(IdStrategy.class)
-    long getSequenceNextValue(@ShardParam("logicalShardId") int logicalShardId, @Param("groupId") int idGroup, @Param("batchSize") int batchSize);
+    void getSequenceNextValue(@ShardParam("idGeneratorParam") IdGeneratorParam idGeneratorParam);
 }

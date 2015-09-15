@@ -2,13 +2,13 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.practice.def.IdGeneratorMapper">
 
-    <select id="getSequenceNextValue" parameterType="map" statementType="CALLABLE">
+    <select id="getSequenceNextValue" parameterType="com.practice.def.IdGeneratorParam" statementType="CALLABLE">
     <![CDATA[
     CALL GET_SEQUENCE_ID_NEXT_VALUE(
-        #{logicalShardId, mode=IN, jdbcType=INTEGER},
-        #{groupId, mode=IN, jdbcType=INTEGER},
-        #{batchSize, mode=IN, jdbcType=INTEGER},
-        #{nextValue, mode=OUT, jdbcType=BIGINT})
+        #{idGeneratorParam.logicalShardId, mode=IN, jdbcType=INTEGER},
+        #{idGeneratorParam.groupId, mode=IN, jdbcType=INTEGER},
+        #{idGeneratorParam.batchSize, mode=IN, jdbcType=INTEGER},
+        #{idGeneratorParam.nextValue, mode=OUT, jdbcType=BIGINT})
         ]]>
     </select>
 
