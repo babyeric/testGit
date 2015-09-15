@@ -15,7 +15,6 @@ public class DefMapperFactory extends AbcMapperFactory {
     private DefShardIdGenerator defShardIdGenerator;
 
     @Required
-    //@Resource(name = "defShardIdGenerator")
     public void setDefShardIdGenerator(DefShardIdGenerator defShardIdGenerator) {
         this.defShardIdGenerator = defShardIdGenerator;
     }

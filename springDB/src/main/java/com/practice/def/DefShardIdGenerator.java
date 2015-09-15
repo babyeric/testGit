@@ -15,7 +15,6 @@ public class DefShardIdGenerator {
 
     private IdGeneratorMapper idGeneratorMapper;
 
-    @Resource(name = "idGeneratorMapper")
     public void setIdGeneratorMapper(IdGeneratorMapper idGeneratorMapper) {
         this.idGeneratorMapper = idGeneratorMapper;
     }

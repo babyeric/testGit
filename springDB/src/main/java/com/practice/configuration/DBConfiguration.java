@@ -20,7 +20,9 @@ import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.transaction.TransactionFactory;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.io.ClassPathResource;
@@ -39,7 +41,7 @@ import javax.sql.DataSource;
  */
 
 @Configuration
-public class DBConfiguration{
+public class DBConfiguration {
     @Value("${mysql.port}")
     private String port;
 
@@ -89,21 +91,30 @@ public class DBConfiguration{
 
     @Bean (name="userMapper")
     public UserMapper userMapper() throws Exception {
-        return mapperFactory().resolve(UserMapper.class);
+        return defMapperFactory().resolve(UserMapper.class);
     }
 
     @Bean (name="idGeneratorMapper")
     public IdGeneratorMapper idGeneratorMapper() {
+        IdGeneratorMapper mapper;
         try {
-            return mapperFactory().resolve(IdGeneratorMapper.class);
+            mapper = abcMapperFactory().resolve(IdGeneratorMapper.class);
         } catch (Exception e) {
             throw new IllegalStateException(e);
         }
+        return mapper;
     }
 
+    @Bean (name="abcMapperFactory")
+    public AbcMapperFactory abcMapperFactory() throws Exception {
+        SqlSessionTemplate sessionTemplate = new SqlSessionTemplate(sqlSessionFactory());
+        AbcMapperFactory mapperFactory = new AbcMapperFactory();
+        mapperFactory.setSqlSession(sessionTemplate);
+        return mapperFactory;
+    }
 
-    @Bean (name="mapperFactory")
-    public AbcMapperFactory mapperFactory() throws Exception {
+    @Bean (name="defMapperFactory")
+    public DefMapperFactory defMapperFactory() throws Exception {
         SqlSessionTemplate sessionTemplate = new SqlSessionTemplate(sqlSessionFactory());
         DefMapperFactory mapperFactory = new DefMapperFactory();
         mapperFactory.setSqlSession(sessionTemplate);
@@ -122,6 +133,7 @@ public class DBConfiguration{
     public DefShardIdGenerator defShardIdGenerator() {
         DefShardIdGenerator defShardIdGenerator = new DefCachedShardIdGenerator();
         defShardIdGenerator.setBatchSize(20);
+        defShardIdGenerator.setIdGeneratorMapper(idGeneratorMapper());
         return defShardIdGenerator;
     }
 
