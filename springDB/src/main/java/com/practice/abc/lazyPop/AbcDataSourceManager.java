@@ -3,6 +3,7 @@ package com.practice.abc.lazyPop;
 import com.practice.abc.lazyPop.config.DataSourceConfig;
 import com.practice.abc.lazyPop.config.LogicalDatabase;
 import com.practice.abc.lazyPop.config.PhysicalShard;
+import com.practice.abc.transactional.multiShard.AbcDataSourceProxy;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
@@ -34,7 +35,7 @@ public class AbcDataSourceManager {
             dataSource.setUsername("root");
             dataSource.setUrl("jdbc:mysql://"+ physicalShard.getHost()+"/"+ physicalShard.getSchema());
             dataSource.setPassword("#Bugsfor$");
-            dataSourceMap.putIfAbsent(physicalShard, dataSource);
+            dataSourceMap.putIfAbsent(physicalShard, new AbcDataSourceProxy(dataSource));
         }
         return dataSourceMap.get(physicalShard);
     }

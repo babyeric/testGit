@@ -46,12 +46,18 @@ public class DataService {
                 template.execute(new TransactionCallback<String>() {
                     @Override
                     public String doInTransaction(TransactionStatus status) {
-                        UserDB user = new UserDB();
-                        //user.setUserId(5002L);
-                        user.setName("user_100");
-                        userMapper.insert(user);
-                        //status.setRollbackOnly();
-                        return user.getUserId() + user.getName() + user.getBirthday();
+                        try {
+                            UserDB user = new UserDB();
+                            //user.setUserId(5002L);
+                            user.setName("user_100");
+                            userMapper.insert(user);
+                            //status.setRollbackOnly();
+                            throw new RuntimeException("");
+                        } catch (Exception e) {
+                            status.setRollbackOnly();
+                        }
+                        return  "";
+                        //return user.getUserId() + user.getName() + user.getBirthday();
                     }
                 });
                 /*
