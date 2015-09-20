@@ -1,9 +1,8 @@
 package com.practice.user;
 
-import com.practice.abc.lazyPop.annotation.ShardAwareId;
-import com.practice.abc.lazyPop.annotation.ShardParam;
 import com.practice.def.ShardGeneratedIdGroup;
 import com.practice.def.annotation.ShardGeneratedId;
+import org.juric.sharding.annotation.ShardAwareId;
 
 import java.io.Serializable;
 import java.util.Date;

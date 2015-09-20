@@ -1,10 +1,10 @@
 package com.practice;
 
-import com.practice.abc.lazyPop.AbcDataSourceManager;
-import com.practice.abc.lazyPop.config.DataSourceConfig;
-import com.practice.abc.lazyPop.config.LogicalDatabase;
-import com.practice.abc.lazyPop.config.PhysicalShard;
 import org.flywaydb.core.Flyway;
+import org.juric.sharding.config.DataSourceConfig;
+import org.juric.sharding.config.LogicalDatabase;
+import org.juric.sharding.config.PhysicalShard;
+import org.juric.sharding.datasource.ShardingDataSourceManager;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
@@ -27,7 +27,7 @@ public class MigrationManager {
 
     private final Map<String, Connection> connectionMap = new HashMap<>();
     DataSourceConfig dataSourceConfig;
-    AbcDataSourceManager dataSourceManager;
+    ShardingDataSourceManager dataSourceManager;
 
     @Resource(name = "dataSourceConfig")
     public void setDataSourceConfig(DataSourceConfig dataSourceConfig) {
@@ -35,7 +35,7 @@ public class MigrationManager {
     }
 
     @Resource(name = "dataSourceManager")
-    public void setDataSourceManager(AbcDataSourceManager dataSourceManager) {
+    public void setDataSourceManager(ShardingDataSourceManager dataSourceManager) {
         this.dataSourceManager = dataSourceManager;
     }
 

@@ -1,10 +1,10 @@
 package com.practice.user;
 
-import com.practice.abc.lazyPop.annotation.AbcDBName;
-import com.practice.abc.lazyPop.annotation.ShardMethod;
-import com.practice.abc.lazyPop.annotation.ShardParam;
-import com.practice.abc.lazyPop.strategy.IdStrategy;
 import org.apache.ibatis.annotations.Param;
+import org.juric.sharding.annotation.LogicalDbName;
+import org.juric.sharding.annotation.ShardMethod;
+import org.juric.sharding.annotation.ShardParam;
+import org.juric.sharding.strategy.IdStrategy;
 
 /**
  * Created with IntelliJ IDEA.
@@ -13,7 +13,7 @@ import org.apache.ibatis.annotations.Param;
  * Time: 11:53 AM
  * To change this template use File | Settings | File Templates.
  */
-@AbcDBName("test")
+@LogicalDbName("test")
 public interface UserMapper {
     @ShardMethod(IdStrategy.class)
     int insert(@ShardParam("userDB") UserDB userDB);

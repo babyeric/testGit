@@ -1,7 +1,6 @@
 package com.practice.def;
 
-import com.practice.abc.lazyPop.AbcMapperFactory;
-import com.practice.abc.lazyPop.AbcMapperProxyHandler;
+import org.juric.sharding.mapper.ShardingMapperFactory;
 import org.springframework.beans.factory.annotation.Required;
 
 import javax.annotation.Resource;
@@ -10,7 +9,7 @@ import java.lang.reflect.Proxy;
 /**
  * Created by Eric on 9/13/2015.
  */
-public class DefMapperFactory extends AbcMapperFactory {
+public class DefMapperFactory extends ShardingMapperFactory {
 
     private DefShardIdGenerator defShardIdGenerator;
 

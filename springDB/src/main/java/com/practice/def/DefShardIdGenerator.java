@@ -1,7 +1,7 @@
 package com.practice.def;
 
-import com.practice.abc.lazyPop.strategy.IdStrategy;
 import com.practice.def.annotation.ShardGeneratedId;
+import org.juric.sharding.strategy.IdStrategy;
 import org.springframework.util.Assert;
 
 import javax.annotation.Resource;

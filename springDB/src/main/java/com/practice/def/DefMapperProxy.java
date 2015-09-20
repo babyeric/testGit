@@ -1,12 +1,11 @@
 package com.practice.def;
 
-import com.practice.abc.lazyPop.AbcMapperProxyHandler;
-import com.practice.abc.lazyPop.annotation.ShardAwareId;
-import com.practice.abc.lazyPop.annotation.ShardParam;
-import com.practice.abc.lazyPop.strategy.StrategyResult;
 import com.practice.def.annotation.ShardGeneratedId;
 import org.apache.ibatis.mapping.SqlCommandType;
 import org.apache.ibatis.session.SqlSession;
+import org.juric.sharding.annotation.ShardParam;
+import org.juric.sharding.mapper.ShardingMapperProxy;
+import org.juric.sharding.strategy.StrategyResult;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -21,7 +20,7 @@ import java.lang.reflect.Proxy;
 /**
  * Created by Eric on 9/13/2015.
  */
-public class DefMapperProxy<T> extends AbcMapperProxyHandler{
+public class DefMapperProxy<T> extends ShardingMapperProxy {
     private final static Logger LOG = LoggerFactory.getLogger(DefMapperProxy.class);
     private DefShardIdGenerator defShardIdGenerator;
 

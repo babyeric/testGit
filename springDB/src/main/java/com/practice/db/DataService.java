@@ -1,6 +1,5 @@
 package com.practice.db;
 
-import com.practice.abc.transactional.spring.AbcSmartTransactionObject;
 import com.practice.user.UserDB;
 import com.practice.user.UserMapper;
 import org.springframework.stereotype.Service;

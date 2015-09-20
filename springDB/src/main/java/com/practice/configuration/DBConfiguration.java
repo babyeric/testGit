@@ -1,23 +1,21 @@
 package com.practice.configuration;
 
-import com.practice.abc.lazyPop.AbcDataSourceManager;
-import com.practice.abc.lazyPop.AbcDummyDataSource;
-import com.practice.abc.lazyPop.AbcMapperFactory;
-import com.practice.abc.lazyPop.AbcMapperUtils;
-import com.practice.abc.lazyPop.config.DataSourceConfig;
-import com.practice.abc.lazyPop.config.LogicalDatabase;
-import com.practice.abc.lazyPop.config.LogicalIdRange;
-import com.practice.abc.lazyPop.config.PhysicalShard;
-import com.practice.abc.transactional.mybatis.AbcSpringManagedTransactionFactory;
-import com.practice.abc.transactional.spring.AbcTransactionManager;
 import com.practice.db.DataService;
-import com.practice.def.DefCachedShardIdGenerator;
-import com.practice.def.DefMapperFactory;
-import com.practice.def.DefShardIdGenerator;
-import com.practice.def.IdGeneratorMapper;
+import com.practice.def.*;
 import com.practice.user.UserMapper;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.transaction.TransactionFactory;
+import org.juric.sharding.config.DataSourceConfig;
+import org.juric.sharding.config.LogicalDatabase;
+import org.juric.sharding.config.LogicalIdRange;
+import org.juric.sharding.config.PhysicalShard;
+import org.juric.sharding.datasource.DataSourceFactory;
+import org.juric.sharding.datasource.DummyDataSource;
+import org.juric.sharding.datasource.ShardingDataSourceManager;
+import org.juric.sharding.mapper.ShardingMapperFactory;
+import org.juric.sharding.mapper.ShardingMapperUtils;
+import org.juric.sharding.transactional.mybatis.ShardingSpringManagedTransactionFactory;
+import org.juric.sharding.transactional.spring.ShardingTransactionManager;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.BeansException;
@@ -68,7 +66,7 @@ public class DBConfiguration {
 
     @Bean(name="transactionFactory")
     public TransactionFactory transactionFactory() {
-        AbcSpringManagedTransactionFactory transactionFactory = new AbcSpringManagedTransactionFactory();
+        ShardingSpringManagedTransactionFactory transactionFactory = new ShardingSpringManagedTransactionFactory();
         transactionFactory.setDataSourceManager(dataSourceManager());
         return transactionFactory;
     }
@@ -77,7 +75,7 @@ public class DBConfiguration {
     public SqlSessionFactory sqlSessionFactory() throws Exception {
         PathMatchingResourcePatternResolver scanner = new PathMatchingResourcePatternResolver();
         SqlSessionFactoryBean sqlSessionFactory = new SqlSessionFactoryBean();
-        sqlSessionFactory.setDataSource(new AbcDummyDataSource());
+        sqlSessionFactory.setDataSource(new DummyDataSource());
         sqlSessionFactory.setMapperLocations(scanner.getResources("classpath:mapper/*.xml"));
         sqlSessionFactory.setTransactionFactory(transactionFactory());
         return sqlSessionFactory.getObject();
@@ -85,7 +83,7 @@ public class DBConfiguration {
 
     @Bean(name="transactionManager")
     public AbstractPlatformTransactionManager transactionManager() {
-        AbcTransactionManager transactionManager = new AbcTransactionManager();
+        ShardingTransactionManager transactionManager = new ShardingTransactionManager();
         return transactionManager;
     }
 
@@ -98,17 +96,17 @@ public class DBConfiguration {
     public IdGeneratorMapper idGeneratorMapper() {
         IdGeneratorMapper mapper;
         try {
-            mapper = abcMapperFactory().resolve(IdGeneratorMapper.class);
+            mapper = ShardingMapperFactory().resolve(IdGeneratorMapper.class);
         } catch (Exception e) {
             throw new IllegalStateException(e);
         }
         return mapper;
     }
 
-    @Bean (name="abcMapperFactory")
-    public AbcMapperFactory abcMapperFactory() throws Exception {
+    @Bean (name="shardingMapperFactory")
+    public ShardingMapperFactory ShardingMapperFactory() throws Exception {
         SqlSessionTemplate sessionTemplate = new SqlSessionTemplate(sqlSessionFactory());
-        AbcMapperFactory mapperFactory = new AbcMapperFactory();
+        ShardingMapperFactory mapperFactory = new ShardingMapperFactory();
         mapperFactory.setSqlSession(sessionTemplate);
         return mapperFactory;
     }
@@ -123,9 +121,10 @@ public class DBConfiguration {
     }
 
     @Bean (name="dataSourceManager")
-    public AbcDataSourceManager dataSourceManager() {
-        AbcDataSourceManager dataSourceManager = new AbcDataSourceManager();
+    public ShardingDataSourceManager dataSourceManager() {
+        ShardingDataSourceManager dataSourceManager = new ShardingDataSourceManager();
         dataSourceManager.setDataSourceConfig(databaseConfig());
+        dataSourceManager.setDataSourceFactory(dataSourceFactory());
         return dataSourceManager;
     }
 
@@ -138,7 +137,11 @@ public class DBConfiguration {
     }
 
     @Bean
-    public AbcMapperUtils abcMapperUtils() {
-        return new AbcMapperUtils(databaseConfig(), dataSourceManager());
+    public ShardingMapperUtils abcMapperUtils() {
+        return new ShardingMapperUtils(databaseConfig(), dataSourceManager());
+    }
+
+    public DataSourceFactory dataSourceFactory() {
+        return new DataSourceFactoryImpl();
     }
 }
