@@ -1,7 +1,7 @@
 package org.juric.sharding.transactional.spring;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.jdbc.datasource.ConnectionHolder;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.transaction.HeuristicCompletionException;
@@ -22,7 +22,7 @@ import java.util.Map;
  * To change this template use File | Settings | File Templates.
  */
 public class ShardingTransactionObject {
-    private final static Logger LOG = LoggerFactory.getLogger(ShardingTransactionObject.class);
+    private final static Log LOG = LogFactory.getLog(ShardingTransactionObject.class);
 
     private ShardingTransactionManager transactionManager;
     private boolean isRollbackOnly = false;

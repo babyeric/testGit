@@ -4,11 +4,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>configuration</artifactId>
-    <packaging>jar</packaging>
+    <artifactId>storage-lib</artifactId>
 
-    <name>configuration</name>
-    <description>Demo project configuration</description>
+    <name>storage-lib</name>
+    <description>sharding storage library</description>
 
     <parent>
         <groupId>org.juric</groupId>
@@ -17,11 +16,7 @@
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 
-    <dependencies>
-        <dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter</artifactId>
-        </dependency>
-    </dependencies>
 
+    <dependencies>
+    </dependencies>
 </project>

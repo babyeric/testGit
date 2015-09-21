@@ -1,27 +1,25 @@
 package com.practice.def;
 
 import com.practice.def.annotation.ShardGeneratedId;
+import org.apache.ibatis.logging.Log;
+import org.apache.ibatis.logging.LogFactory;
 import org.apache.ibatis.mapping.SqlCommandType;
 import org.apache.ibatis.session.SqlSession;
 import org.juric.sharding.annotation.ShardParam;
 import org.juric.sharding.mapper.ShardingMapperProxy;
 import org.juric.sharding.strategy.StrategyResult;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 import java.beans.BeanInfo;
 import java.beans.Introspector;
 import java.beans.PropertyDescriptor;
 import java.lang.annotation.Annotation;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.lang.reflect.Proxy;
 
 /**
  * Created by Eric on 9/13/2015.
  */
 public class DefMapperProxy<T> extends ShardingMapperProxy {
-    private final static Logger LOG = LoggerFactory.getLogger(DefMapperProxy.class);
+    private final static Log LOG = LogFactory.getLog(DefMapperProxy.class);
     private DefShardIdGenerator defShardIdGenerator;
 
     void setDefShardIdGenerator(DefShardIdGenerator defShardIdGenerator) {

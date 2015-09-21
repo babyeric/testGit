@@ -8,13 +8,15 @@
 	<packaging>pom</packaging>
 	
 	<parent>
-        <groupId>com.practice</groupId>
+        <groupId>org.juric</groupId>
         <artifactId>pom.parent</artifactId>
         <version>0.1-SNAPSHOT</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
 	
 	<modules>
+	    <module>mybatis-sharding-lib</module>
+		<module>storage-lib</module>
 		<module>configuration</module>
 		<module>springDB</module>
 		<module>springBoot</module>

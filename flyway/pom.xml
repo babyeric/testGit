@@ -10,7 +10,7 @@
     <description>Demo project flyway</description>
 
     <parent>
-        <groupId>com.practice</groupId>
+        <groupId>org.juric</groupId>
         <artifactId>pom.parent</artifactId>
         <version>0.1-SNAPSHOT</version>
         <relativePath/> <!-- lookup parent from repository -->
