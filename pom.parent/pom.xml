@@ -13,10 +13,10 @@
     <description>parent for projects</description>
 
     <properties>
-		<com.practice.major.version>0</com.practice.major.version>
-		<com.practice.minor.version>1</com.practice.minor.version>
-		<com.practice.snapshot.version>-SNAPSHOT</com.practice.snapshot.version>
-		<com.practice.version>${com.practice.major.version}.${com.practice.minor.version}${com.practice.snapshot.version}</com.practice.version>
+		<org.juric.major.version>0</org.juric.major.version>
+		<org.juric.minor.version>1</org.juric.minor.version>
+		<org.juric.snapshot.version>-SNAPSHOT</org.juric.snapshot.version>
+		<org.juric.version>${org.juric.major.version}.${org.juric.minor.version}${org.juric.snapshot.version}</org.juric.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<java.version>1.7</java.version>
     </properties>
@@ -51,14 +51,14 @@
 				<version>2.6</version>
 			</dependency>
 			<dependency>
-				<groupId>com.practice</groupId>
+				<groupId>org.juric</groupId>
 				<artifactId>springDB</artifactId>
-				<version>${com.practice.version}</version>
+				<version>${org.juric.version}</version>
 			</dependency>
 			<dependency>
-				<groupId>com.practice</groupId>
+				<groupId>org.juric</groupId>
 				<artifactId>configuration</artifactId>
-				<version>${com.practice.version}</version>
+				<version>${org.juric.version}</version>
 			</dependency>
 			<dependency>
 				<groupId>org.juric</groupId>

@@ -1,6 +1,7 @@
 package org.juric.sharding.mapper;
 
-import org.juric.sharding.config.DataSourceConfig;
+import org.juric.sharding.config.PhysicalDatabase;
+import org.juric.sharding.config.RepositoryConfig;
 import org.juric.sharding.datasource.ShardingDataSourceManager;
 
 import javax.sql.DataSource;
@@ -13,20 +14,20 @@ import javax.sql.DataSource;
  * To change this template use File | Settings | File Templates.
  */
 public class ShardingMapperUtils {
-    private static DataSourceConfig datasourceConfig = null;
+    private static RepositoryConfig<PhysicalDatabase> repositoryConfig = null;
     private static ShardingDataSourceManager dataSourceManager = null;
 
-    public ShardingMapperUtils(DataSourceConfig datasourceConfig, ShardingDataSourceManager dataSourceManager) {
-        ShardingMapperUtils.datasourceConfig = datasourceConfig;
+    public ShardingMapperUtils(RepositoryConfig<PhysicalDatabase> repositoryConfig, ShardingDataSourceManager dataSourceManager) {
+        ShardingMapperUtils.repositoryConfig = repositoryConfig;
         ShardingMapperUtils.dataSourceManager = dataSourceManager;
     }
 
     public static int logicalToPhysicalId(String logicalDbName, int logicalShardId) {
-        return datasourceConfig.getLogicalDatabase(logicalDbName).logicalToPhysicalId(logicalShardId);
+        return repositoryConfig.getLogicalRepository(logicalDbName).logicalToPhysicalId(logicalShardId);
     }
 
     public static int physicalToLogicalId(String logicalDbName, int physicalShardId) {
-        return datasourceConfig.getLogicalDatabase(logicalDbName).physicalToLogicalId(physicalShardId);
+        return repositoryConfig.getLogicalRepository(logicalDbName).physicalToLogicalId(physicalShardId);
     }
 
     public static DataSource getDataSource(String logicalDbName, int physicalShardId) {
@@ -34,6 +35,6 @@ public class ShardingMapperUtils {
     }
 
     public static int[] getPhysicalShardIds(String logicalDbName) {
-        return datasourceConfig.getLogicalDatabase(logicalDbName).getPhysicalShardIds();
+        return repositoryConfig.getLogicalRepository(logicalDbName).getPhysicalShardIds();
     }
 }

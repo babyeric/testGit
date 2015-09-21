@@ -1,12 +1,10 @@
 package com.practice;
 
 import org.flywaydb.core.Flyway;
-import org.juric.sharding.config.DataSourceConfig;
-import org.juric.sharding.config.LogicalDatabase;
-import org.juric.sharding.config.PhysicalShard;
+import org.juric.sharding.config.LogicalRepository;
+import org.juric.sharding.config.PhysicalDatabase;
+import org.juric.sharding.config.RepositoryConfig;
 import org.juric.sharding.datasource.ShardingDataSourceManager;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import javax.annotation.Resource;
@@ -26,12 +24,12 @@ public class MigrationManager {
     private final static String CREATE_SCHEMA_TEMPLATE = "CREATE DATABASE IF NOT EXISTS `%s` /*!40100 COLLATE %s */";
 
     private final Map<String, Connection> connectionMap = new HashMap<>();
-    DataSourceConfig dataSourceConfig;
+    RepositoryConfig<PhysicalDatabase> repositoryConfig;
     ShardingDataSourceManager dataSourceManager;
 
-    @Resource(name = "dataSourceConfig")
-    public void setDataSourceConfig(DataSourceConfig dataSourceConfig) {
-        this.dataSourceConfig = dataSourceConfig;
+    @Resource(name = "databaseConfig")
+    public void setRepositoryConfig(RepositoryConfig<PhysicalDatabase> repositoryConfig) {
+        this.repositoryConfig = repositoryConfig;
     }
 
     @Resource(name = "dataSourceManager")
@@ -41,10 +39,10 @@ public class MigrationManager {
 
     public void migrate() {
         try {
-            for (LogicalDatabase logicalDatabase : dataSourceConfig.getAllLogicalDatabase()) {
+            for (LogicalRepository<PhysicalDatabase> logicalDatabase : repositoryConfig.getAllLogicalDatabase()) {
                 for(int physicalShardId : logicalDatabase.getPhysicalShardIds()) {
-                    PhysicalShard physicalShard = logicalDatabase.getPhysicalShard(physicalShardId);
-                    createSchemaIfNotExist(physicalShard);
+                    PhysicalDatabase physicalDatabase = logicalDatabase.getPhysicalShard(physicalShardId);
+                    createSchemaIfNotExist(physicalDatabase);
                     DataSource dataSource = dataSourceManager.get(logicalDatabase.getName(), physicalShardId);
                     migrate(logicalDatabase.getName(), dataSource);
                 }
@@ -60,18 +58,18 @@ public class MigrationManager {
         }
     }
 
-    private void createSchemaIfNotExist(PhysicalShard physicalShard) throws SQLException {
-        if (!connectionMap.containsKey(physicalShard.getHost())) {
+    private void createSchemaIfNotExist(PhysicalDatabase physicalDatabase) throws SQLException {
+        if (!connectionMap.containsKey(physicalDatabase.getHost())) {
             DriverManagerDataSource dataSource = new DriverManagerDataSource();
             dataSource.setDriverClassName("com.mysql.jdbc.Driver");
             dataSource.setUsername("root");
-            dataSource.setUrl("jdbc:mysql://" + physicalShard.getHost());
+            dataSource.setUrl("jdbc:mysql://" + physicalDatabase.getHost());
             dataSource.setPassword("#Bugsfor$");
-            connectionMap.put(physicalShard.getHost(), dataSource.getConnection());
+            connectionMap.put(physicalDatabase.getHost(), dataSource.getConnection());
         }
 
-        Statement statement = connectionMap.get(physicalShard.getHost()).createStatement();
-        statement.execute(String.format(CREATE_SCHEMA_TEMPLATE, physicalShard.getSchema() , COLLATE));
+        Statement statement = connectionMap.get(physicalDatabase.getHost()).createStatement();
+        statement.execute(String.format(CREATE_SCHEMA_TEMPLATE, physicalDatabase.getSchema() , COLLATE));
 
     }
 

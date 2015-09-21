@@ -26,11 +26,11 @@
             <artifactId>flyway-core</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.practice</groupId>
+            <groupId>org.juric</groupId>
             <artifactId>springDB</artifactId>
         </dependency>
         <dependency>
-            <groupId>com.practice</groupId>
+            <groupId>org.juric</groupId>
             <artifactId>configuration</artifactId>
         </dependency>
     </dependencies>

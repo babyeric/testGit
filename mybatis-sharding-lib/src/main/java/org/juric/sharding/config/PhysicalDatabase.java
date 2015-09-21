@@ -7,19 +7,15 @@ package org.juric.sharding.config;
  * Time: 3:20 PM
  * To change this template use File | Settings | File Templates.
  */
-public class PhysicalShard {
-    private final LogicalIdRange logicalIdRange;
+public class PhysicalDatabase extends PhysicalRepository{
+
     private final String host;
     private final String schema;
 
-    public PhysicalShard(LogicalIdRange logicalIdRange, String host, String schema) {
-        this.logicalIdRange = logicalIdRange;
+    public PhysicalDatabase(LogicalIdRange logicalIdRange, String host, String schema) {
+        super(logicalIdRange);
         this.host = host;
         this.schema = schema;
-    }
-
-    public final LogicalIdRange getLogicalIdRange() {
-        return logicalIdRange;
     }
 
     public final String getHost() {

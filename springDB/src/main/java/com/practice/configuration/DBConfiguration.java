@@ -5,10 +5,10 @@ import com.practice.def.*;
 import com.practice.user.UserMapper;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.transaction.TransactionFactory;
-import org.juric.sharding.config.DataSourceConfig;
-import org.juric.sharding.config.LogicalDatabase;
 import org.juric.sharding.config.LogicalIdRange;
-import org.juric.sharding.config.PhysicalShard;
+import org.juric.sharding.config.LogicalRepository;
+import org.juric.sharding.config.PhysicalDatabase;
+import org.juric.sharding.config.RepositoryConfig;
 import org.juric.sharding.datasource.DataSourceFactory;
 import org.juric.sharding.datasource.DummyDataSource;
 import org.juric.sharding.datasource.ShardingDataSourceManager;
@@ -18,17 +18,11 @@ import org.juric.sharding.transactional.mybatis.ShardingSpringManagedTransaction
 import org.juric.sharding.transactional.spring.ShardingTransactionManager;
 import org.mybatis.spring.SqlSessionFactoryBean;
 import org.mybatis.spring.SqlSessionTemplate;
-import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.io.ClassPathResource;
-import org.springframework.core.io.Resource;
 import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
 import org.springframework.transaction.support.AbstractPlatformTransactionManager;
-
-import javax.sql.DataSource;
 
 /**
  * Created with IntelliJ IDEA.
@@ -54,13 +48,13 @@ public class DBConfiguration {
         return new DataService();
     }
 
-    @Bean(name="dataSourceConfig")
-    public DataSourceConfig databaseConfig() {
-        DataSourceConfig databaseConfig = new DataSourceConfig();
-        LogicalDatabase logicalDatabase = new LogicalDatabase("test");
+    @Bean(name="databaseConfig")
+    public RepositoryConfig<PhysicalDatabase> databaseConfig() {
+        RepositoryConfig<PhysicalDatabase> databaseConfig = new RepositoryConfig<>();
+        LogicalRepository<PhysicalDatabase> logicalDatabase = new LogicalRepository("test");
         databaseConfig.addLogicalDatabase(logicalDatabase);
-        logicalDatabase.addPhysicalShard(new PhysicalShard(new LogicalIdRange(0, 49999), "localhost:" + port, test1));
-        logicalDatabase.addPhysicalShard(new PhysicalShard(new LogicalIdRange(50000, 99999), "localhost:" + port, test2));
+        logicalDatabase.addPhysicalShard(new PhysicalDatabase(new LogicalIdRange(0, 49999), "localhost:" + port, test1));
+        logicalDatabase.addPhysicalShard(new PhysicalDatabase(new LogicalIdRange(50000, 99999), "localhost:" + port, test2));
         return databaseConfig;
     }
 
@@ -123,7 +117,7 @@ public class DBConfiguration {
     @Bean (name="dataSourceManager")
     public ShardingDataSourceManager dataSourceManager() {
         ShardingDataSourceManager dataSourceManager = new ShardingDataSourceManager();
-        dataSourceManager.setDataSourceConfig(databaseConfig());
+        dataSourceManager.setRepositoryConfig(databaseConfig());
         dataSourceManager.setDataSourceFactory(dataSourceFactory());
         return dataSourceManager;
     }

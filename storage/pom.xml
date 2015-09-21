@@ -4,10 +4,10 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>storage-lib</artifactId>
+    <artifactId>storage</artifactId>
 
-    <name>storage-lib</name>
-    <description>sharding storage library</description>
+    <name>storage</name>
+    <description>sharding storage service</description>
 
     <parent>
         <groupId>org.juric</groupId>
@@ -18,5 +18,9 @@
 
 
     <dependencies>
+        <dependency>
+            <groupId>org.juric</groupId>
+            <artifactId>mybatis-sharding-lib</artifactId>
+        </dependency>
     </dependencies>
 </project>

@@ -1,9 +1,8 @@
 package org.juric.sharding.datasource;
 
-import org.juric.sharding.config.DataSourceConfig;
-import org.juric.sharding.config.PhysicalShard;
+import org.juric.sharding.config.PhysicalDatabase;
+import org.juric.sharding.config.RepositoryConfig;
 import org.juric.sharding.transactional.spring.ShardingDataSourceProxy;
-import org.springframework.jdbc.datasource.DriverManagerDataSource;
 
 import javax.sql.DataSource;
 import java.util.concurrent.ConcurrentHashMap;
@@ -16,7 +15,7 @@ import java.util.concurrent.ConcurrentHashMap;
  * To change this template use File | Settings | File Templates.
  */
 public class ShardingDataSourceManager {
-    private DataSourceConfig dataSourceConfig;
+    private RepositoryConfig<PhysicalDatabase> repositoryConfig;
     private DataSourceFactory dataSourceFactory;
 
     public void setDataSourceFactory(DataSourceFactory dataSourceFactory) {
@@ -25,14 +24,14 @@ public class ShardingDataSourceManager {
     public DataSourceFactory getDataSourceFactory() {
         return dataSourceFactory;
     }
-    private ConcurrentHashMap<PhysicalShard, DataSource> dataSourceMap = new ConcurrentHashMap<PhysicalShard, DataSource>();
+    private ConcurrentHashMap<PhysicalDatabase, DataSource> dataSourceMap = new ConcurrentHashMap<PhysicalDatabase, DataSource>();
 
-    public void setDataSourceConfig(DataSourceConfig dataSourceConfig) {
-        this.dataSourceConfig = dataSourceConfig;
+    public void setRepositoryConfig(RepositoryConfig<PhysicalDatabase> repositoryConfig) {
+        this.repositoryConfig = repositoryConfig;
     }
 
     public DataSource get(String logicalDbName, int physicalShardId) {
-        PhysicalShard physicalShard = dataSourceConfig.getLogicalDatabase(logicalDbName).getPhysicalShard(physicalShardId);
+        PhysicalDatabase physicalShard = repositoryConfig.getLogicalRepository(logicalDbName).getPhysicalShard(physicalShardId);
         if (!dataSourceMap.containsKey(physicalShard)) {
             DataSource dataSource = dataSourceFactory.createDataSource(physicalShard.getHost(), physicalShard.getSchema());
             dataSourceMap.putIfAbsent(physicalShard, new ShardingDataSourceProxy(dataSource));
