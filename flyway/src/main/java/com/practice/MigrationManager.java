@@ -40,7 +40,7 @@ public class MigrationManager {
     public void migrate() {
         try {
             for (LogicalRepository<PhysicalDatabase> logicalDatabase : repositoryConfig.getAllLogicalDatabase()) {
-                for(int physicalShardId : logicalDatabase.getPhysicalShardIds()) {
+                for(int physicalShardId : logicalDatabase.getPhysicalRepositoryIds()) {
                     PhysicalDatabase physicalDatabase = logicalDatabase.getPhysicalShard(physicalShardId);
                     createSchemaIfNotExist(physicalDatabase);
                     DataSource dataSource = dataSourceManager.get(logicalDatabase.getName(), physicalShardId);

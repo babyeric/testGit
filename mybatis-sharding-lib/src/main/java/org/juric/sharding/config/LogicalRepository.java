@@ -20,7 +20,7 @@ public class LogicalRepository<T extends PhysicalRepository> {
         this.name = name;
     }
 
-    public void addPhysicalShard(T physicalShard) {
+    public void addPhysicalRepository(T physicalShard) {
         if (physicalRepositryMap.containsKey(physicalShard.getLogicalIdRange())) {
             throw new IllegalArgumentException("conflict logicalIdRange");
         }
@@ -44,11 +44,11 @@ public class LogicalRepository<T extends PhysicalRepository> {
         return physicalRepositories.get(physicalShardId);
     }
 
-    public Iterable<T> getPhysicalShards() {
+    public Iterable<T> getPhysicalRepositories() {
         return physicalRepositories;
     }
 
-    public int[] getPhysicalShardIds() {
+    public int[] getPhysicalRepositoryIds() {
         int[] ret = new int[physicalRepositories.size()];
         for(int i=0; i<ret.length; ++i) {
             ret[i] = i;

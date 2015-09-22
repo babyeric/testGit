@@ -15,11 +15,9 @@ import java.nio.file.Path;
  * To change this template use File | Settings | File Templates.
  */
 public interface StorageService {
-    public File getFile(LogicalPath logicalPath);
+    public File toFile(LogicalPath logicalPath);
 
-    public File createFile(LogicalPath logicalPath);
-
-    public LogicalPath newFilePath(EnumRepository repo,
+    public LogicalPath generateFilePath(EnumRepository repo,
                                   EnumSchema schema,
                                   Integer logicalShardId,
                                   String ext);

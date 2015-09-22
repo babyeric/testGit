@@ -52,9 +52,9 @@ public class DBConfiguration {
     public RepositoryConfig<PhysicalDatabase> databaseConfig() {
         RepositoryConfig<PhysicalDatabase> databaseConfig = new RepositoryConfig<>();
         LogicalRepository<PhysicalDatabase> logicalDatabase = new LogicalRepository("test");
-        databaseConfig.addLogicalDatabase(logicalDatabase);
-        logicalDatabase.addPhysicalShard(new PhysicalDatabase(new LogicalIdRange(0, 49999), "localhost:" + port, test1));
-        logicalDatabase.addPhysicalShard(new PhysicalDatabase(new LogicalIdRange(50000, 99999), "localhost:" + port, test2));
+        databaseConfig.addLogicalRepository(logicalDatabase);
+        logicalDatabase.addPhysicalRepository(new PhysicalDatabase(new LogicalIdRange(0, 49999), "localhost:" + port, test1));
+        logicalDatabase.addPhysicalRepository(new PhysicalDatabase(new LogicalIdRange(50000, 99999), "localhost:" + port, test2));
         return databaseConfig;
     }
 

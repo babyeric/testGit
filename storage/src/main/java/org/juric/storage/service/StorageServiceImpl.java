@@ -25,21 +25,20 @@ import java.util.Random;
  * Time: 1:47 PM
  * To change this template use File | Settings | File Templates.
  */
-public class StorageServiceImpl implements StorageService {
-
+public class StorageServiceImpl extends StorageServiceSupport implements StorageService {
 
     @Override
-    public File getFile(LogicalPath logicalPath) {
-        return null;
+    public File toFile(LogicalPath logicalPath) {
+        Path filePath = convertPath(logicalPath);
+        File ret = filePath.toFile();
+        return ret;
     }
 
     @Override
-    public File createFile(LogicalPath logicalPath) {
-        return null;
-    }
-
-    @Override
-    public LogicalPath newFilePath(EnumRepository repo, EnumSchema schema, Integer logicalShardId, String ext) {
-        return null;
+    public LogicalPath generateFilePath(EnumRepository repo, EnumSchema schema, Integer logicalShardId, String ext) {
+        LogicalPath ret = generatePath(repo, schema, logicalShardId, ext);
+        File dir = toFile(ret).getParentFile();
+        dir.mkdirs();
+        return ret;
     }
 }

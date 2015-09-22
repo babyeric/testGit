@@ -35,8 +35,8 @@ public abstract class StorageServiceSupport {
         this.idGenerator = idGenerator;
     }
 
-    public Path convertPath(LogicalPath logicalPath) {
-        LogicalRepository<PhysicalStorage> logicalStorage = storageConfig.getLogicalRepository(logicalPath.getRepo().getName());
+    protected Path convertPath(LogicalPath logicalPath) {
+        LogicalRepository<PhysicalStorage> logicalStorage = storageConfig.getLogicalRepository(logicalPath.getRepo().name());
         int physicalShardId = logicalStorage.logicalToPhysicalId(logicalPath.getLogicalShardId());
         String root = logicalStorage.getPhysicalShard(physicalShardId).getRoot();
         return Paths.get(root,
@@ -45,7 +45,7 @@ public abstract class StorageServiceSupport {
                 logicalPath.getSubPath());
     }
 
-    public LogicalPath newPath(EnumRepository repo, EnumSchema schema, Integer logicalShardId, String ext) {
+    protected LogicalPath generatePath(EnumRepository repo, EnumSchema schema, Integer logicalShardId, String ext) {
         if(logicalShardId == null) {
             logicalShardId = new Random().nextInt(IdStrategy.LOGICAL_SHARD_COUNT);
         }

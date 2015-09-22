@@ -60,6 +60,11 @@
 				<artifactId>configuration</artifactId>
 				<version>${org.juric.version}</version>
 			</dependency>
+            <dependency>
+                <groupId>org.juric</groupId>
+                <artifactId>storage</artifactId>
+                <version>${org.juric.version}</version>
+            </dependency>
 			<dependency>
 				<groupId>org.juric</groupId>
 				<artifactId>mybatis-sharding-lib</artifactId>

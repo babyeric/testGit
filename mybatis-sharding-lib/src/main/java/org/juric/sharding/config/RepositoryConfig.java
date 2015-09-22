@@ -11,17 +11,17 @@ import java.util.Map;
  * To change this template use File | Settings | File Templates.
  */
 public class RepositoryConfig<T extends PhysicalRepository> {
-    private final Map<String, LogicalRepository<T>> logicalDatabaseMap = new HashMap<>();
+    private final Map<String, LogicalRepository<T>> logicalRepositoryMap = new HashMap<>();
 
     public LogicalRepository<T> getLogicalRepository(String logicalDbName) {
-        return logicalDatabaseMap.get(logicalDbName);
+        return logicalRepositoryMap.get(logicalDbName);
     }
 
-    public void addLogicalDatabase(LogicalRepository<T> logicalDatabase) {
-        logicalDatabaseMap.put(logicalDatabase.getName(), logicalDatabase);
+    public void addLogicalRepository(LogicalRepository<T> logicalDatabase) {
+        logicalRepositoryMap.put(logicalDatabase.getName(), logicalDatabase);
     }
 
     public Iterable<LogicalRepository<T>> getAllLogicalDatabase() {
-        return logicalDatabaseMap.values();
+        return logicalRepositoryMap.values();
     }
 }

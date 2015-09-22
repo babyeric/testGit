@@ -21,7 +21,7 @@ public enum EnumSchema {
     }
 
     public ShardGeneratedIdGroup getIdGroup() {
-        return getIdGroup();
+        return idGroup;
     }
 
     public String getName() {

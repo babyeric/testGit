@@ -8,16 +8,6 @@ package org.juric.storage.path;
  * To change this template use File | Settings | File Templates.
  */
 public enum EnumRepository {
-    PRIVATE("private"),
-    PUBLIC("public");
-
-    private final String name;
-
-    private EnumRepository(String name) {
-        this.name = name;
-    }
-
-    public String getName() {
-        return name;
-    }
+    PRIVATE,
+    PUBLIC;
 }

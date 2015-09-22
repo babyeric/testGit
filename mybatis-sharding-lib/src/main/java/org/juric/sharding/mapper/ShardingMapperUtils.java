@@ -35,6 +35,6 @@ public class ShardingMapperUtils {
     }
 
     public static int[] getPhysicalShardIds(String logicalDbName) {
-        return repositoryConfig.getLogicalRepository(logicalDbName).getPhysicalShardIds();
+        return repositoryConfig.getLogicalRepository(logicalDbName).getPhysicalRepositoryIds();
     }
 }
