@@ -6,7 +6,7 @@
 
     <groupId>org.juric</groupId>
     <artifactId>pom.parent</artifactId>
-    <version>${com.practice.version}</version>
+    <version>${org.juric.version}</version>
 	<packaging>pom</packaging>
 
     <name>pom.parent</name>

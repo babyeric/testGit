@@ -11,16 +11,16 @@ public class LogicalPath {
     private final EnumRepository repo;
     private final EnumSchema schema;
     private final int logicalShardId;
-    private final String localPath;
+    private final String subPath;
 
     public LogicalPath(EnumRepository repo,
                        EnumSchema schema,
                        int logicalShardId,
-                       String localPath) {
+                       String subPath) {
         this.repo = repo;
         this.schema = schema;
         this.logicalShardId = logicalShardId;
-        this.localPath = localPath;
+        this.subPath = subPath;
     }
 
     public EnumRepository getRepo() {
@@ -35,7 +35,7 @@ public class LogicalPath {
         return logicalShardId;
     }
 
-    public String getLocalPath() {
-        return localPath;
+    public String getSubPath() {
+        return subPath;
     }
 }

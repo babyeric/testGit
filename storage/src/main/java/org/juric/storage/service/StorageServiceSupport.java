@@ -1,4 +1,4 @@
-package org.juric.storage.path;
+package org.juric.storage.service;
 
 import com.practice.def.DefShardIdGenerator;
 import org.apache.commons.lang.StringUtils;
@@ -6,6 +6,9 @@ import org.juric.sharding.config.LogicalRepository;
 import org.juric.sharding.config.RepositoryConfig;
 import org.juric.sharding.strategy.IdStrategy;
 import org.juric.storage.config.PhysicalStorage;
+import org.juric.storage.path.EnumRepository;
+import org.juric.storage.path.EnumSchema;
+import org.juric.storage.path.LogicalPath;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -15,16 +18,12 @@ import java.util.Date;
 import java.util.Random;
 
 /**
- * Created with IntelliJ IDEA.
- * User: EricChen
- * Date: 9/21/15
- * Time: 1:47 PM
- * To change this template use File | Settings | File Templates.
+ * Created by Eric on 9/22/2015.
  */
-public class PathServiceImpl implements PathService {
-    private final static String DATE_FORMAT = "yyyyMMdd";
+public abstract class StorageServiceSupport {
+    public final static String DATE_FORMAT = "yyyyMMdd";
 
-    private RepositoryConfig<PhysicalStorage> storageConfig;
+    protected RepositoryConfig<PhysicalStorage> storageConfig;
     private DefShardIdGenerator idGenerator;
 
 
@@ -36,7 +35,6 @@ public class PathServiceImpl implements PathService {
         this.idGenerator = idGenerator;
     }
 
-    @Override
     public Path convertPath(LogicalPath logicalPath) {
         LogicalRepository<PhysicalStorage> logicalStorage = storageConfig.getLogicalRepository(logicalPath.getRepo().getName());
         int physicalShardId = logicalStorage.logicalToPhysicalId(logicalPath.getLogicalShardId());
@@ -44,11 +42,10 @@ public class PathServiceImpl implements PathService {
         return Paths.get(root,
                 logicalPath.getSchema().getName(),
                 String.valueOf(logicalPath.getLogicalShardId()),
-                logicalPath.getLocalPath());
+                logicalPath.getSubPath());
     }
 
-    @Override
-    public LogicalPath createPath(EnumRepository repo, EnumSchema schema, Integer logicalShardId, String ext) {
+    public LogicalPath newPath(EnumRepository repo, EnumSchema schema, Integer logicalShardId, String ext) {
         if(logicalShardId == null) {
             logicalShardId = new Random().nextInt(IdStrategy.LOGICAL_SHARD_COUNT);
         }
@@ -72,5 +69,4 @@ public class PathServiceImpl implements PathService {
 
         return ret;
     }
-
 }
