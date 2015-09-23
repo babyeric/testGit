@@ -1,5 +1,6 @@
 package com.practice.configurer;
 
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
@@ -23,6 +24,7 @@ import java.util.List;
 
 @Configuration
 @Import(WebMvcAutoConfiguration.WebMvcAutoConfigurationAdapter.class)
+//@ConditionalOnProperty(name="application.cluster", havingValue="admin")
 public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
