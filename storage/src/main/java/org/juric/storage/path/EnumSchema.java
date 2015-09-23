@@ -10,21 +10,15 @@ import com.practice.def.ShardGeneratedIdGroup;
  * To change this template use File | Settings | File Templates.
  */
 public enum EnumSchema {
-    IMAGE("image", ShardGeneratedIdGroup.IMAGE_FILE_ID_GROUP);
+    IMAGE(ShardGeneratedIdGroup.IMAGE_FILE_ID_GROUP);
 
     private final ShardGeneratedIdGroup idGroup;
-    private final String name;
 
-    EnumSchema(String name, ShardGeneratedIdGroup idGroup) {
-        this.name = name;
+    EnumSchema(ShardGeneratedIdGroup idGroup) {
         this.idGroup = idGroup;
     }
 
     public ShardGeneratedIdGroup getIdGroup() {
         return idGroup;
-    }
-
-    public String getName() {
-        return name;
     }
 }

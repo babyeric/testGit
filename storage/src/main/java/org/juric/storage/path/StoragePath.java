@@ -7,20 +7,21 @@ package org.juric.storage.path;
  * Time: 4:07 PM
  * To change this template use File | Settings | File Templates.
  */
-public class LogicalPath {
+public class StoragePath {
+    public final static String SEPARATOR = "/";
     private final EnumRepository repo;
     private final EnumSchema schema;
     private final int logicalShardId;
     private final String subPath;
 
-    public LogicalPath(EnumRepository repo,
+    public StoragePath(EnumRepository repo,
                        EnumSchema schema,
                        int logicalShardId,
                        String subPath) {
         this.repo = repo;
         this.schema = schema;
         this.logicalShardId = logicalShardId;
-        this.subPath = subPath;
+        this.subPath = subPath.replace("\\", SEPARATOR);
     }
 
     public EnumRepository getRepo() {

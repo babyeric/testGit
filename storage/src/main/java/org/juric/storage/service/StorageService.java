@@ -2,7 +2,7 @@ package org.juric.storage.service;
 
 import org.juric.storage.path.EnumRepository;
 import org.juric.storage.path.EnumSchema;
-import org.juric.storage.path.LogicalPath;
+import org.juric.storage.path.StoragePath;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -15,9 +15,9 @@ import java.nio.file.Path;
  * To change this template use File | Settings | File Templates.
  */
 public interface StorageService {
-    public File toFile(LogicalPath logicalPath);
+    public File toFile(StoragePath storagePath);
 
-    public LogicalPath generateFilePath(EnumRepository repo,
+    public StoragePath generateFilePath(EnumRepository repo,
                                   EnumSchema schema,
                                   Integer logicalShardId,
                                   String ext);

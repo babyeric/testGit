@@ -8,7 +8,7 @@ import org.juric.sharding.strategy.IdStrategy;
 import org.juric.storage.config.PhysicalStorage;
 import org.juric.storage.path.EnumRepository;
 import org.juric.storage.path.EnumSchema;
-import org.juric.storage.path.LogicalPath;
+import org.juric.storage.path.StoragePath;
 
 import java.io.File;
 import java.nio.file.Path;
@@ -28,15 +28,15 @@ import java.util.Random;
 public class StorageServiceImpl extends StorageServiceSupport implements StorageService {
 
     @Override
-    public File toFile(LogicalPath logicalPath) {
-        Path filePath = convertPath(logicalPath);
+    public File toFile(StoragePath storagePath) {
+        Path filePath = convertPath(storagePath);
         File ret = filePath.toFile();
         return ret;
     }
 
     @Override
-    public LogicalPath generateFilePath(EnumRepository repo, EnumSchema schema, Integer logicalShardId, String ext) {
-        LogicalPath ret = generatePath(repo, schema, logicalShardId, ext);
+    public StoragePath generateFilePath(EnumRepository repo, EnumSchema schema, Integer logicalShardId, String ext) {
+        StoragePath ret = generatePath(repo, schema, logicalShardId, ext);
         File dir = toFile(ret).getParentFile();
         dir.mkdirs();
         return ret;

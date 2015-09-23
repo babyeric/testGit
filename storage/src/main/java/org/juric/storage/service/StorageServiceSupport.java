@@ -8,7 +8,7 @@ import org.juric.sharding.strategy.IdStrategy;
 import org.juric.storage.config.PhysicalStorage;
 import org.juric.storage.path.EnumRepository;
 import org.juric.storage.path.EnumSchema;
-import org.juric.storage.path.LogicalPath;
+import org.juric.storage.path.StoragePath;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -35,17 +35,17 @@ public abstract class StorageServiceSupport {
         this.idGenerator = idGenerator;
     }
 
-    protected Path convertPath(LogicalPath logicalPath) {
-        LogicalRepository<PhysicalStorage> logicalStorage = storageConfig.getLogicalRepository(logicalPath.getRepo().name());
-        int physicalShardId = logicalStorage.logicalToPhysicalId(logicalPath.getLogicalShardId());
+    protected Path convertPath(StoragePath storagePath) {
+        LogicalRepository<PhysicalStorage> logicalStorage = storageConfig.getLogicalRepository(storagePath.getRepo().name());
+        int physicalShardId = logicalStorage.logicalToPhysicalId(storagePath.getLogicalShardId());
         String root = logicalStorage.getPhysicalShard(physicalShardId).getRoot();
         return Paths.get(root,
-                logicalPath.getSchema().getName(),
-                String.valueOf(logicalPath.getLogicalShardId()),
-                logicalPath.getSubPath());
+                storagePath.getSchema().name(),
+                String.valueOf(storagePath.getLogicalShardId()),
+                storagePath.getSubPath());
     }
 
-    protected LogicalPath generatePath(EnumRepository repo, EnumSchema schema, Integer logicalShardId, String ext) {
+    protected StoragePath generatePath(EnumRepository repo, EnumSchema schema, Integer logicalShardId, String ext) {
         if(logicalShardId == null) {
             logicalShardId = new Random().nextInt(IdStrategy.LOGICAL_SHARD_COUNT);
         }
@@ -54,7 +54,7 @@ public abstract class StorageServiceSupport {
 
         String localPath = Paths.get(dateFormat.format(new Date()), String.valueOf(newId)+normalizeExtension(ext)).toString();
 
-        return new LogicalPath(repo, schema, logicalShardId, localPath);
+        return new StoragePath(repo, schema, logicalShardId, localPath);
     }
 
     private String normalizeExtension(String ext) {

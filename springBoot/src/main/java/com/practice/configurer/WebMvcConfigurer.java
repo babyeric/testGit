@@ -1,15 +1,19 @@
 package com.practice.configurer;
 
+import com.practice.http.StoragePathWebMvcCodec;
+import com.practice.http.StorageResourceResolver;
+import org.juric.storage.service.StorageService;
 import org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration;
+import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.core.io.Resource;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.resource.ResourceResolver;
 import org.springframework.web.servlet.resource.ResourceResolverChain;
 
+import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
@@ -24,22 +28,23 @@ import java.util.List;
 @Configuration
 @Import(WebMvcAutoConfiguration.WebMvcAutoConfigurationAdapter.class)
 public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
+
+    @Resource(name = "storageService")
+    private StorageService storageService;
+
+    @Bean
+    public StorageResourceResolver storageResourceResolver() {
+        StorageResourceResolver storageResourceResolver = new StorageResourceResolver();
+        storageResourceResolver.setStorageService(storageService);
+        return storageResourceResolver;
+    }
+
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry
                 .addResourceHandler("/files/**")
                 .setCachePeriod(3600)
                 .resourceChain(true)
-                .addResolver(new ResourceResolver() {
-                    @Override
-                    public Resource resolveResource(HttpServletRequest request, String requestPath, List<? extends Resource> locations, ResourceResolverChain chain) {
-                        return null;  //To change body of implemented methods use File | Settings | File Templates.
-                    }
-
-                    @Override
-                    public String resolveUrlPath(String resourcePath, List<? extends Resource> locations, ResourceResolverChain chain) {
-                        return null;  //To change body of implemented methods use File | Settings | File Templates.
-                    }
-                });
+                .addResolver(storageResourceResolver());
     }
 }

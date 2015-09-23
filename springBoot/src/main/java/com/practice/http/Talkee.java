@@ -6,7 +6,7 @@ import com.practice.user.UserMapper;
 import org.juric.storage.configurer.StorageConfiguration;
 import org.juric.storage.path.EnumRepository;
 import org.juric.storage.path.EnumSchema;
-import org.juric.storage.path.LogicalPath;
+import org.juric.storage.path.StoragePath;
 import org.juric.storage.service.StorageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -56,8 +56,8 @@ public class Talkee {
 
     @RequestMapping("/test")
     String test() {
-        LogicalPath logicalPath = storageService.generateFilePath(EnumRepository.PUBLIC, EnumSchema.IMAGE, null, ".txt");
-        File file = storageService.toFile(logicalPath);
+        StoragePath storagePath = storageService.generateFilePath(EnumRepository.PUBLIC, EnumSchema.IMAGE, null, ".txt");
+        File file = storageService.toFile(storagePath);
         if(!file.exists()) {
             try {
                 file.createNewFile();
