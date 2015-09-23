@@ -19,6 +19,7 @@
 		<module>configuration</module>
 		<module>springDB</module>
         <module>storage</module>
+		<module>portal</module>
 		<module>springBoot</module>
 		<module>flyway</module>
 	</modules>
