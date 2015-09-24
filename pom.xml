@@ -20,7 +20,7 @@
 		<module>springDB</module>
         <module>storage</module>
 		<module>portal</module>
-		<module>springBoot</module>
+		<module>portal.app</module>
 		<module>flyway</module>
 	</modules>
 </project>
