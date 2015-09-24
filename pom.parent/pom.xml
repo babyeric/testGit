@@ -52,7 +52,7 @@
 			</dependency>
 			<dependency>
 				<groupId>org.juric</groupId>
-				<artifactId>springDB</artifactId>
+				<artifactId>db</artifactId>
 				<version>${org.juric.version}</version>
 			</dependency>
 			<dependency>

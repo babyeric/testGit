@@ -27,7 +27,7 @@
 		</dependency>
         <dependency>
             <groupId>org.juric</groupId>
-            <artifactId>springDB</artifactId>
+            <artifactId>db</artifactId>
         </dependency>
         <dependency>
             <groupId>org.juric</groupId>
