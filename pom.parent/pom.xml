@@ -73,6 +73,11 @@
                 <version>${org.juric.version}</version>
             </dependency>
 			<dependency>
+                <groupId>org.juric</groupId>
+                <artifactId>wcm</artifactId>
+                <version>${org.juric.version}</version>
+            </dependency>
+			<dependency>
 				<groupId>org.juric</groupId>
 				<artifactId>mybatis-sharding-lib</artifactId>
 				<version>0.0.1</version>

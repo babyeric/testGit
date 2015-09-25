@@ -20,6 +20,7 @@
 		<module>db</module>
         <module>storage</module>
 		<module>portal</module>
+		<module>wcm</module>
 		<module>portal.app</module>
 		<module>flyway</module>
 	</modules>
