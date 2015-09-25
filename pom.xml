@@ -17,9 +17,10 @@
 	<modules>
 	    <module>mybatis-sharding-lib</module>
 		<module>configuration</module>
-		<module>springDB</module>
+		<module>db</module>
         <module>storage</module>
-		<module>springBoot</module>
+		<module>portal</module>
+		<module>portal.app</module>
 		<module>flyway</module>
 	</modules>
 </project>

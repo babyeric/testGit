@@ -3,6 +3,7 @@ package com.practice.configurer;
 import com.practice.http.StoragePathWebMvcCodec;
 import com.practice.http.StorageResourceResolver;
 import org.juric.storage.service.StorageService;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -27,6 +28,7 @@ import java.util.List;
 
 @Configuration
 @Import(WebMvcAutoConfiguration.WebMvcAutoConfigurationAdapter.class)
+//@ConditionalOnProperty(name="application.cluster", havingValue="admin")
 public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
 
     @Resource(name = "storageService")
