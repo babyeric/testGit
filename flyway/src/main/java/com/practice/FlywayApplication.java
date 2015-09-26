@@ -26,7 +26,7 @@ public class FlywayApplication {
     @Bean
     static EnvironmentAwarePropertyConfigurer propertyPlaceHolderConfigurer() {
         EnvironmentAwarePropertyConfigurer pagePropertySourcePlaceHolderConfigurer = new EnvironmentAwarePropertyConfigurer();
-        pagePropertySourcePlaceHolderConfigurer.setPropertyBags(CollectionUtils.arrayToList(new String[]{"springDB"}));
+        pagePropertySourcePlaceHolderConfigurer.setPropertyBags(CollectionUtils.arrayToList(new String[]{"db"}));
         return pagePropertySourcePlaceHolderConfigurer;
     }
 

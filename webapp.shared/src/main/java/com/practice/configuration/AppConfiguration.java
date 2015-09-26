@@ -2,12 +2,15 @@ package com.practice.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
 import org.springframework.boot.autoconfigure.velocity.VelocityAutoConfiguration;
 import org.springframework.boot.autoconfigure.velocity.VelocityProperties;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.ui.velocity.SpringResourceLoader;
 import org.springframework.ui.velocity.VelocityEngineFactory;
 import org.springframework.web.servlet.view.velocity.VelocityConfigurer;
 
@@ -23,25 +26,14 @@ import java.util.Properties;
  * To change this template use File | Settings | File Templates.
  */
 @Configuration
-@EnableConfigurationProperties(VelocityProperties.class)
+@Import(VelocityAutoConfiguration.class)
 public class AppConfiguration {
 
     @Autowired
     private VelocityProperties properties;
 
-    @Bean
-    public VelocityConfigurer velocityConfigurer() {
-        VelocityConfigurer configurer = new VelocityConfigurer();
-        applyProperties(configurer);
-        return configurer;
+    @PostConstruct
+    public void overrideVelocityProperties() {
+        properties.getProperties().put(SpringResourceLoader.SPRING_RESOURCE_LOADER_CACHE, "false");
     }
-
-    private void applyProperties(VelocityEngineFactory factory) {
-        factory.setResourceLoaderPath(this.properties.getResourceLoaderPath());
-        factory.setPreferFileSystemAccess(this.properties.isPreferFileSystemAccess());
-        Properties velocityProperties = new Properties();
-        velocityProperties.putAll(this.properties.getProperties());
-        factory.setVelocityProperties(velocityProperties);
-    }
-
 }

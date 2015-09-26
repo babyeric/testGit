@@ -21,6 +21,7 @@
         <module>storage</module>
 		<module>portal</module>
 		<module>wcm</module>
+		<module>webapp.shared</module>
 		<module>portal.app</module>
 		<module>flyway</module>
 	</modules>
