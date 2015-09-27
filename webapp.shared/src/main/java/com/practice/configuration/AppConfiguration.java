@@ -1,6 +1,7 @@
 package com.practice.configuration;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
@@ -29,11 +30,14 @@ import java.util.Properties;
 @Import(VelocityAutoConfiguration.class)
 public class AppConfiguration {
 
+    @Value("${velocity.resource.cache.enabled}")
+    private String velocityResourceCacheEnabled;
+
     @Autowired
     private VelocityProperties properties;
 
     @PostConstruct
     public void overrideVelocityProperties() {
-        properties.getProperties().put(SpringResourceLoader.SPRING_RESOURCE_LOADER_CACHE, "false");
+        properties.getProperties().put(SpringResourceLoader.SPRING_RESOURCE_LOADER_CACHE, velocityResourceCacheEnabled);
     }
 }

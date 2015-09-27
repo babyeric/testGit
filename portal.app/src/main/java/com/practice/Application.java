@@ -20,7 +20,7 @@ public class Application {
     @Bean
     static EnvironmentAwarePropertyConfigurer propertyPlaceHolderConfigurer() {
         EnvironmentAwarePropertyConfigurer pagePropertySourcePlaceHolderConfigurer = new EnvironmentAwarePropertyConfigurer();
-        pagePropertySourcePlaceHolderConfigurer.setPropertyBags(CollectionUtils.arrayToList(new String[]{"db"}));
+        pagePropertySourcePlaceHolderConfigurer.setPropertyBags(CollectionUtils.arrayToList(new String[]{"db","webapp"}));
         return pagePropertySourcePlaceHolderConfigurer;
     }
 }
