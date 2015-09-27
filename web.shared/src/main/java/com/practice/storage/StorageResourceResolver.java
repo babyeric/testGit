@@ -1,4 +1,4 @@
-package com.practice.http;
+package com.practice.storage;
 
 import org.juric.storage.path.StoragePath;
 import org.juric.storage.service.StorageService;

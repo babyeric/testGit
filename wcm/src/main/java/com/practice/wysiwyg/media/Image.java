@@ -1,4 +1,4 @@
-package com.practice.wysiwyg;
+package com.practice.wysiwyg.media;
 
 import org.jsoup.nodes.Element;
 

@@ -1,20 +1,15 @@
 package com.practice.configurer;
 
-import com.practice.http.StorageResourceResolver;
+import com.practice.storage.StorageResourceResolver;
 import org.juric.storage.service.StorageService;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnProperty;
 import org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
-import org.springframework.web.servlet.config.annotation.EnableWebMvc;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import org.springframework.web.servlet.resource.ResourceResolver;
-import org.springframework.web.servlet.resource.ResourceResolverChain;
 
 import javax.annotation.Resource;
-import javax.servlet.http.HttpServletRequest;
 
 /**
  * Created with IntelliJ IDEA.

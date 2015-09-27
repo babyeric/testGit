@@ -1,4 +1,4 @@
-package com.practice.wysiwyg;
+package com.practice.wysiwyg.media;
 
 /**
  * Created by Eric on 9/27/2015.

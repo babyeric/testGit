@@ -1,4 +1,4 @@
-package com.practice.http;
+package com.practice.storage;
 
 import org.apache.commons.lang.StringUtils;
 import org.juric.storage.path.EnumRepository;

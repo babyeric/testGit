@@ -1,12 +1,13 @@
 package com.practice.wysiwyg;
 
+import com.practice.wysiwyg.media.Image;
+import com.practice.wysiwyg.media.Media;
 import org.apache.commons.io.IOUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.Part;
 import java.io.*;
