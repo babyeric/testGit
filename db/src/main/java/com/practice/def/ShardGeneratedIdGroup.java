@@ -5,6 +5,7 @@ package com.practice.def;
  */
 public enum ShardGeneratedIdGroup {
     USER_ID_GROUP(1000),
+    ARTICLE_ID_GROUP(1001),
     /////FileId groups start by 100000
     IMAGE_FILE_ID_GROUP(10000);
 
