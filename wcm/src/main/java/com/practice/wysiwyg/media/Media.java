@@ -6,8 +6,6 @@ package com.practice.wysiwyg.media;
 public interface Media {
     String getSource();
 
-    boolean isPosted();
-
     String getContent();
 
     void setContent(String content);

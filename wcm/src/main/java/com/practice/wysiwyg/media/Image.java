@@ -9,34 +9,21 @@ import java.util.regex.Pattern;
  */
 public class Image implements Media {
     public final static String ATTRIBUTE_SOURCE = "src";
-    public final static Pattern POSTED_IMAGE_PATTERN = Pattern.compile("postedimage/\\d+");
-    private String source;
+
+    private Element element;
     private String content;
 
-    public Image(String source) {
-        this.source = source;
-    }
-
     public Image(Element element) {
-        source = element.attr(ATTRIBUTE_SOURCE);
+        this.element = element;
     }
 
     @Override
     public String getSource() {
-        return source;
-    }
-
-    @Override
-    public boolean isPosted() {
-        if (POSTED_IMAGE_PATTERN.matcher(source).matches()) {
-            return true;
-        }
-
-        return false;
+        return element.attr(ATTRIBUTE_SOURCE);
     }
 
     public void setSource(String source) {
-        this.source = source;
+        element.attr(ATTRIBUTE_SOURCE, source);
     }
 
     @Override

@@ -30,7 +30,8 @@ public class EditorController extends EditorControllerSupport{
     @RequestMapping(value = "/update", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     String handleUpdate(HttpServletRequest request) throws IOException, ServletException {
         Doc doc = new Doc(request);
-        mediaProcessors.invoke(doc);
+        mediaProcessors.invoke("process", doc);
+        String output = doc.html();
         return "redirect:editor";
     }
 }

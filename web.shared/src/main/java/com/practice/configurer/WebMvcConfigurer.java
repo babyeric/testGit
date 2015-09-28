@@ -23,6 +23,7 @@ import javax.annotation.Resource;
 @Import(WebMvcAutoConfiguration.WebMvcAutoConfigurationAdapter.class)
 //@ConditionalOnProperty(name="application.cluster", havingValue="admin")
 public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
+    public final static String FILE_URL_PRIFIX = "/files/";
 
     @Resource(name = "storageService")
     private StorageService storageService;
@@ -37,7 +38,7 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
     @Override
     public void addResourceHandlers(ResourceHandlerRegistry registry) {
         registry
-                .addResourceHandler("/files/**")
+                .addResourceHandler(FILE_URL_PRIFIX + "**")
                 .setCachePeriod(3600)
                 .resourceChain(true)
                 .addResolver(storageResourceResolver());

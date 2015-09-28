@@ -65,9 +65,10 @@ public class Doc {
         List<T> ret = new ArrayList<>();
         for(Element element : elements) {
             T media = newInstance(element, type);
-            if (media.isPosted()) {
+            if (parts.containsKey(media.getSource())) {
                 setContent(media);
             }
+
             ret.add(media);
         }
         return ret;
@@ -89,7 +90,7 @@ public class Doc {
         }
     }
 
-    public <T extends Media> void setMeidas(List<T> medias) {
-
+    public String html() {
+        return document.body().html();
     }
 }

@@ -56,7 +56,7 @@ public class Talkee {
 
     @RequestMapping("/test")
     String test() {
-        StoragePath storagePath = storageService.generateFilePath(EnumRepository.PUBLIC, EnumSchema.IMAGE, null, ".txt");
+        StoragePath storagePath = storageService.generateStoragePath(EnumRepository.PUBLIC, EnumSchema.IMAGE, null, ".txt");
         File file = storageService.toFile(storagePath);
         if(!file.exists()) {
             try {
