@@ -37,14 +37,14 @@ public class MigrationManager {
         this.dataSourceManager = dataSourceManager;
     }
 
-    public void migrate() {
+    public void run(OperationMode operationMode) {
         try {
             for (LogicalRepository<PhysicalDatabase> logicalDatabase : repositoryConfig.getAllLogicalDatabase()) {
                 for(int physicalShardId : logicalDatabase.getPhysicalRepositoryIds()) {
                     PhysicalDatabase physicalDatabase = logicalDatabase.getPhysicalShard(physicalShardId);
                     createSchemaIfNotExist(physicalDatabase);
                     DataSource dataSource = dataSourceManager.get(logicalDatabase.getName(), physicalShardId);
-                    migrate(logicalDatabase.getName(), dataSource);
+                    run(operationMode, logicalDatabase.getName(), dataSource);
                 }
             }
 
@@ -73,12 +73,18 @@ public class MigrationManager {
 
     }
 
-    private void migrate(String logicalDbName, DataSource dataSource) {
+    private void run(OperationMode operationMode, String logicalDbName, DataSource dataSource) {
         Flyway flyway = new Flyway();
         flyway.setLocations(new String[]{SCRIPT_ROOT + "/" + logicalDbName});
         flyway.setDataSource(dataSource);
         flyway.setValidateOnMigrate(true);
         flyway.setEncoding("utf-8");
-        flyway.migrate();
+        switch (operationMode) {
+            case REPAIR:
+                flyway.repair();
+                break;
+            default:
+                flyway.migrate();
+        }
     }
 }

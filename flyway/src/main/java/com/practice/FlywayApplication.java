@@ -20,7 +20,8 @@ public class FlywayApplication {
         ApplicationContext ctx = SpringApplication.run(FlywayApplication.class, args);
 
         MigrationManager migrationManager = (MigrationManager)ctx.getBean("migrationManager");
-        migrationManager.migrate();
+
+        migrationManager.run(operationMode(args));
     }
 
     @Bean
@@ -28,6 +29,12 @@ public class FlywayApplication {
         EnvironmentAwarePropertyConfigurer pagePropertySourcePlaceHolderConfigurer = new EnvironmentAwarePropertyConfigurer();
         pagePropertySourcePlaceHolderConfigurer.setPropertyBags(CollectionUtils.arrayToList(new String[]{"db"}));
         return pagePropertySourcePlaceHolderConfigurer;
+    }
+
+    private static OperationMode operationMode(String[] args) {
+        return args.length == 0?
+                OperationMode.MIGRATE :
+                OperationMode.fromValue(args[0]);
     }
 
 }
