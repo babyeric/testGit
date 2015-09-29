@@ -1,10 +1,9 @@
 package com.practice.storage;
 
-import org.juric.storage.path.StoragePath;
-import org.juric.storage.service.StorageService;
+import com.juric.storage.path.StoragePath;
+import com.practice.client.storage.StorageServiceClient;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;
-import org.springframework.core.io.ResourceLoader;
 import org.springframework.web.servlet.resource.ResourceResolver;
 import org.springframework.web.servlet.resource.ResourceResolverChain;
 
@@ -17,10 +16,10 @@ import java.util.List;
  */
 public class StorageResourceResolver implements ResourceResolver {
 
-    private StorageService storageService;
+    private StorageServiceClient storageServiceClient;
 
-    public void setStorageService(StorageService storageService) {
-        this.storageService = storageService;
+    public void setStorageServiceClient(StorageServiceClient storageServiceClient) {
+        this.storageServiceClient = storageServiceClient;
     }
 
     @Override
@@ -35,7 +34,7 @@ public class StorageResourceResolver implements ResourceResolver {
 
     private Resource getResource(String requestPath) {
         StoragePath storagePath = StoragePathWebMvcCodec.decode(requestPath);
-        File file = storageService.toFile(storagePath);
+        File file = storageServiceClient.toFile(storagePath);
         return new FileSystemResource(file);
     }
 }

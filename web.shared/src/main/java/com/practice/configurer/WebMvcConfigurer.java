@@ -1,7 +1,8 @@
 package com.practice.configurer;
 
+import com.practice.client.storage.StorageServiceClient;
+import com.practice.client.storage.StorageServiceClientImpl;
 import com.practice.storage.StorageResourceResolver;
-import org.juric.storage.service.StorageService;
 import org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -25,13 +26,16 @@ import javax.annotation.Resource;
 public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
     public final static String FILE_URL_PRIFIX = "/files/";
 
-    @Resource(name = "storageService")
-    private StorageService storageService;
+
+    @Bean
+    public StorageServiceClient storageServiceClient() {
+        return new StorageServiceClientImpl();
+    }
 
     @Bean
     public StorageResourceResolver storageResourceResolver() {
         StorageResourceResolver storageResourceResolver = new StorageResourceResolver();
-        storageResourceResolver.setStorageService(storageService);
+        storageResourceResolver.setStorageServiceClient(storageServiceClient());
         return storageResourceResolver;
     }
 

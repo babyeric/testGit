@@ -1,5 +1,6 @@
 package org.juric.storage.configurer;
 
+import com.juric.storage.path.EnumRepository;
 import com.practice.configuration.DBConfiguration;
 import com.practice.def.DefShardIdGenerator;
 import org.juric.sharding.config.LogicalIdRange;
@@ -7,7 +8,6 @@ import org.juric.sharding.config.LogicalRepository;
 import org.juric.sharding.config.PhysicalDatabase;
 import org.juric.sharding.config.RepositoryConfig;
 import org.juric.storage.config.PhysicalStorage;
-import org.juric.storage.path.EnumRepository;
 import org.juric.storage.service.StorageService;
 import org.juric.storage.service.StorageServiceImpl;
 import org.springframework.context.annotation.Bean;

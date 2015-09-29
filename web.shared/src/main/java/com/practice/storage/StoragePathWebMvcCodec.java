@@ -1,9 +1,9 @@
 package com.practice.storage;
 
+import com.juric.storage.path.EnumRepository;
+import com.juric.storage.path.EnumSchema;
+import com.juric.storage.path.StoragePath;
 import org.apache.commons.lang.StringUtils;
-import org.juric.storage.path.EnumRepository;
-import org.juric.storage.path.EnumSchema;
-import org.juric.storage.path.StoragePath;
 
 /**
  * Created by Eric on 9/22/2015.

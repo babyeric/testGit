@@ -89,7 +89,12 @@
             </dependency>
 			<dependency>
                 <groupId>org.juric</groupId>
-                <artifactId>webapp.shared</artifactId>
+                <artifactId>carbon</artifactId>
+                <version>${org.juric.version}</version>
+            </dependency>
+			<dependency>
+                <groupId>org.juric</groupId>
+                <artifactId>carbon.schema</artifactId>
                 <version>${org.juric.version}</version>
             </dependency>
 			<dependency>

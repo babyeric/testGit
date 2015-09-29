@@ -1,13 +1,13 @@
 package com.practice.wysiwyg.processor;
 
+import com.juric.storage.path.EnumRepository;
+import com.juric.storage.path.EnumSchema;
+import com.juric.storage.path.StoragePath;
+import com.practice.client.storage.StorageServiceClient;
 import com.practice.configurer.WebMvcConfigurer;
 import com.practice.storage.StoragePathWebMvcCodec;
 import com.practice.wysiwyg.Doc;
 import com.practice.wysiwyg.media.Image;
-import org.juric.storage.path.EnumRepository;
-import org.juric.storage.path.EnumSchema;
-import org.juric.storage.path.StoragePath;
-import org.juric.storage.service.StorageService;
 import org.springframework.util.StringUtils;
 
 import javax.xml.bind.DatatypeConverter;
@@ -27,10 +27,10 @@ public class ImageProcessor implements MediaProcessor {
     private final static Pattern IMAGE_CONTENT_PATTERN = Pattern.compile("data:image/(png|jpg|gif|jpeg?);base64,");
     private final static Map<String, String> MEDIA_TYPE_TO_EXTENSION = new HashMap<>();
 
-    private StorageService storageService;
+    private StorageServiceClient storageServiceClient;
 
-    public void setStorageService(StorageService storageService) {
-        this.storageService = storageService;
+    public void setStorageServiceClient(StorageServiceClient storageServiceClient) {
+        this.storageServiceClient = storageServiceClient;
     }
 
     static {
@@ -64,8 +64,8 @@ public class ImageProcessor implements MediaProcessor {
     }
 
     private String saveImage(String extension, byte[] bytes) {
-        StoragePath storagePath = storageService.generateStoragePath(EnumRepository.PUBLIC, EnumSchema.IMAGE, null, extension);
-        File imageFile = storageService.toFile(storagePath);
+        StoragePath storagePath = storageServiceClient.generateStoragePath(EnumRepository.PUBLIC, EnumSchema.IMAGE, null, extension);
+        File imageFile = storageServiceClient.toFile(storagePath);
         try {
             FileOutputStream fos = new FileOutputStream(imageFile);
             fos.write(bytes);

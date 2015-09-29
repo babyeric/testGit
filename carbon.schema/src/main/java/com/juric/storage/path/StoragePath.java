@@ -1,4 +1,4 @@
-package org.juric.storage.path;
+package com.juric.storage.path;
 
 /**
  * Created with IntelliJ IDEA.

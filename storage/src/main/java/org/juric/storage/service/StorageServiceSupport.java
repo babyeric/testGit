@@ -1,20 +1,23 @@
 package org.juric.storage.service;
 
+import com.juric.storage.path.EnumRepository;
+import com.juric.storage.path.EnumSchema;
+import com.juric.storage.path.StoragePath;
 import com.practice.def.DefShardIdGenerator;
+import com.practice.def.ShardGeneratedIdGroup;
 import org.apache.commons.lang.StringUtils;
 import org.juric.sharding.config.LogicalRepository;
 import org.juric.sharding.config.RepositoryConfig;
 import org.juric.sharding.strategy.IdStrategy;
 import org.juric.storage.config.PhysicalStorage;
-import org.juric.storage.path.EnumRepository;
-import org.juric.storage.path.EnumSchema;
-import org.juric.storage.path.StoragePath;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Random;
 
 /**
@@ -22,6 +25,11 @@ import java.util.Random;
  */
 public abstract class StorageServiceSupport {
     public final static String DATE_FORMAT = "yyyyMMdd";
+    private final static Map<EnumSchema, ShardGeneratedIdGroup> SCHEMA_TO_IDGROUP = new HashMap<>();
+
+    static {
+        SCHEMA_TO_IDGROUP.put(EnumSchema.IMAGE, ShardGeneratedIdGroup.IMAGE_FILE_ID_GROUP);
+    }
 
     protected RepositoryConfig<PhysicalStorage> storageConfig;
     private DefShardIdGenerator idGenerator;
@@ -49,7 +57,7 @@ public abstract class StorageServiceSupport {
         if(logicalShardId == null) {
             logicalShardId = new Random().nextInt(IdStrategy.LOGICAL_SHARD_COUNT);
         }
-        long newId = idGenerator.generate(schema.getIdGroup(), logicalShardId);
+        long newId = idGenerator.generate(SCHEMA_TO_IDGROUP.get(schema), logicalShardId);
         DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
 
         String localPath = Paths.get(dateFormat.format(new Date()), String.valueOf(newId)+normalizeExtension(ext)).toString();

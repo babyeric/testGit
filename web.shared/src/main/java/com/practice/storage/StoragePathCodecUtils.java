@@ -1,6 +1,6 @@
 package com.practice.storage;
 
-import org.juric.storage.path.StoragePath;
+import com.juric.storage.path.StoragePath;
 
 /**
  * Created by Eric on 9/22/2015.

@@ -4,9 +4,6 @@ import com.practice.db.DataService;
 import com.practice.user.UserDB;
 import com.practice.user.UserMapper;
 import org.juric.storage.configurer.StorageConfiguration;
-import org.juric.storage.path.EnumRepository;
-import org.juric.storage.path.EnumSchema;
-import org.juric.storage.path.StoragePath;
 import org.juric.storage.service.StorageService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -32,7 +29,9 @@ import java.util.Date;
 
 @Import(StorageConfiguration.class)
 @RestController
+@Deprecated
 public class Talkee {
+    /*
     private final static Logger LOG = LoggerFactory.getLogger(Talkee.class);
 
     private DataService dataService;
@@ -56,7 +55,6 @@ public class Talkee {
 
     @RequestMapping("/test")
     String test() {
-        StoragePath storagePath = storageService.generateStoragePath(EnumRepository.PUBLIC, EnumSchema.IMAGE, null, ".txt");
         File file = storageService.toFile(storagePath);
         if(!file.exists()) {
             try {
@@ -81,4 +79,5 @@ public class Talkee {
         userDB.setBirthday(birthday);
         return String.valueOf(userMapper.insert(userDB));
     }
+    */
 }

@@ -1,10 +1,10 @@
 package com.practice.configuration;
 
+import com.practice.client.storage.StorageServiceClient;
 import com.practice.function.ChainedMethod;
 import com.practice.wysiwyg.Doc;
 import com.practice.wysiwyg.processor.ImageProcessor;
 import com.practice.wysiwyg.processor.MediaProcessor;
-import org.juric.storage.service.StorageService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -15,13 +15,13 @@ import javax.annotation.Resource;
  */
 @Configuration
 public class WCMConfiguration {
-    @Resource(name = "storageService")
-    private StorageService storageService;
+    @Resource(name = "storageServiceClient")
+    private StorageServiceClient storageServiceClient;
 
     @Bean(name="imageProcessor")
     public ImageProcessor imageProcessor() {
         ImageProcessor imageProcessor = new ImageProcessor();
-        imageProcessor.setStorageService(storageService);
+        imageProcessor.setStorageServiceClient(storageServiceClient);
         return imageProcessor;
     }
 
