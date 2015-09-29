@@ -1,4 +1,4 @@
-package com.practice.http;
+package com.juric.portal.http;
 
 
 import org.springframework.stereotype.Controller;

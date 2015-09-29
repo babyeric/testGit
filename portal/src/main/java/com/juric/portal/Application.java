@@ -1,4 +1,4 @@
-package com.practice;
+package com.juric.portal;
 
 import com.practice.config.EnvironmentAwarePropertyConfigurer;
 import org.springframework.boot.*;
