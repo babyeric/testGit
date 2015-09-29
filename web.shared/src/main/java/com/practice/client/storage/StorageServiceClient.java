@@ -14,6 +14,6 @@ public interface StorageServiceClient {
 
     public StoragePath generateStoragePath(EnumRepository repo,
                                            EnumSchema schema,
-                                           Integer logicalShardId,
+                                           Long shardParam,
                                            String ext);
 }

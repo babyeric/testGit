@@ -1,4 +1,4 @@
-package com.juric;
+package com.juric.carbon;
 
 import com.practice.config.EnvironmentAwarePropertyConfigurer;
 import org.springframework.boot.*;

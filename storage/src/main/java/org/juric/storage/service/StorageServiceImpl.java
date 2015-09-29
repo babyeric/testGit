@@ -35,8 +35,8 @@ public class StorageServiceImpl extends StorageServiceSupport implements Storage
     }
 
     @Override
-    public StoragePath generateStoragePath(EnumRepository repo, EnumSchema schema, Integer logicalShardId, String ext) {
-        StoragePath ret = generatePath(repo, schema, logicalShardId, ext);
+    public StoragePath generateStoragePath(EnumRepository repo, EnumSchema schema, Long shardParam, String ext) {
+        StoragePath ret = generatePath(repo, schema, shardParam, ext);
         File dir = toFile(ret).getParentFile();
         dir.mkdirs();
         return ret;

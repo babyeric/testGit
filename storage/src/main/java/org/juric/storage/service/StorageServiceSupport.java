@@ -53,10 +53,8 @@ public abstract class StorageServiceSupport {
                 storagePath.getSubPath());
     }
 
-    protected StoragePath generatePath(EnumRepository repo, EnumSchema schema, Integer logicalShardId, String ext) {
-        if(logicalShardId == null) {
-            logicalShardId = new Random().nextInt(IdStrategy.LOGICAL_SHARD_COUNT);
-        }
+    protected StoragePath generatePath(EnumRepository repo, EnumSchema schema, Long shardParam, String ext) {
+        int logicalShardId = logicalShardId(shardParam);
         long newId = idGenerator.generate(SCHEMA_TO_IDGROUP.get(schema), logicalShardId);
         DateFormat dateFormat = new SimpleDateFormat(DATE_FORMAT);
 
@@ -76,5 +74,13 @@ public abstract class StorageServiceSupport {
         }
 
         return ret;
+    }
+
+    private int logicalShardId(Long shardParam) {
+        if (shardParam == null) {
+            return new Random().nextInt(IdStrategy.LOGICAL_SHARD_COUNT);
+        } else {
+            return (int)(shardParam % IdStrategy.LOGICAL_SHARD_COUNT);
+        }
     }
 }

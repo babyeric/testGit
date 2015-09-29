@@ -17,7 +17,7 @@ public class StorageServiceClientImpl implements StorageServiceClient {
     }
 
     @Override
-    public StoragePath generateStoragePath(EnumRepository repo, EnumSchema schema, Integer logicalShardId, String ext) {
+    public StoragePath generateStoragePath(EnumRepository repo, EnumSchema schema, Long shardParam, String ext) {
         return null;
     }
 }
