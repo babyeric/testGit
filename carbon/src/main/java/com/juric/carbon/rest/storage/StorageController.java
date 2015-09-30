@@ -1,5 +1,6 @@
 package com.juric.carbon.rest.storage;
 
+import com.juric.carbon.rest.mvc.Version;
 import com.juric.storage.path.EnumRepository;
 import com.juric.storage.path.EnumSchema;
 import com.juric.storage.path.StoragePath;
@@ -24,7 +25,9 @@ import javax.annotation.Resource;
  */
 
 @Import(StorageConfiguration.class)
-@RestController("/storage")
+@Version("1")
+@RestController()
+@RequestMapping("/storage")
 public class StorageController extends StorageControllerSupport {
     @Resource(name = "storageService")
     private StorageService storageService;
