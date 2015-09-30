@@ -30,13 +30,13 @@ public class VersionRequestMappingHandlerMapping extends RequestMappingHandlerMa
         }
 
         if (version != null) {
-            return versionMppingInfo(version, condition).combine(info);
+            return versionMappingInfo(version, condition).combine(info);
         }
 
         return info;
     }
 
-    private RequestMappingInfo versionMppingInfo(Version version, RequestCondition<?> condition) {
+    private RequestMappingInfo versionMappingInfo(Version version, RequestCondition<?> condition) {
         return new RequestMappingInfo(
                 new PatternsRequestCondition(version.value(), getUrlPathHelper(), getPathMatcher(), useSuffixPatternMatch(), useTrailingSlashMatch(), getFileExtensions()),
                 new RequestMethodsRequestCondition(),
