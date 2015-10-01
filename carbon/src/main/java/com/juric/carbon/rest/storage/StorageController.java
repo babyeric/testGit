@@ -38,8 +38,8 @@ public class StorageController extends StorageControllerSupport {
                                   @RequestParam(value="shardParam") Long shardParam,
                                   @RequestParam(value="ext") String ext) {
 
-        storageService.generateStoragePath(repo, schema, shardParam, ext);
-        throw new ValidationException("abc");
+        return storageService.generateStoragePath(repo, schema, shardParam, ext);
+        //throw new ValidationException("abc");
     }
 
 
