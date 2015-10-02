@@ -9,10 +9,14 @@ package com.juric.storage.path;
  */
 public class StoragePath {
     public final static String SEPARATOR = "/";
-    private final EnumRepository repo;
-    private final EnumSchema schema;
-    private final int logicalShardId;
-    private final String subPath;
+    private EnumRepository repo;
+    private EnumSchema schema;
+    private int logicalShardId;
+    private String subPath;
+
+    public StoragePath() {
+
+    }
 
     public StoragePath(EnumRepository repo,
                        EnumSchema schema,
@@ -38,5 +42,21 @@ public class StoragePath {
 
     public String getSubPath() {
         return subPath;
+    }
+
+    public void setRepo(EnumRepository repo) {
+        this.repo = repo;
+    }
+
+    public void setSchema(EnumSchema schema) {
+        this.schema = schema;
+    }
+
+    public void setLogicalShardId(int logicalShardId) {
+        this.logicalShardId = logicalShardId;
+    }
+
+    public void setSubPath(String subPath) {
+        this.subPath = subPath;
     }
 }
