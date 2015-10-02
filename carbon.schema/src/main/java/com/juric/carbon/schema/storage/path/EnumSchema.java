@@ -1,4 +1,4 @@
-package com.juric.storage.path;
+package com.juric.carbon.schema.storage.path;
 
 
 /**

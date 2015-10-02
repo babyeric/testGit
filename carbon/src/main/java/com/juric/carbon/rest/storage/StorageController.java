@@ -1,13 +1,11 @@
 package com.juric.carbon.rest.storage;
 
-import com.juric.carbon.configuration.StorageConfiguration;
+import com.juric.carbon.api.storage.path.StoragePathService;
+import com.juric.carbon.configuration.CarbonConfiguration;
 import com.juric.carbon.rest.mvc.Version;
-import com.juric.carbon.service.storage.StoragePathService;
-import com.juric.storage.path.EnumRepository;
-import com.juric.storage.path.EnumSchema;
-import com.juric.storage.path.StoragePath;
-import com.practice.exception.ValidationException;
-import com.practice.rest.AbstractRestController;
+import com.juric.carbon.schema.storage.path.EnumRepository;
+import com.juric.carbon.schema.storage.path.EnumSchema;
+import com.juric.carbon.schema.storage.path.StoragePath;
 import org.springframework.context.annotation.Import;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -24,7 +22,7 @@ import javax.annotation.Resource;
  * To change this template use File | Settings | File Templates.
  */
 
-@Import(StorageConfiguration.class)
+@Import(CarbonConfiguration.class)
 @Version("1")
 @RestController()
 @RequestMapping("/storage")

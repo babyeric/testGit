@@ -1,5 +1,7 @@
 package com.practice.http;
 
+import com.juric.carbon.api.article.ArticleService;
+import com.juric.carbon.schema.article.Article;
 import com.practice.article.ArticleDB;
 import com.practice.article.ArticleMapper;
 import com.practice.function.ChainedMethod;
@@ -26,8 +28,8 @@ public class EditorController extends EditorControllerSupport{
     @Resource(name="mediaProcessors")
     ChainedMethod<Doc> mediaProcessors;
 
-    @Resource(name="articleMapper")
-    ArticleMapper articleMapper;
+    @Resource(name="articleService")
+    ArticleService articleService;
 
     @RequestMapping("/editor")
     String home(Map<String, Object> model) {
@@ -42,11 +44,11 @@ public class EditorController extends EditorControllerSupport{
     }
 
     private void saveArticle(String content) {
-        ArticleDB articleDB = new ArticleDB();
-        articleDB.setContent(content);
-        articleDB.setTitle("test article");
-        articleDB.setCreateDate(new Date());
-        articleDB.setCreateBy("dev");
-        articleMapper.insert(articleDB);
+        Article article = new Article();
+        article.setContent(content);
+        article.setTitle("test article");
+        article.setCreateDate(new Date());
+        article.setCreateBy("dev");
+        articleService.save(article);
     }
 }

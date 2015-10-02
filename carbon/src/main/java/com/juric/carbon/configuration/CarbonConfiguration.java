@@ -1,7 +1,10 @@
 package com.juric.carbon.configuration;
 
-import com.juric.carbon.service.storage.StoragePathService;
+import com.juric.carbon.api.article.ArticleService;
+import com.juric.carbon.api.storage.path.StoragePathService;
+import com.juric.carbon.service.article.ArticleServiceImpl;
 import com.juric.carbon.service.storage.StoragePathServiceImpl;
+import com.practice.article.ArticleMapper;
 import com.practice.configuration.DBConfiguration;
 import com.practice.def.DefShardIdGenerator;
 import org.springframework.context.annotation.Bean;
@@ -19,11 +22,13 @@ import javax.annotation.Resource;
  */
 @Import(DBConfiguration.class)
 @Configuration
-public class StorageConfiguration {
-
+public class CarbonConfiguration {
+    @Resource(name="defShardIdGenerator")
     private DefShardIdGenerator defShardIdGenerator;
 
-    @Resource(name="defShardIdGenerator")
+    @Resource(name = "articleMapper")
+    private ArticleMapper articleMapper;
+
     public void setDefShardIdGenerator(DefShardIdGenerator defShardIdGenerator) {
         this.defShardIdGenerator = defShardIdGenerator;
     }
@@ -33,5 +38,12 @@ public class StorageConfiguration {
         StoragePathServiceImpl storagePathService = new StoragePathServiceImpl();
         storagePathService.setIdGenerator(defShardIdGenerator);
         return storagePathService;
+    }
+
+    @Bean(name="articleService")
+    public ArticleService articleService() {
+        ArticleServiceImpl articleService = new ArticleServiceImpl();
+        articleService.setArticleMapper(articleMapper);
+        return articleService;
     }
 }

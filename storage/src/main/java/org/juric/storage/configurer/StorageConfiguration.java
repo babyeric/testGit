@@ -1,6 +1,6 @@
 package org.juric.storage.configurer;
 
-import com.juric.storage.path.EnumRepository;
+import com.juric.carbon.schema.storage.path.EnumRepository;
 import com.practice.configuration.DBConfiguration;
 import com.practice.def.DefShardIdGenerator;
 import org.juric.sharding.config.LogicalIdRange;

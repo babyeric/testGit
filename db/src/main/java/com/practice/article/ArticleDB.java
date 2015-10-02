@@ -1,5 +1,6 @@
 package com.practice.article;
 
+import com.juric.carbon.schema.article.Article;
 import com.practice.def.ShardGeneratedIdGroup;
 import com.practice.def.annotation.ShardGeneratedId;
 import org.juric.sharding.annotation.ShardAwareId;
@@ -10,60 +11,67 @@ import java.util.Date;
  * Created by Eric on 9/27/2015.
  */
 public class ArticleDB {
-    private Long articleId;
-    private Integer version;
-    private String title;
-    private String content;
-    private Date createDate;
-    private String createBy;
+    private Article article;
+
+    public ArticleDB() {
+        this(new Article());
+    }
+
+    public ArticleDB(Article article) {
+        this.article = article;
+    }
+
+    public Article getArticle() {
+        return article;
+    }
 
     @ShardAwareId
     public Long getArticleId() {
-        return articleId;
+        return article.getArticleId();
     }
 
     @ShardGeneratedId(ShardGeneratedIdGroup.ARTICLE_ID_GROUP)
     public void setArticleId(Long articleId) {
-        this.articleId = articleId;
+        article.setArticleId(articleId);
     }
 
     public Integer getVersion() {
-        return version;
+        return article.getVersion();
     }
 
     public void setVersion(Integer version) {
-        this.version = version;
+        article.setVersion(version);
     }
 
     public String getTitle() {
-        return title;
+        return article.getTitle();
     }
 
     public void setTitle(String title) {
-        this.title = title;
+        article.setTitle(title);
     }
 
     public String getContent() {
-        return content;
+        return article.getContent();
     }
 
     public void setContent(String content) {
-        this.content = content;
+        article.setContent(content);
     }
 
     public Date getCreateDate() {
-        return createDate;
+        return article.getCreateDate();
     }
 
     public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
+        article.setCreateDate(createDate);
     }
 
     public String getCreateBy() {
-        return createBy;
+        return article.getCreateBy();
     }
 
     public void setCreateBy(String createBy) {
-        this.createBy = createBy;
+        article.setCreateBy(createBy);
     }
 }

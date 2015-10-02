@@ -1,6 +1,6 @@
 package org.juric.storage.service;
 
-import com.juric.storage.path.StoragePath;
+import com.juric.carbon.schema.storage.path.StoragePath;
 import org.juric.sharding.config.LogicalRepository;
 import org.juric.sharding.config.RepositoryConfig;
 import org.juric.storage.config.PhysicalStorage;

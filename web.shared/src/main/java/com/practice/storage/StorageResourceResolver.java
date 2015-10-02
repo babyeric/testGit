@@ -1,6 +1,6 @@
 package com.practice.storage;
 
-import com.juric.storage.path.StoragePath;
+import com.juric.carbon.schema.storage.path.StoragePath;
 import org.juric.storage.service.StorageService;
 import org.springframework.core.io.FileSystemResource;
 import org.springframework.core.io.Resource;

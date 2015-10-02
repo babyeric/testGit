@@ -1,9 +1,7 @@
 package com.practice.configuration;
 
-import com.juric.storage.path.StoragePath;
-import com.practice.client.storage.StoragePathServiceClient;
+import com.juric.carbon.api.storage.path.StoragePathService;
 import com.practice.function.ChainedMethod;
-import com.practice.wysiwyg.Doc;
 import com.practice.wysiwyg.processor.ImageProcessor;
 import com.practice.wysiwyg.processor.MediaProcessor;
 import org.juric.storage.service.StorageService;
@@ -17,8 +15,8 @@ import javax.annotation.Resource;
  */
 @Configuration
 public class WCMConfiguration {
-    @Resource(name = "storagePathServiceClient")
-    private StoragePathServiceClient storagePathServiceClient;
+    @Resource(name = "storagePathService")
+    private StoragePathService storagePathService;
 
     @Resource(name = "storageService")
     private StorageService storageService;
@@ -27,7 +25,7 @@ public class WCMConfiguration {
     public ImageProcessor imageProcessor() {
         ImageProcessor imageProcessor = new ImageProcessor();
         imageProcessor.setStorageService(storageService);
-        imageProcessor.setStoragePathServiceClient(storagePathServiceClient);
+        imageProcessor.setStoragePathService(storagePathService);
         return imageProcessor;
     }
 

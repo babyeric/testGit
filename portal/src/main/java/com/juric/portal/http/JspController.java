@@ -2,6 +2,7 @@ package com.juric.portal.http;
 
 
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.Map;
@@ -15,8 +16,9 @@ import java.util.Map;
  */
 @Controller
 public class JspController {
-    @RequestMapping("/")
-    String home(Map<String, Object> model) {
+
+    @RequestMapping("/article/{articleId}")
+    String article(@PathVariable("id") long articleId, Map<String, Object> model) {
         model.put("message", "Hello World!");
         return "index";
     }

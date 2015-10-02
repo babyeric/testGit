@@ -1,8 +1,8 @@
 package com.practice.storage;
 
-import com.juric.storage.path.EnumRepository;
-import com.juric.storage.path.EnumSchema;
-import com.juric.storage.path.StoragePath;
+import com.juric.carbon.schema.storage.path.EnumRepository;
+import com.juric.carbon.schema.storage.path.EnumSchema;
+import com.juric.carbon.schema.storage.path.StoragePath;
 import org.apache.commons.lang.StringUtils;
 
 /**
@@ -27,6 +27,7 @@ public class StoragePathWebMvcCodec {
         if (parts.length != NUM_PARTS) {
             throw new IllegalArgumentException("invalid path");
         }
+
 
         EnumSchema schema = EnumSchema.valueOf(parts[INDEX_SCHEMA].toUpperCase());
         int logicalShardId = Integer.parseInt(parts[INDEX_LOGICALSHARDID]);

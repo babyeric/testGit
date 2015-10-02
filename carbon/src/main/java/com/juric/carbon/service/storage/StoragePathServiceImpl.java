@@ -1,8 +1,9 @@
 package com.juric.carbon.service.storage;
 
-import com.juric.storage.path.EnumRepository;
-import com.juric.storage.path.EnumSchema;
-import com.juric.storage.path.StoragePath;
+import com.juric.carbon.api.storage.path.StoragePathService;
+import com.juric.carbon.schema.storage.path.EnumRepository;
+import com.juric.carbon.schema.storage.path.EnumSchema;
+import com.juric.carbon.schema.storage.path.StoragePath;
 import com.practice.def.DefShardIdGenerator;
 import com.practice.def.ShardGeneratedIdGroup;
 import org.apache.commons.lang.StringUtils;

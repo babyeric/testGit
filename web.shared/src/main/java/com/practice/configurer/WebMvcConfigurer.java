@@ -1,6 +1,6 @@
 package com.practice.configurer;
 
-import com.practice.client.storage.StoragePathServiceClient;
+import com.juric.carbon.api.storage.path.StoragePathService;
 import com.practice.client.storage.StoragePathServiceClientImpl;
 import com.practice.storage.StorageResourceResolver;
 import org.juric.storage.configurer.StorageConfiguration;
@@ -35,8 +35,8 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
         this.storageService = storageService;
     }
 
-    @Bean(name="storagePathServiceClient")
-    public StoragePathServiceClient storagePathServiceClient() {
+    @Bean(name="storagePathService")
+    public StoragePathService storagePathServiceClient() {
         return new StoragePathServiceClientImpl();
     }
 

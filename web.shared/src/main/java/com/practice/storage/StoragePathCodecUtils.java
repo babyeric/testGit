@@ -1,6 +1,7 @@
 package com.practice.storage;
 
-import com.juric.storage.path.StoragePath;
+
+import com.juric.carbon.schema.storage.path.StoragePath;
 
 /**
  * Created by Eric on 9/22/2015.

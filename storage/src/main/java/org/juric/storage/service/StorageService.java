@@ -1,8 +1,6 @@
 package org.juric.storage.service;
 
-import com.juric.storage.path.EnumRepository;
-import com.juric.storage.path.EnumSchema;
-import com.juric.storage.path.StoragePath;
+import com.juric.carbon.schema.storage.path.StoragePath;
 
 import java.io.File;
 import java.nio.file.Path;
