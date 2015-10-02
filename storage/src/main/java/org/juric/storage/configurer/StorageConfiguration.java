@@ -27,14 +27,6 @@ import javax.annotation.Resource;
 @Configuration
 public class StorageConfiguration {
 
-
-    private DefShardIdGenerator defShardIdGenerator;
-
-    @Resource(name="defShardIdGenerator")
-    public void setDefShardIdGenerator(DefShardIdGenerator defShardIdGenerator) {
-        this.defShardIdGenerator = defShardIdGenerator;
-    }
-
     @Bean
     public RepositoryConfig<PhysicalStorage> storageConifg() {
         RepositoryConfig<PhysicalStorage> storageConfig = new RepositoryConfig();
@@ -48,7 +40,6 @@ public class StorageConfiguration {
     @Bean(name="storageService")
     public StorageService storageService() {
         StorageServiceImpl storageService = new StorageServiceImpl();
-        storageService.setIdGenerator(defShardIdGenerator);
         storageService.setStorageConfig(storageConifg());
         return storageService;
     }

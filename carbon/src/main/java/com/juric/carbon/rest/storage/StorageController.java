@@ -1,6 +1,7 @@
 package com.juric.carbon.rest.storage;
 
 import com.juric.carbon.rest.mvc.Version;
+import com.juric.carbon.service.storage.StoragePathService;
 import com.juric.storage.path.EnumRepository;
 import com.juric.storage.path.EnumSchema;
 import com.juric.storage.path.StoragePath;
@@ -29,8 +30,8 @@ import javax.annotation.Resource;
 @RestController()
 @RequestMapping("/storage")
 public class StorageController extends StorageControllerSupport {
-    @Resource(name = "storageService")
-    private StorageService storageService;
+    @Resource(name = "storagePathService")
+    private StoragePathService storagePathService;
 
     @RequestMapping(method = RequestMethod.POST)
     public StoragePath createPath(@RequestParam(value="repo") EnumRepository repo,
@@ -38,9 +39,6 @@ public class StorageController extends StorageControllerSupport {
                                   @RequestParam(value="shardParam") Long shardParam,
                                   @RequestParam(value="ext") String ext) {
 
-        storageService.generateStoragePath(repo, schema, shardParam, ext);
-        throw new ValidationException("abc");
+        return storagePathService.generatePath(repo, schema, shardParam, ext);
     }
-
-
 }

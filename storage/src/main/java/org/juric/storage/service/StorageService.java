@@ -16,9 +16,4 @@ import java.nio.file.Path;
  */
 public interface StorageService {
     public File toFile(StoragePath storagePath);
-
-    public StoragePath generateStoragePath(EnumRepository repo,
-                                  EnumSchema schema,
-                                  Long shardParam,
-                                  String ext);
 }
