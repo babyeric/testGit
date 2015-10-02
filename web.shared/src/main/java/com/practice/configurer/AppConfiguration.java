@@ -1,5 +1,9 @@
 package com.practice.configurer;
 
+import com.juric.carbon.api.article.ArticleService;
+import com.juric.carbon.api.storage.path.StoragePathService;
+import com.practice.client.article.ArticleServiceClientImpl;
+import com.practice.client.storage.StoragePathServiceClientImpl;
 import org.juric.storage.configurer.StorageConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -28,17 +32,16 @@ import java.util.Properties;
  * To change this template use File | Settings | File Templates.
  */
 @Configuration
-@Import({VelocityAutoConfiguration.class})
+@Import({})
 public class AppConfiguration {
 
-    @Value("${velocity.resource.cache.enabled}")
-    private String velocityResourceCacheEnabled;
+    @Bean(name="articleService")
+    public ArticleService articleService() {
+        return new ArticleServiceClientImpl();
+    }
 
-    @Autowired
-    private VelocityProperties properties;
-
-    @PostConstruct
-    public void overrideVelocityProperties() {
-        properties.getProperties().put(SpringResourceLoader.SPRING_RESOURCE_LOADER_CACHE, velocityResourceCacheEnabled);
+    @Bean(name="storagePathService")
+    public StoragePathService storagePathServiceClient() {
+        return new StoragePathServiceClientImpl();
     }
 }

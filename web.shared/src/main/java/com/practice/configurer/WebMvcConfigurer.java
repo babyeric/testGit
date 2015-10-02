@@ -5,13 +5,19 @@ import com.practice.client.storage.StoragePathServiceClientImpl;
 import com.practice.storage.StorageResourceResolver;
 import org.juric.storage.configurer.StorageConfiguration;
 import org.juric.storage.service.StorageService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.velocity.VelocityAutoConfiguration;
+import org.springframework.boot.autoconfigure.velocity.VelocityProperties;
 import org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.ui.velocity.SpringResourceLoader;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 
+import javax.annotation.PostConstruct;
 import javax.annotation.Resource;
 
 /**
@@ -23,7 +29,7 @@ import javax.annotation.Resource;
  */
 
 @Configuration
-@Import({WebMvcAutoConfiguration.WebMvcAutoConfigurationAdapter.class, StorageConfiguration.class})
+@Import({WebMvcAutoConfiguration.WebMvcAutoConfigurationAdapter.class, VelocityAutoConfiguration.class, StorageConfiguration.class})
 //@ConditionalOnProperty(name="application.cluster", havingValue="admin")
 public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
     public final static String FILE_URL_PRIFIX = "/files/";
@@ -35,9 +41,15 @@ public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
         this.storageService = storageService;
     }
 
-    @Bean(name="storagePathService")
-    public StoragePathService storagePathServiceClient() {
-        return new StoragePathServiceClientImpl();
+    @Value("${velocity.resource.cache.enabled}")
+    private String velocityResourceCacheEnabled;
+
+    @Autowired
+    private VelocityProperties properties;
+
+    @PostConstruct
+    public void overrideVelocityProperties() {
+        properties.getProperties().put(SpringResourceLoader.SPRING_RESOURCE_LOADER_CACHE, velocityResourceCacheEnabled);
     }
 
     @Bean
