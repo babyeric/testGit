@@ -9,9 +9,7 @@ import java.io.File;
 /**
  * Created by Eric on 9/28/2015.
  */
-public interface StorageServiceClient {
-    public File toFile(StoragePath storagePath);
-
+public interface StoragePathServiceClient {
     public StoragePath generateStoragePath(EnumRepository repo,
                                            EnumSchema schema,
                                            Long shardParam,

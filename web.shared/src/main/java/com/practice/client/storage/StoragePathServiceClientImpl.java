@@ -17,12 +17,7 @@ import java.util.Map;
 /**
  * Created by Eric on 9/28/2015.
  */
-public class StorageServiceClientImpl implements StorageServiceClient {
-
-    @Override
-    public File toFile(StoragePath storagePath) {
-        return null;
-    }
+public class StoragePathServiceClientImpl implements StoragePathServiceClient {
 
     @Override
     public StoragePath generateStoragePath(EnumRepository repo, EnumSchema schema, Long shardParam, String ext) {

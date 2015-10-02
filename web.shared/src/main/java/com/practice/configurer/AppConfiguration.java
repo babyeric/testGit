@@ -1,5 +1,6 @@
-package com.practice.configuration;
+package com.practice.configurer;
 
+import org.juric.storage.configurer.StorageConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.AutoConfigureAfter;
@@ -27,7 +28,7 @@ import java.util.Properties;
  * To change this template use File | Settings | File Templates.
  */
 @Configuration
-@Import(VelocityAutoConfiguration.class)
+@Import({VelocityAutoConfiguration.class})
 public class AppConfiguration {
 
     @Value("${velocity.resource.cache.enabled}")

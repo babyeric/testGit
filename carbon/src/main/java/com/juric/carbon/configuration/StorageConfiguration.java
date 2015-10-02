@@ -4,8 +4,6 @@ import com.juric.carbon.service.storage.StoragePathService;
 import com.juric.carbon.service.storage.StoragePathServiceImpl;
 import com.practice.configuration.DBConfiguration;
 import com.practice.def.DefShardIdGenerator;
-import org.juric.storage.service.StorageService;
-import org.juric.storage.service.StorageServiceImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;

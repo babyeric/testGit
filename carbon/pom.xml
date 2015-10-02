@@ -36,10 +36,6 @@
 			<groupId>org.juric</groupId>
 			<artifactId>db</artifactId>
 		</dependency>
-		<dependency>
-			<groupId>org.juric</groupId>
-			<artifactId>storage</artifactId>
-		</dependency>
         <dependency>
             <groupId>org.juric</groupId>
             <artifactId>common-lib</artifactId>

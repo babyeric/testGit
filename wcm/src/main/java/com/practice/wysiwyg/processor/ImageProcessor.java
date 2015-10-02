@@ -3,16 +3,16 @@ package com.practice.wysiwyg.processor;
 import com.juric.storage.path.EnumRepository;
 import com.juric.storage.path.EnumSchema;
 import com.juric.storage.path.StoragePath;
-import com.practice.client.storage.StorageServiceClient;
+import com.practice.client.storage.StoragePathServiceClient;
 import com.practice.configurer.WebMvcConfigurer;
 import com.practice.storage.StoragePathWebMvcCodec;
 import com.practice.wysiwyg.Doc;
 import com.practice.wysiwyg.media.Image;
+import org.juric.storage.service.StorageService;
 import org.springframework.util.StringUtils;
 
 import javax.xml.bind.DatatypeConverter;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.util.HashMap;
 import java.util.List;
@@ -27,10 +27,16 @@ public class ImageProcessor implements MediaProcessor {
     private final static Pattern IMAGE_CONTENT_PATTERN = Pattern.compile("data:image/(png|jpg|gif|jpeg?);base64,");
     private final static Map<String, String> MEDIA_TYPE_TO_EXTENSION = new HashMap<>();
 
-    private StorageServiceClient storageServiceClient;
+    private StoragePathServiceClient storagePathServiceClient;
 
-    public void setStorageServiceClient(StorageServiceClient storageServiceClient) {
-        this.storageServiceClient = storageServiceClient;
+    private StorageService storageService;
+
+    public void setStoragePathServiceClient(StoragePathServiceClient storagePathServiceClient) {
+        this.storagePathServiceClient = storagePathServiceClient;
+    }
+
+    public void setStorageService(StorageService storageService) {
+        this.storageService = storageService;
     }
 
     static {
@@ -64,8 +70,8 @@ public class ImageProcessor implements MediaProcessor {
     }
 
     private String saveImage(String extension, byte[] bytes) {
-        StoragePath storagePath = storageServiceClient.generateStoragePath(EnumRepository.PUBLIC, EnumSchema.IMAGE, null, extension);
-        File imageFile = storageServiceClient.toFile(storagePath);
+        StoragePath storagePath = storagePathServiceClient.generateStoragePath(EnumRepository.PUBLIC, EnumSchema.IMAGE, null, extension);
+        File imageFile = storageService.toFile(storagePath, true);
         try {
             FileOutputStream fos = new FileOutputStream(imageFile);
             fos.write(bytes);

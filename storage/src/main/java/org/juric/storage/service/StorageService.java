@@ -15,5 +15,5 @@ import java.nio.file.Path;
  * To change this template use File | Settings | File Templates.
  */
 public interface StorageService {
-    public File toFile(StoragePath storagePath);
+    public File toFile(StoragePath storagePath, boolean createDir);
 }

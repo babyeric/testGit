@@ -23,11 +23,16 @@ public class StorageServiceImpl implements StorageService {
         this.storageConfig = storageConfig;
     }
 
-
     @Override
-    public File toFile(StoragePath storagePath) {
+    public File toFile(StoragePath storagePath, boolean createDir) {
         Path filePath = convertPath(storagePath);
         File ret = filePath.toFile();
+        if (createDir) {
+            File parent =  ret.getParentFile();
+            if (!parent.exists()) {
+                parent.mkdirs();
+            }
+        }
         return ret;
     }
 
@@ -40,5 +45,4 @@ public class StorageServiceImpl implements StorageService {
                 String.valueOf(storagePath.getLogicalShardId()),
                 storagePath.getSubPath());
     }
-
 }

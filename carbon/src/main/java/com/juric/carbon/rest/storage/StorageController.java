@@ -1,5 +1,6 @@
 package com.juric.carbon.rest.storage;
 
+import com.juric.carbon.configuration.StorageConfiguration;
 import com.juric.carbon.rest.mvc.Version;
 import com.juric.carbon.service.storage.StoragePathService;
 import com.juric.storage.path.EnumRepository;
@@ -7,8 +8,6 @@ import com.juric.storage.path.EnumSchema;
 import com.juric.storage.path.StoragePath;
 import com.practice.exception.ValidationException;
 import com.practice.rest.AbstractRestController;
-import org.juric.storage.configurer.StorageConfiguration;
-import org.juric.storage.service.StorageService;
 import org.springframework.context.annotation.Import;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;

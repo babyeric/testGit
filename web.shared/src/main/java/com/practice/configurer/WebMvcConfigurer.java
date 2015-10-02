@@ -1,8 +1,10 @@
 package com.practice.configurer;
 
-import com.practice.client.storage.StorageServiceClient;
-import com.practice.client.storage.StorageServiceClientImpl;
+import com.practice.client.storage.StoragePathServiceClient;
+import com.practice.client.storage.StoragePathServiceClientImpl;
 import com.practice.storage.StorageResourceResolver;
+import org.juric.storage.configurer.StorageConfiguration;
+import org.juric.storage.service.StorageService;
 import org.springframework.boot.autoconfigure.web.WebMvcAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -21,21 +23,27 @@ import javax.annotation.Resource;
  */
 
 @Configuration
-@Import(WebMvcAutoConfiguration.WebMvcAutoConfigurationAdapter.class)
+@Import({WebMvcAutoConfiguration.WebMvcAutoConfigurationAdapter.class, StorageConfiguration.class})
 //@ConditionalOnProperty(name="application.cluster", havingValue="admin")
 public class WebMvcConfigurer extends WebMvcConfigurerAdapter {
     public final static String FILE_URL_PRIFIX = "/files/";
 
+    private StorageService storageService;
 
-    @Bean
-    public StorageServiceClient storageServiceClient() {
-        return new StorageServiceClientImpl();
+    @Resource(name="storageService")
+    public void setStorageService(StorageService storageService) {
+        this.storageService = storageService;
+    }
+
+    @Bean(name="storagePathServiceClient")
+    public StoragePathServiceClient storagePathServiceClient() {
+        return new StoragePathServiceClientImpl();
     }
 
     @Bean
     public StorageResourceResolver storageResourceResolver() {
         StorageResourceResolver storageResourceResolver = new StorageResourceResolver();
-        storageResourceResolver.setStorageServiceClient(storageServiceClient());
+        storageResourceResolver.setStorageService(storageService);
         return storageResourceResolver;
     }
 
