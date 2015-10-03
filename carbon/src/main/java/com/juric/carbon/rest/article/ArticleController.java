@@ -3,10 +3,7 @@ package com.juric.carbon.rest.article;
 import com.juric.carbon.api.article.ArticleService;
 import com.juric.carbon.rest.mvc.Version;
 import com.juric.carbon.schema.article.Article;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -30,7 +27,7 @@ public class ArticleController {
     }
 
     @RequestMapping(value = "/article/{articleId}", method = RequestMethod.GET)
-    public Article getArticleById(long articleId) {
+    public Article getArticleById(@PathVariable("articleId") long articleId) {
         Article ret = articleService.getById(articleId);
         return ret;
     }

@@ -1,7 +1,5 @@
 package com.practice.configurer;
 
-import com.juric.carbon.api.storage.path.StoragePathService;
-import com.practice.client.storage.StoragePathServiceClientImpl;
 import com.practice.storage.StorageResourceResolver;
 import org.juric.storage.configurer.StorageConfiguration;
 import org.juric.storage.service.StorageService;

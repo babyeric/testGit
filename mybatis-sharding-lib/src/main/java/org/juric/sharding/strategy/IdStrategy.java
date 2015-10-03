@@ -40,7 +40,7 @@ public class IdStrategy extends AbstractShardingStrategy {
             return new StrategyResult(rn.nextInt(LOGICAL_SHARD_COUNT), null);
         }
         if (arg instanceof Long) {
-           return new StrategyResult((int)((Long) arg).longValue() % LOGICAL_SHARD_COUNT, null);
+           return new StrategyResult((int)(((Long) arg).longValue() % LOGICAL_SHARD_COUNT), null);
         } else if (arg instanceof Integer) {
             return new StrategyResult( ((Integer) arg).intValue() % LOGICAL_SHARD_COUNT, null);
         } else {

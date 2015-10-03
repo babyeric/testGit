@@ -32,7 +32,6 @@ import java.util.Properties;
  * To change this template use File | Settings | File Templates.
  */
 @Configuration
-@Import({})
 public class AppConfiguration {
 
     @Bean(name="articleService")
