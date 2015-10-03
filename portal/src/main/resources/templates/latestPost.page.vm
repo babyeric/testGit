@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+    #include("header.vm")
+<body>
+<div class="container">
+    #include("navbar.vm")
+    <div id='content' class='row-fluid'>
+        <div class='col-md-8 main'>
+            <h2>Latest Post</h2>
+            <!--<c:url value="/test" var="url"/>
+            <p>JSTL URL: ${url}</p>-->
+            <article>
+                <h2><a href="singlepost.html">${article.title} March 21 - April 19</a></h2>
+
+                <div class="row">
+                    <div class="group1 col-sm-6 col-md-6">
+                        <span class="glyphicon glyphicon-folder-open"></span>  <a href="#">Signs</a>
+                        <span class="glyphicon glyphicon-bookmark"></span> <a href="#">Aries</a>,
+                        <a href="#">Fire</a>, <a href="#">Mars</a>
+                    </div>
+                    <div class="group2 col-sm-6 col-md-6">
+                        <span class="glyphicon glyphicon-pencil"></span> <a href="singlepost.html#comments">20 Comments</a>
+                        <span class="glyphicon glyphicon-time"></span> August 24, 2013 9:00 PM
+                    </div>
+                </div>
+                <hr>
+                    ${article.content}
+                <hr>
+            </article>
+            <article>
+                <h2><a href="singlepost.html">${article.title} March 21 - April 19</a></h2>
+
+                <div class="row">
+                    <div class="group1 col-sm-6 col-md-6">
+                        <span class="glyphicon glyphicon-folder-open"></span>  <a href="#">Signs</a>
+                        <span class="glyphicon glyphicon-bookmark"></span> <a href="#">Aries</a>,
+                        <a href="#">Fire</a>, <a href="#">Mars</a>
+                    </div>
+                    <div class="group2 col-sm-6 col-md-6">
+                        <span class="glyphicon glyphicon-pencil"></span> <a href="singlepost.html#comments">20 Comments</a>
+                        <span class="glyphicon glyphicon-time"></span> August 24, 2013 9:00 PM
+                    </div>
+                </div>
+                <hr>
+                ${article.content}
+                <hr>
+            </article>
+        </div>
+        #include("sidebar.vm")
+    </div>
+</div>
+    #include("footer.vm")
+    #include("script.shared.vm")
+</body>
+</html>

@@ -32,6 +32,13 @@ public class ArticleController {
     String article(@PathVariable("articleId") long articleId, Model model) {
         Article article = articleService.getById(articleId);
         model.addAttribute("article", article);
-        return "article";
+        return "article.page";
+    }
+
+    @RequestMapping("/latestPost/{articleId}")
+    String latestPost(@PathVariable("articleId") long articleId, Model model) {
+        Article article = articleService.getById(articleId);
+        model.addAttribute("article", article);
+        return "latestPost.page";
     }
 }
