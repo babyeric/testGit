@@ -24,7 +24,7 @@ import java.util.Map;
  */
 @Controller
 @Import({AppConfiguration.class, WebMvcConfigurer.class})
-public class JspController {
+public class ArticleController {
     @Resource(name="articleService")
     private ArticleService articleService;
 
@@ -32,7 +32,6 @@ public class JspController {
     String article(@PathVariable("articleId") long articleId, Model model) {
         Article article = articleService.getById(articleId);
         model.addAttribute("article", article);
-        model.addAttribute("message", "Hello World!");
-        return "index";
+        return "article";
     }
 }
