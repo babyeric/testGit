@@ -1,5 +1,9 @@
 package org.juric.sharding.annotation;
 
+import org.juric.sharding.policy.IdShardAwarePolicy;
+import org.juric.sharding.policy.ShardAwarePolicy;
+import org.juric.sharding.strategy.ShardingStrategy;
+
 import java.lang.annotation.*;
 
 /**
@@ -14,4 +18,5 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Inherited
 public @interface ShardAwareId {
+    Class<? extends ShardAwarePolicy> value() default IdShardAwarePolicy.class;
 }

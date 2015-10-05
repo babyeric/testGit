@@ -67,11 +67,19 @@ public class ArticleDB {
         article.setCreateDate(createDate);
     }
 
-    public String getCreateBy() {
-        return article.getCreateBy();
+    public String getModifiedBy() {
+        return article.getModifiedBy();
     }
 
-    public void setCreateBy(String createBy) {
-        article.setCreateBy(createBy);
+    public void setModifiedBy(String modifiedBy) {
+        article.setModifiedBy(modifiedBy);
+    }
+
+    public void setSiteId(Long siteId) {
+        article.setSiteId(siteId);
+    }
+
+    public Long getSiteId() {
+        return article.getSiteId();
     }
 }

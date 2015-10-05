@@ -1,6 +1,8 @@
 package org.juric.sharding.strategy;
 
 import org.juric.sharding.annotation.ShardAwareId;
+import org.juric.sharding.policy.PolicyRegistry;
+import org.juric.sharding.policy.ShardAwarePolicy;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -26,7 +28,11 @@ public class IdStrategy extends AbstractShardingStrategy {
                 if (shardAwareId != null) {
                     try {
                         arg = m.invoke(arg);
-                        break;
+                        if (arg != null) {
+                            ShardAwarePolicy policy = PolicyRegistry.resolve(shardAwareId.value());
+                            int logicalShardId = policy.resolveLogicalShardId(arg);
+                            return new StrategyResult(logicalShardId, null);
+                        }
                     } catch (Exception e) {
                         throw new IllegalStateException();
                     }
@@ -34,17 +40,9 @@ public class IdStrategy extends AbstractShardingStrategy {
             }
         }
 
-        if (arg == null) {
-            //trigger shard aware id generation
-            Random rn = new Random();
-            return new StrategyResult(rn.nextInt(LOGICAL_SHARD_COUNT), null);
-        }
-        if (arg instanceof Long) {
-           return new StrategyResult((int)(((Long) arg).longValue() % LOGICAL_SHARD_COUNT), null);
-        } else if (arg instanceof Integer) {
-            return new StrategyResult( ((Integer) arg).intValue() % LOGICAL_SHARD_COUNT, null);
-        } else {
-            throw new IllegalStateException();
-        }
+        //trigger shard aware id generation
+        Random rn = new Random();
+        return new StrategyResult(rn.nextInt(LOGICAL_SHARD_COUNT), null);
+
     }
 }

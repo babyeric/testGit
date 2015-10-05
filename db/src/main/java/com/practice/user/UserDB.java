@@ -1,8 +1,11 @@
 package com.practice.user;
 
+import com.juric.carbon.schema.article.Article;
+import com.juric.carbon.schema.user.User;
 import com.practice.def.ShardGeneratedIdGroup;
 import com.practice.def.annotation.ShardGeneratedId;
 import org.juric.sharding.annotation.ShardAwareId;
+import org.juric.sharding.policy.HashShardAwarePolicy;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -15,33 +18,40 @@ import java.util.Date;
  * To change this template use File | Settings | File Templates.
  */
 public class UserDB implements Serializable {
-    private Long userId;
-    private String name;
-    private Date birthday;
+    private User user;
+
+    public UserDB() {
+        this(new User());
+    }
+
+    public UserDB(User user) {
+        this.user = user;
+    }
 
     @ShardAwareId
     public Long getUserId() {
-        return userId;
+        return user.getUserId();
     }
 
     @ShardGeneratedId(ShardGeneratedIdGroup.USER_ID_GROUP)
     public void setUserId(Long userId) {
-        this.userId = userId;
+        this.user.setUserId(userId);
     }
 
-    public String getName() {
-        return name;
+    @ShardAwareId(HashShardAwarePolicy.class)
+    public String getEmail() {
+        return user.getEmail();
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setEmail(String email) {
+        user.setEmail(email);
     }
 
     public Date getBirthday() {
-        return birthday;
+        return user.getBirthday();
     }
 
     public void setBirthday(Date birthday) {
-        this.birthday = birthday;
+        user.setBirthday(birthday);
     }
 }
