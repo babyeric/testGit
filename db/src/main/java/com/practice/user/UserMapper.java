@@ -16,8 +16,11 @@ import org.juric.sharding.strategy.IdStrategy;
 @LogicalDbName("test")
 public interface UserMapper {
     @ShardMethod(IdStrategy.class)
-    int insert(@ShardParam("userDB") UserDB userDB);
+    int save(@ShardParam("userDB") UserDB userDB);
 
     @ShardMethod(IdStrategy.class)
     UserDB getById(@ShardParam("userId") Long userId);
+
+    @ShardMethod(IdStrategy.class)
+    UserDB getByEmail(@ShardParam("email") String email);
 }

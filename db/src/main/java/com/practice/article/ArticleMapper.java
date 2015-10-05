@@ -5,6 +5,7 @@ import org.juric.sharding.annotation.ShardMethod;
 import org.juric.sharding.annotation.ShardParam;
 import org.juric.sharding.strategy.IdStrategy;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -16,7 +17,7 @@ public interface ArticleMapper {
     ArticleDB selectOne(@ShardParam("articleId") long articleId);
 
     @ShardMethod(IdStrategy.class)
-    List<ArticleDB> selectMany(@ShardParam("articleId") long articleId);
+    List<ArticleDB> selectBySite(@ShardParam("siteId") long siteId, Date lastDate, Long lastId, int pageSize);
 
     @ShardMethod(IdStrategy.class)
     int insert(@ShardParam("articleDB") ArticleDB articleDB);

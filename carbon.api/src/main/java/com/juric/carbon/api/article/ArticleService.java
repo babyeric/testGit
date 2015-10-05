@@ -2,6 +2,9 @@ package com.juric.carbon.api.article;
 
 import com.juric.carbon.schema.article.Article;
 
+import java.util.Date;
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  * User: EricChen
@@ -11,5 +14,6 @@ import com.juric.carbon.schema.article.Article;
  */
 public interface ArticleService {
     Article save(Article article);
-    Article getById(Long articleId);
+    Article getById(long articleId);
+    List<Article> getArticlesBySite(long siteId, Date lastDate, Long lastId, int pageSize);
 }

@@ -1,5 +1,7 @@
 package com.juric.carbon.schema.article;
 
+import com.juric.carbon.schema.base.BaseSchema;
+
 import java.util.Date;
 
 /**
@@ -9,13 +11,12 @@ import java.util.Date;
  * Time: 1:57 PM
  * To change this template use File | Settings | File Templates.
  */
-public class Article {
+public class Article extends BaseSchema {
     private Long articleId;
+    private Long siteId;
     private Integer version;
     private String title;
     private String content;
-    private Date createDate;
-    private String createBy;
 
     public Long getArticleId() {
         return articleId;
@@ -49,19 +50,11 @@ public class Article {
         this.content = content;
     }
 
-    public Date getCreateDate() {
-        return createDate;
+    public Long getSiteId() {
+        return siteId;
     }
 
-    public void setCreateDate(Date createDate) {
-        this.createDate = createDate;
-    }
-
-    public String getCreateBy() {
-        return createBy;
-    }
-
-    public void setCreateBy(String createBy) {
-        this.createBy = createBy;
+    public void setSiteId(Long siteId) {
+        this.siteId = siteId;
     }
 }

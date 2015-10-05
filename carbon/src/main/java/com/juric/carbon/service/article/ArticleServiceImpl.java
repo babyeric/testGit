@@ -5,6 +5,9 @@ import com.juric.carbon.schema.article.Article;
 import com.practice.article.ArticleDB;
 import com.practice.article.ArticleMapper;
 
+import java.util.Date;
+import java.util.List;
+
 /**
  * Created with IntelliJ IDEA.
  * User: EricChen
@@ -27,8 +30,13 @@ public class ArticleServiceImpl extends ArticleServiceSupport implements Article
     }
 
     @Override
-    public Article getById(Long articleId) {
+    public Article getById(long articleId) {
         ArticleDB articleDB = articleMapper.selectOne(articleId);
         return articleDB.getArticle();
+    }
+
+    @Override
+    public List<Article> getArticlesBySite(long siteId, Date lastDate, Long lastId, int pageSize) {
+        return null;
     }
 }
