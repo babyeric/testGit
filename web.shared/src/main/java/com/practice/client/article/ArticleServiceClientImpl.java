@@ -4,7 +4,9 @@ import com.juric.carbon.api.article.ArticleService;
 import com.juric.carbon.schema.article.Article;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -25,7 +27,12 @@ public class ArticleServiceClientImpl implements ArticleService {
     }
 
     @Override
-    public Article getById(Long articleId) {
+    public List<Article> getArticlesBySite(long siteId, Date lastDate, Long lastId, int pageSize) {
+        return null;
+    }
+
+    @Override
+    public Article getById(long articleId) {
         RestTemplate restTemplate = new RestTemplate();
         Map<String, Object> pathVaribles = new HashMap<>();
         pathVaribles.put("articleId", articleId);

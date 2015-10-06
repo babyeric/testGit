@@ -9,6 +9,6 @@ import com.juric.carbon.schema.user.UserPassword;
 public interface UserService {
     User createUser(User user, UserPassword userPassword);
     void updateUser(User user);
-    User getUserById(Long userId);
+    User getUserById(long userId);
     User getUserByEmail(String email);
 }

@@ -1,6 +1,7 @@
 package com.practice.user;
 
 import com.juric.carbon.schema.user.UserPassword;
+import org.juric.sharding.annotation.LogicalDbName;
 import org.juric.sharding.annotation.ShardMethod;
 import org.juric.sharding.annotation.ShardParam;
 import org.juric.sharding.strategy.IdStrategy;
@@ -8,6 +9,7 @@ import org.juric.sharding.strategy.IdStrategy;
 /**
  * Created by Eric on 10/4/2015.
  */
+@LogicalDbName("test")
 public interface UserPasswordMapper {
     @ShardMethod(IdStrategy.class)
     void savePassword(@ShardParam("userPasswordDB") UserPasswordDB userPasswordDB);

@@ -79,6 +79,7 @@ public class ArticleDB {
         article.setSiteId(siteId);
     }
 
+    @ShardAwareId
     public Long getSiteId() {
         return article.getSiteId();
     }

@@ -48,7 +48,7 @@ public class EditorController extends EditorControllerSupport{
         article.setContent(content);
         article.setTitle("test article");
         article.setCreateDate(new Date());
-        article.setCreateBy("dev");
+        article.setModifiedBy("dev");
         articleService.save(article);
     }
 }

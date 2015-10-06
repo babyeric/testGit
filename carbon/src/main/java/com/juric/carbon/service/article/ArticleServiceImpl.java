@@ -4,6 +4,8 @@ import com.juric.carbon.api.article.ArticleService;
 import com.juric.carbon.schema.article.Article;
 import com.practice.article.ArticleDB;
 import com.practice.article.ArticleMapper;
+import com.practice.function.Functor;
+import com.practice.utils.ListUtils;
 
 import java.util.Date;
 import java.util.List;
@@ -24,9 +26,8 @@ public class ArticleServiceImpl extends ArticleServiceSupport implements Article
 
     @Override
     public Article save(Article article) {
-        ArticleDB articleDB = new ArticleDB(article);
-        articleMapper.insert(articleDB);
-        return articleDB.getArticle();
+        articleMapper.insert( new ArticleDB(article));
+        return article;
     }
 
     @Override
@@ -37,6 +38,12 @@ public class ArticleServiceImpl extends ArticleServiceSupport implements Article
 
     @Override
     public List<Article> getArticlesBySite(long siteId, Date lastDate, Long lastId, int pageSize) {
-        return null;
+        List<ArticleDB> articles = articleMapper.selectBySite(siteId, lastDate, lastId, pageSize);
+        return ListUtils.convert(articles, new Functor<ArticleDB, Article>() {
+            @Override
+            public Article invoke(ArticleDB articleDB) {
+                return articleDB.getArticle();
+            }
+        });
     }
 }

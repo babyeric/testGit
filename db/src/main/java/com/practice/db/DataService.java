@@ -20,8 +20,9 @@ import javax.annotation.Resource;
  * To change this template use File | Settings | File Templates.
  */
 @Service
+@Deprecated
 public class DataService {
-
+/*
     private UserMapper userMapper;
     private PlatformTransactionManager transactionManager;
 
@@ -39,9 +40,9 @@ public class DataService {
     public String talk() {
          final TransactionTemplate template = new TransactionTemplate(transactionManager);
         template.setPropagationBehavior(TransactionDefinition.PROPAGATION_REQUIRED);
-       /*return template.execute(new TransactionCallback<String>() {
+       return template.execute(new TransactionCallback<String>() {
             @Override
-            public String doInTransaction(TransactionStatus status) {     */
+            public String doInTransaction(TransactionStatus status) {
                 template.execute(new TransactionCallback<String>() {
                     @Override
                     public String doInTransaction(TransactionStatus status) {
@@ -59,7 +60,7 @@ public class DataService {
                         //return user.getUserId() + user.getName() + user.getBirthday();
                     }
                 });
-                /*
+
                 UserDB user = new UserDB();
                 user.setUserId(103L);
                 user.setName("user_101");
@@ -67,7 +68,7 @@ public class DataService {
                 status.setRollbackOnly();
                 return null;
             }
-         });*/
+         });
         return null;
-    }
+    }*/
 }

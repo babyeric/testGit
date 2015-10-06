@@ -28,6 +28,10 @@ public class UserDB implements Serializable {
         this.user = user;
     }
 
+    public User getUser() {
+        return user;
+    }
+
     @ShardAwareId
     public Long getUserId() {
         return user.getUserId();
