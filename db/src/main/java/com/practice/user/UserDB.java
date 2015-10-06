@@ -54,4 +54,36 @@ public class UserDB implements Serializable {
     public void setBirthday(Date birthday) {
         user.setBirthday(birthday);
     }
+
+    public String getFirstName() {
+        return user.getFirstName();
+    }
+
+    public void setFirstName(String firstName) {
+        user.setFirstName(firstName);
+    }
+
+    public String getLastName() {
+        return user.getLastName();
+    }
+
+    public void setLastName(String lastName) {
+        user.setLastName(lastName);
+    }
+
+    public String getMobile() {
+        return user.getMobile();
+    }
+
+    public void setMobile(String mobile) {
+        user.setMobile(mobile);
+    }
+
+    public String getCountry() {
+        return user.getCountry();
+    }
+
+    public void setCountry(String country) {
+        user.setCountry(country);
+    }
 }
