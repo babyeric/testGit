@@ -28,7 +28,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(User user, UserPassword userPassword) {
-        userMapper.save(new UserDB(user));
+        userMapper.insert(new UserDB(user));
         UserPasswordDB db = userPasswordHasher.hash(userPassword);
         userPasswordMapper.savePassword(db);
         return user;
@@ -36,7 +36,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void updateUser(User user) {
-        userMapper.save(new UserDB(user));
+        userMapper.update(new UserDB(user));
     }
 
     @Override

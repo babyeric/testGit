@@ -1,6 +1,7 @@
 package org.juric.sharding.strategy;
 
 
+import org.juric.sharding.annotation.ShardAwareId;
 import org.juric.sharding.annotation.ShardParam;
 
 import java.lang.annotation.Annotation;
@@ -20,7 +21,7 @@ public abstract class AbstractShardingStrategy implements ShardingStrategy {
         for (int i=0; i<annotations.length; ++i) {
             for (int j=0; j<annotations[i].length; ++j) {
                 if (annotations[i][j] instanceof ShardParam) {
-                    return resolve(logcailDbName, args[i]);
+                    return resolve(logcailDbName, method, args[i]);
                 }
             }
         }
@@ -28,6 +29,5 @@ public abstract class AbstractShardingStrategy implements ShardingStrategy {
         throw new IllegalStateException("shardParam not found");
     }
 
-
-    public abstract StrategyResult resolve(String logcailDbName, Object arg);
+    public abstract StrategyResult resolve(String logcailDbName, Method method, Object arg);
 }

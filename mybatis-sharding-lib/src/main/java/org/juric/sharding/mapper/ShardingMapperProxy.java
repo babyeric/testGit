@@ -57,7 +57,11 @@ public class ShardingMapperProxy<T> implements InvocationHandler, Serializable {
 
         int[] shardIds = strategyResult.getPhysicalShardIds();
         if (shardIds == null) {
-            shardIds = new int[]{ShardingMapperUtils.logicalToPhysicalId(logicalDbName, strategyResult.getLogicalShardId())};
+            int[] logicalShardIds = strategyResult.getLogicalShardIds();
+            shardIds = new int[logicalShardIds.length];
+            for(int i=0; i<shardIds.length; ++i) {
+                shardIds[i] = ShardingMapperUtils.logicalToPhysicalId(logicalDbName, logicalShardIds[i]);
+            }
         }
 
 
@@ -93,10 +97,10 @@ public class ShardingMapperProxy<T> implements InvocationHandler, Serializable {
         Map<String, Object> extraParam = new HashMap<>();
         extraParam.put(PARAM_NOW, new Date());
         if(isInsert) {
-            if (strategyResult.getLogicalShardId() == null) {
+            if (strategyResult.getLogicalShardIds().length != 1) {
                 throw new IllegalArgumentException();
             }
-            extraParam.put(PARAM_LOGICAL_SHARD_ID, strategyResult.getLogicalShardId());
+            extraParam.put(PARAM_LOGICAL_SHARD_ID, strategyResult.getLogicalShardIds()[0]);
         }
         return extraParam;
     }

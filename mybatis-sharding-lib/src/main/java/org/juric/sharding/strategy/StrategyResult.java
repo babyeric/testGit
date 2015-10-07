@@ -8,16 +8,16 @@ package org.juric.sharding.strategy;
  * To change this template use File | Settings | File Templates.
  */
 public class StrategyResult {
-    private Integer logicalShardId;
+    private int[] logicalShardIds;
     private int[] physicalShardIds;
 
-    public StrategyResult(Integer logicalShardId, int[] physicalShardIds) {
-        this.logicalShardId = logicalShardId;
+    public StrategyResult(int[] logicalShardIds, int[] physicalShardIds) {
+        this.logicalShardIds = logicalShardIds;
         this.physicalShardIds = physicalShardIds;
     }
 
-    public Integer getLogicalShardId() {
-        return logicalShardId;
+    public int[] getLogicalShardIds() {
+        return logicalShardIds;
     }
 
     public int[] getPhysicalShardIds() {

@@ -6,11 +6,11 @@ import java.util.Random;
 /**
  * Created with IntelliJ IDEA.
  * User: EricChen
- * Date: 9/8/15
- * Time: 11:17 AM
+ * Date: 10/7/15
+ * Time: 11:13 AM
  * To change this template use File | Settings | File Templates.
  */
-public class IdStrategy extends AbstractShardingStrategy {
+public class DirectHashStrategy extends AbstractShardingStrategy {
     @Override
     public StrategyResult resolve(String logcailDbName, Method method, Object arg) {
         arg = StrategyUtils.resolveComplexType(arg, new Functor<Object, Boolean>() {
@@ -20,7 +20,7 @@ public class IdStrategy extends AbstractShardingStrategy {
                     return Boolean.FALSE;
                 }
 
-                if (o instanceof Long || o instanceof Integer) {
+                if (o instanceof String) {
                     return Boolean.TRUE;
                 }
 
@@ -30,10 +30,8 @@ public class IdStrategy extends AbstractShardingStrategy {
 
         if (arg != null) {
             int logicalShardId;
-            if (arg instanceof Long) {
-                logicalShardId = (int)(((Long) arg).longValue() % IdStrategy.LOGICAL_SHARD_COUNT);
-            } else if (arg instanceof Integer) {
-                logicalShardId = ((Integer) arg).intValue() % IdStrategy.LOGICAL_SHARD_COUNT;
+            if (arg instanceof String) {
+                logicalShardId = arg.hashCode() % IdStrategy.LOGICAL_SHARD_COUNT;
             } else {
                 throw new IllegalArgumentException("type not acceptable");
             }

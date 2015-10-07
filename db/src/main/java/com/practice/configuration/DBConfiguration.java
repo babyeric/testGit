@@ -3,6 +3,8 @@ package com.practice.configuration;
 import com.practice.article.ArticleMapper;
 import com.practice.db.DataService;
 import com.practice.def.*;
+import com.practice.reverseLookup.ReverseLookupServiceResolver;
+import com.practice.reverseLookup.StringReverseLookupService;
 import com.practice.user.UserMapper;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.transaction.TransactionFactory;
@@ -93,18 +95,12 @@ public class DBConfiguration {
     }
 
     @Bean (name="idGeneratorMapper")
-    public IdGeneratorMapper idGeneratorMapper() {
-        IdGeneratorMapper mapper;
-        try {
-            mapper = ShardingMapperFactory().resolve(IdGeneratorMapper.class);
-        } catch (Exception e) {
-            throw new IllegalStateException(e);
-        }
-        return mapper;
+    public IdGeneratorMapper idGeneratorMapper() throws Exception {
+        return shardingMapperFactory().resolve(IdGeneratorMapper.class);
     }
 
     @Bean (name="shardingMapperFactory")
-    public ShardingMapperFactory ShardingMapperFactory() throws Exception {
+    public ShardingMapperFactory shardingMapperFactory() throws Exception {
         SqlSessionTemplate sessionTemplate = new SqlSessionTemplate(sqlSessionFactory());
         ShardingMapperFactory mapperFactory = new ShardingMapperFactory();
         mapperFactory.setSqlSession(sessionTemplate);
@@ -129,7 +125,7 @@ public class DBConfiguration {
     }
 
     @Bean (name="defShardIdGenerator")
-    public DefShardIdGenerator defShardIdGenerator() {
+    public DefShardIdGenerator defShardIdGenerator() throws Exception {
         DefShardIdGenerator defShardIdGenerator = new DefCachedShardIdGenerator();
         defShardIdGenerator.setBatchSize(20);
         defShardIdGenerator.setIdGeneratorMapper(idGeneratorMapper());
@@ -141,7 +137,15 @@ public class DBConfiguration {
         return new ShardingMapperUtils(databaseConfig(), dataSourceManager());
     }
 
+    @Bean
     public DataSourceFactory dataSourceFactory() {
         return new DataSourceFactoryImpl();
+    }
+
+    @Bean
+    public ReverseLookupServiceResolver reverseLookupServiceResolver() throws Exception {
+        ReverseLookupServiceResolver reverseLookupServiceResolver = new ReverseLookupServiceResolver();
+        reverseLookupServiceResolver.register(String.class, shardingMapperFactory().resolve(StringReverseLookupService.class));
+        return reverseLookupServiceResolver;
     }
 }

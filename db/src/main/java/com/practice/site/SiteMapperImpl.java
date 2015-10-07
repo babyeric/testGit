@@ -1,6 +1,7 @@
 package com.practice.site;
 
-import com.practice.reverseLookup.SiteTagToIdLookupMapper;
+import com.practice.reverseLookup.ReverseLookupTables;
+import com.practice.reverseLookup.StringToLongLookupMapper;
 import org.juric.sharding.annotation.ShardParam;
 
 import java.util.List;
@@ -12,31 +13,31 @@ import java.util.List;
  * Time: 4:55 PM
  * To change this template use File | Settings | File Templates.
  */
-public class SiteMapperImpl implements SiteMapper {
-    private SiteMapper siteMapper;
-    private SiteTagToIdLookupMapper siteTagToIdLookupMapper;
+public class SiteMapperImpl implements SiteMapper{
+    private StringToLongLookupMapper stringToLongLookupMapper;
+    private SiteMapper impl;
 
-    public void setSiteMapper(SiteMapper siteMapper) {
-        this.siteMapper = siteMapper;
+    public void setStringToLongLookupMapper(StringToLongLookupMapper stringToLongLookupMapper) {
+        this.stringToLongLookupMapper = stringToLongLookupMapper;
     }
 
-    public void setSiteTagToIdLookupMapper(SiteTagToIdLookupMapper siteTagToIdLookupMapper) {
-        this.siteTagToIdLookupMapper = siteTagToIdLookupMapper;
+    public void setSiteMapper(SiteMapper impl) {
+        this.impl = impl;
     }
 
     @Override
     public int save(@ShardParam("siteDB") SiteDB siteDB) {
         SiteDB oldOne = null;
         if (siteDB.getSiteId() != null && siteDB.getSiteTag() != null) {
-            oldOne = siteMapper.getSiteById(siteDB.getSiteId());
+            oldOne = impl.getSiteById(siteDB.getSiteId());
         }
 
-        int ret = siteMapper.save(siteDB);
+        int ret = impl.save(siteDB);
         if (ret > 0 && siteDB.getSiteTag() != null) {
             if (oldOne != null) {
-                siteTagToIdLookupMapper.delete(oldOne.getSiteTag(), oldOne.getSiteId());
+                stringToLongLookupMapper.delete(oldOne.getSiteTag(), oldOne.getSiteId(), ReverseLookupTables.SITETAG_TO_SITEID_LOOKUP);
             }
-            siteTagToIdLookupMapper.insert(siteDB.getSiteTag(), siteDB.getSiteId());
+            stringToLongLookupMapper.insert(siteDB.getSiteTag(), siteDB.getSiteId(), ReverseLookupTables.SITETAG_TO_SITEID_LOOKUP);
         }
 
         return ret;
@@ -44,16 +45,16 @@ public class SiteMapperImpl implements SiteMapper {
 
     @Override
     public SiteDB getSiteById(@ShardParam("siteId") long siteId) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return impl.getSiteById(siteId);
     }
 
     @Override
-    public SiteDB getSiteByTag(String siteTag) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    public SiteDB getSiteByTag(@ShardParam("siteTag") String siteTag) {
+        return impl.getSiteByTag(siteTag);
     }
 
     @Override
     public List<SiteDB> getSitesByUserId(@ShardParam("userId") long userId) {
-        return null;  //To change body of implemented methods use File | Settings | File Templates.
+        return impl.getSitesByUserId(userId);
     }
 }

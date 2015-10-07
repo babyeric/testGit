@@ -1,11 +1,9 @@
 package com.practice.user;
 
-import com.juric.carbon.schema.article.Article;
 import com.juric.carbon.schema.user.User;
 import com.practice.def.ShardGeneratedIdGroup;
 import com.practice.def.annotation.ShardGeneratedId;
 import org.juric.sharding.annotation.ShardAwareId;
-import org.juric.sharding.policy.HashShardAwarePolicy;
 
 import java.io.Serializable;
 import java.util.Date;
@@ -42,7 +40,7 @@ public class UserDB implements Serializable {
         this.user.setUserId(userId);
     }
 
-    @ShardAwareId(HashShardAwarePolicy.class)
+    @ShardAwareId
     public String getEmail() {
         return user.getEmail();
     }

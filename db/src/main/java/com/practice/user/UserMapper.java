@@ -4,6 +4,7 @@ import org.apache.ibatis.annotations.Param;
 import org.juric.sharding.annotation.LogicalDbName;
 import org.juric.sharding.annotation.ShardMethod;
 import org.juric.sharding.annotation.ShardParam;
+import org.juric.sharding.strategy.DirectHashStrategy;
 import org.juric.sharding.strategy.IdStrategy;
 
 /**
@@ -15,12 +16,15 @@ import org.juric.sharding.strategy.IdStrategy;
  */
 @LogicalDbName("test")
 public interface UserMapper {
+    @ShardMethod(DirectHashStrategy.class)
+    int insert(@ShardParam("userDB") UserDB userDB);
+
     @ShardMethod(IdStrategy.class)
-    int save(@ShardParam("userDB") UserDB userDB);
+    int update(@ShardParam("userDB") UserDB userDB);
 
     @ShardMethod(IdStrategy.class)
     UserDB getById(@ShardParam("userId") Long userId);
 
-    @ShardMethod(IdStrategy.class)
+    @ShardMethod(DirectHashStrategy.class)
     UserDB getByEmail(@ShardParam("email") String email);
 }

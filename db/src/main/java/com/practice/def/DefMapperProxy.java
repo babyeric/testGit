@@ -36,15 +36,19 @@ public class DefMapperProxy<T> extends ShardingMapperProxy {
             return;
         }
 
-        if (strategyResult.getLogicalShardId() == null) {
+        if (strategyResult.getLogicalShardIds() == null) {
             return;
+        }
+
+        if (strategyResult.getLogicalShardIds().length != 1) {
+            throw new IllegalArgumentException("only support one shard operation");
         }
 
         Annotation[][] annotations = method.getParameterAnnotations();
         for (int i=0; i<annotations.length; ++i) {
             for (int j=0; j<annotations[i].length; ++j) {
                 if (annotations[i][j] instanceof ShardParam) {
-                    generateId(strategyResult.getLogicalShardId().intValue(), args[i]);
+                    generateId(strategyResult.getLogicalShardIds()[0], args[i]);
                 }
             }
         }

@@ -1,5 +1,7 @@
 package org.juric.sharding.strategy;
 
+import java.lang.reflect.Method;
+
 /**
  * Created with IntelliJ IDEA.
  * User: EricChen
@@ -9,7 +11,7 @@ package org.juric.sharding.strategy;
  */
 public class PhysicalStrategy extends AbstractShardingStrategy {
     @Override
-    public StrategyResult resolve(String logcailDbName, Object arg) {
+    public StrategyResult resolve(String logcailDbName, Method method, Object arg) {
         if (!(arg instanceof Integer)) {
             throw new IllegalArgumentException();
         }
