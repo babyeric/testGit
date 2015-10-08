@@ -6,8 +6,10 @@ import com.practice.def.*;
 import com.practice.reverseLookup.ReverseLookupServiceResolver;
 import com.practice.reverseLookup.StringReverseLookupService;
 import com.practice.reverseLookup.StringToLongLookupMapper;
+import com.practice.site.SiteMapper;
 import com.practice.user.UserMapper;
 import com.practice.user.UserMapperImpl;
+import com.practice.user.UserPasswordMapper;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.transaction.TransactionFactory;
 import org.juric.sharding.config.LogicalIdRange;
@@ -110,6 +112,17 @@ public class DBConfiguration {
         return shardingMapperFactory().resolve(IdGeneratorMapper.class);
     }
 
+    @Bean (name="siteMapper")
+    public SiteMapper siteMapper() throws Exception {
+        return defMapperFactory().resolve(SiteMapper.class);
+    }
+
+    @Bean (name="userPasswordMapper")
+    public UserPasswordMapper userPasswordMapper() throws Exception {
+        return defMapperFactory().resolve(UserPasswordMapper.class);
+    }
+
+    @Bean
     public StringToLongLookupMapper stringToLongLookupMapper() throws Exception {
         return shardingMapperFactory().resolve(StringToLongLookupMapper.class);
     }

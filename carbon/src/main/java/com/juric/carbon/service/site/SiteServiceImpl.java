@@ -16,6 +16,10 @@ public class
         SiteServiceImpl implements SiteService {
     private SiteMapper siteMapper;
 
+    public void setSiteMapper(SiteMapper siteMapper) {
+        this.siteMapper = siteMapper;
+    }
+
     @Override
     public Site createSite(Site site) {
         siteMapper.insert(new SiteDB(site));
