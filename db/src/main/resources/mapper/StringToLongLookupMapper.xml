@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.practice.reverseLookup.StringToLongLookupMapper">
+
+    <insert id="insert">
+        insert into #{tableName} (
+            LOGICAL_SHARD_ID, LOOKUP_KEY, LOOKUP_VALUE
+        ) values (
+            #{_logicalShardId_}, #{key}, #{value}
+        )
+    </insert>
+
+    <delete id="delete">
+        delete from #{tableName}
+        where LOOKUP_KEY=#{key}
+    </delete>
+
+
+    <select id="lookup">
+        select
+          VALUE
+        from
+         #{tableName}
+        where
+          LOOKUP_KEY=#{key}
+    </select>
+</mapper>

@@ -60,6 +60,12 @@ public class DBConfiguration {
         databaseConfig.addLogicalRepository(logicalDatabase);
         logicalDatabase.addPhysicalRepository(new PhysicalDatabase(new LogicalIdRange(0, 49999), "localhost:" + port, test1));
         logicalDatabase.addPhysicalRepository(new PhysicalDatabase(new LogicalIdRange(50000, 99999), "localhost:" + port, test2));
+
+        logicalDatabase = new LogicalRepository("mapping");
+        databaseConfig.addLogicalRepository(logicalDatabase);
+        logicalDatabase.addPhysicalRepository(new PhysicalDatabase(new LogicalIdRange(0, 49999), "localhost:" + port, "mapping1"));
+        logicalDatabase.addPhysicalRepository(new PhysicalDatabase(new LogicalIdRange(50000, 99999), "localhost:" + port, "mapping2"));
+
         return databaseConfig;
     }
 
@@ -154,7 +160,9 @@ public class DBConfiguration {
     @Bean
     public ReverseLookupServiceResolver reverseLookupServiceResolver() throws Exception {
         ReverseLookupServiceResolver reverseLookupServiceResolver = new ReverseLookupServiceResolver();
-        reverseLookupServiceResolver.register(String.class, shardingMapperFactory().resolve(StringReverseLookupService.class));
+        StringReverseLookupService stringReverseLookupService = new StringReverseLookupService();
+        stringReverseLookupService.setStringToLongLookupMapper(shardingMapperFactory().resolve(StringToLongLookupMapper.class));
+        reverseLookupServiceResolver.register(String.class, stringReverseLookupService);
         return reverseLookupServiceResolver;
     }
 }

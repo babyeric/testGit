@@ -75,6 +75,14 @@ public class ArticleDB {
         article.setModifiedBy(modifiedBy);
     }
 
+    public Date getModifiedDate() {
+        return article.getModifiedDate();
+    }
+
+    public void setModifiedDate(Date modifiedDate) {
+        article.setModifiedDate(modifiedDate);
+    }
+
     public void setSiteId(Long siteId) {
         article.setSiteId(siteId);
     }

@@ -39,24 +39,7 @@
         ) values (
             #{_logicalShardId_},
             <include refid="values" />
-        ) ON DUPLICATE KEY UPDATE
-        <if test="userDB.email != null">
-            EMAIL = #{userDB.email},
-        </if>
-        <if test="userDB.firstName != null">
-            FIRST_NAME = #{userDB.firstName},
-        </if>
-        <if test="userDB.lastName != null">
-            LAST_NAME = #{userDB.lastName},
-        </if>
-        <if test="userDB.mobile != null">
-            MOBILE = #{userDB.mobile},
-        </if>
-        <if test="userDB.birthday != null">
-            BIRTHDAY = #{userDB.birthday},
-        </if>
-        MODIFIED_DATE = #{userDB.modifiedDate},
-        MODIFIED_BY = #{userDB.modifiedBy}
+        )
     </insert>
 
     <update id="update" parameterType="com.practice.user.UserDB">
