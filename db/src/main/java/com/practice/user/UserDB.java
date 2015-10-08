@@ -88,4 +88,28 @@ public class UserDB implements Serializable {
     public void setCountry(String country) {
         user.setCountry(country);
     }
+
+    public Date getCreateDate() {
+        return user.getCreateDate();
+    }
+
+    public void setCreateDate(Date createDate) {
+        user.setCreateDate(createDate);
+    }
+
+    public Date getModifiedDate() {
+        return user.getModifiedDate();
+    }
+
+    public void setModifiedDate(Date modifiedDate) {
+        user.setModifiedDate(modifiedDate);
+    }
+
+    public String getModifiedBy() {
+        return user.getModifiedBy();
+    }
+
+    public void setModifiedBy(String modifiedBy) {
+        user.setModifiedBy(modifiedBy);
+    }
 }

@@ -12,18 +12,19 @@ import java.util.List;
 /**
  * Created by Eric on 10/5/2015.
  */
-public class SiteServiceImpl implements SiteService {
+public class
+        SiteServiceImpl implements SiteService {
     private SiteMapper siteMapper;
 
     @Override
     public Site createSite(Site site) {
-        siteMapper.save(new SiteDB(site));
+        siteMapper.insert(new SiteDB(site));
         return site;
     }
 
     @Override
     public void updateSite(Site site) {
-        siteMapper.save(new SiteDB(site));
+        siteMapper.update(new SiteDB(site));
     }
 
     @Override

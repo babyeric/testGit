@@ -2,6 +2,8 @@ package com.practice.site;
 
 import com.practice.reverseLookup.ReverseLookupTables;
 import com.practice.reverseLookup.StringToLongLookupMapper;
+import com.practice.user.UserDB;
+import com.practice.utils.MapperUtils;
 import org.juric.sharding.annotation.ShardParam;
 
 import java.util.List;
@@ -26,18 +28,29 @@ public class SiteMapperImpl implements SiteMapper{
     }
 
     @Override
-    public int save(@ShardParam("siteDB") SiteDB siteDB) {
+    public int update(@ShardParam("siteDB") SiteDB siteDB) {
         SiteDB oldOne = null;
-        if (siteDB.getSiteId() != null && siteDB.getSiteTag() != null) {
+        if (siteDB.getSiteTag() != null) {
             oldOne = impl.getSiteById(siteDB.getSiteId());
         }
+        if (oldOne == null) {
+            return 0;
+        }
+        int ret = impl.update(siteDB);
 
-        int ret = impl.save(siteDB);
-        if (ret > 0 && siteDB.getSiteTag() != null) {
-            if (oldOne != null) {
-                stringToLongLookupMapper.delete(oldOne.getSiteTag(), oldOne.getSiteId(), ReverseLookupTables.SITETAG_TO_SITEID_LOOKUP);
-            }
-            stringToLongLookupMapper.insert(siteDB.getSiteTag(), siteDB.getSiteId(), ReverseLookupTables.SITETAG_TO_SITEID_LOOKUP);
+        if (ret > 0 && MapperUtils.keyUpdated(oldOne.getSiteTag(), siteDB.getSiteTag())) {
+            stringToLongLookupMapper.delete(oldOne.getSiteTag(), oldOne.getSiteId(), ReverseLookupTables.SITE_TAG_TO_ID_LOOKUP);
+            stringToLongLookupMapper.insert(siteDB.getSiteTag(), siteDB.getSiteId(), ReverseLookupTables.SITE_TAG_TO_ID_LOOKUP);
+        }
+
+        return ret;
+    }
+
+    @Override
+    public int insert(@ShardParam("siteDB") SiteDB siteDB) {
+        int ret = impl.insert(siteDB);
+        if (ret > 0) {
+            stringToLongLookupMapper.insert(siteDB.getSiteTag(), siteDB.getSiteId(), ReverseLookupTables.SITE_TAG_TO_ID_LOOKUP);
         }
 
         return ret;

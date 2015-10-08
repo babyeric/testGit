@@ -18,13 +18,16 @@ import java.util.List;
 @LogicalDbName("test")
 public interface SiteMapper {
     @ShardMethod(IdStrategy.class)
-    int save(@ShardParam("siteDB") SiteDB siteDB);
+    int insert(@ShardParam("siteDB") SiteDB siteDB);
+
+    @ShardMethod(IdStrategy.class)
+    int update(@ShardParam("siteDB") SiteDB siteDB);
 
     @ShardMethod(IdStrategy.class)
     SiteDB getSiteById(@ShardParam("siteId") long siteId);
 
     @ShardMethod(ReverseLookupStrategy.class)
-    @ReverseLookupContext(ReverseLookupTables.SITETAG_TO_SITEID_LOOKUP)
+    @ReverseLookupContext(ReverseLookupTables.SITE_TAG_TO_ID_LOOKUP)
     SiteDB getSiteByTag(@ShardParam("siteTag") String siteTag);
 
     @ShardMethod(IdStrategy.class)

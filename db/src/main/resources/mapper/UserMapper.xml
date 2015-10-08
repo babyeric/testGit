@@ -4,18 +4,32 @@
 
     <resultMap type="com.practice.user.UserDB" id="userDBMap">
         <id property="userId" column="USER_ID" jdbcType="BIGINT" />
-        <result property="name" column="NAME" jdbcType="VARCHAR" />
+        <result property="email" column="EMAIL" jdbcType="VARCHAR" />
+        <result property="firstName" column="FIRST_NAME" jdbcType="VARCHAR" />
+        <result property="lastName" column="LAST_NAME" jdbcType="VARCHAR" />
+        <result property="mobile" column="MOBILE" jdbcType="VARCHAR" />
+        <result property="country" column="COUNTRY" jdbcType="VARCHAR" />
         <result property="birthday" column="BIRTHDAY" jdbcType="DATE" />
+        <result property="createDate" column="CREATE_DATE" jdbcType="DATE" />
+        <result property="modifiedDate" column="MODIFIED_DATE" jdbcType="DATE" />
+        <result property="modifiedBy" column="MODIFIED_BY" jdbcType="VARCHAR" />
     </resultMap>
 
     <sql id="*">
-    USER_ID, NAME, BIRTHDAY
+    USER_ID, EMAIL, FIRST_NAME, LAST_NAME, MOBILE, COUNTRY, BIRTHDAY, CREATE_DATE, MODIFIED_DATE, MODIFIED_BY
     </sql>
 
     <sql id="values">
     #{userDB.userId},
-    #{userDB.name},
-    #{_now_}
+    #{userDB.email},
+    #{userDB.firstName},
+    #{userDB.lastName},
+    #{userDB.mobile},
+    #{userDB.country},
+    #{userDB.birthday},
+    #{userDB.createDate},
+    #{userDB.modifiedDate},
+    #{userDB.modifiedBy}
     </sql>
 
     <insert id="insert" parameterType="com.practice.user.UserDB">
@@ -25,8 +39,49 @@
         ) values (
             #{_logicalShardId_},
             <include refid="values" />
-        )
+        ) ON DUPLICATE KEY UPDATE
+        <if test="userDB.email != null">
+            EMAIL = #{userDB.email},
+        </if>
+        <if test="userDB.firstName != null">
+            FIRST_NAME = #{userDB.firstName},
+        </if>
+        <if test="userDB.lastName != null">
+            LAST_NAME = #{userDB.lastName},
+        </if>
+        <if test="userDB.mobile != null">
+            MOBILE = #{userDB.mobile},
+        </if>
+        <if test="userDB.birthday != null">
+            BIRTHDAY = #{userDB.birthday},
+        </if>
+        MODIFIED_DATE = #{userDB.modifiedDate},
+        MODIFIED_BY = #{userDB.modifiedBy}
     </insert>
+
+    <update id="update" parameterType="com.practice.user.UserDB">
+        update user
+        set
+            <if test="userDB.email != null">
+                EMAIL = #{userDB.email},
+            </if>
+            <if test="userDB.firstName != null">
+                FIRST_NAME = #{userDB.firstName},
+            </if>
+            <if test="userDB.lastName != null">
+                LAST_NAME = #{userDB.lastName},
+            </if>
+            <if test="userDB.mobile != null">
+                MOBILE = #{userDB.mobile},
+            </if>
+            <if test="userDB.birthday != null">
+                BIRTHDAY = #{userDB.birthday},
+            </if>
+            MODIFIED_DATE = #{userDB.modifiedDate},
+            MODIFIED_BY = #{userDB.modifiedBy}
+        where
+            USER_ID=#{userId}
+    </update>
 
 
     <select id="getById"  resultType="com.practice.user.UserDB" resultMap="userDBMap">
@@ -36,6 +91,15 @@
           user
         where
           USER_ID=#{userId}
+    </select>
+
+    <select id="getByEmail"  resultType="com.practice.user.UserDB" resultMap="userDBMap">
+        select
+          <include refid="*" />
+        from
+          user
+        where
+          EMAIL=#{email}
     </select>
 
 </mapper>

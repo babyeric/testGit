@@ -1,5 +1,9 @@
 package com.practice.user;
 
+import com.practice.reverseLookup.ReverseLookupContext;
+import com.practice.reverseLookup.ReverseLookupService;
+import com.practice.reverseLookup.ReverseLookupStrategy;
+import com.practice.reverseLookup.ReverseLookupTables;
 import org.apache.ibatis.annotations.Param;
 import org.juric.sharding.annotation.LogicalDbName;
 import org.juric.sharding.annotation.ShardMethod;
@@ -16,7 +20,7 @@ import org.juric.sharding.strategy.IdStrategy;
  */
 @LogicalDbName("test")
 public interface UserMapper {
-    @ShardMethod(DirectHashStrategy.class)
+    @ShardMethod(IdStrategy.class)
     int insert(@ShardParam("userDB") UserDB userDB);
 
     @ShardMethod(IdStrategy.class)
@@ -25,6 +29,7 @@ public interface UserMapper {
     @ShardMethod(IdStrategy.class)
     UserDB getById(@ShardParam("userId") Long userId);
 
-    @ShardMethod(DirectHashStrategy.class)
+    @ShardMethod(ReverseLookupStrategy.class)
+    @ReverseLookupContext(ReverseLookupTables.USER_EMAIL_TO_ID_LOOKUP)
     UserDB getByEmail(@ShardParam("email") String email);
 }

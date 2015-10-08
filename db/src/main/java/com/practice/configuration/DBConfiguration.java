@@ -5,7 +5,9 @@ import com.practice.db.DataService;
 import com.practice.def.*;
 import com.practice.reverseLookup.ReverseLookupServiceResolver;
 import com.practice.reverseLookup.StringReverseLookupService;
+import com.practice.reverseLookup.StringToLongLookupMapper;
 import com.practice.user.UserMapper;
+import com.practice.user.UserMapperImpl;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.transaction.TransactionFactory;
 import org.juric.sharding.config.LogicalIdRange;
@@ -86,7 +88,10 @@ public class DBConfiguration {
 
     @Bean (name="userMapper")
     public UserMapper userMapper() throws Exception {
-        return defMapperFactory().resolve(UserMapper.class);
+        UserMapperImpl ret = new UserMapperImpl();
+        ret.setUserMapper(defMapperFactory().resolve(UserMapper.class));
+        ret.setStringToLongLookupMapper(stringToLongLookupMapper());
+        return ret;
     }
 
     @Bean (name="articleMapper")
@@ -97,6 +102,10 @@ public class DBConfiguration {
     @Bean (name="idGeneratorMapper")
     public IdGeneratorMapper idGeneratorMapper() throws Exception {
         return shardingMapperFactory().resolve(IdGeneratorMapper.class);
+    }
+
+    public StringToLongLookupMapper stringToLongLookupMapper() throws Exception {
+        return shardingMapperFactory().resolve(StringToLongLookupMapper.class);
     }
 
     @Bean (name="shardingMapperFactory")
