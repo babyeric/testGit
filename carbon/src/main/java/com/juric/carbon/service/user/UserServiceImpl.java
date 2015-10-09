@@ -30,7 +30,7 @@ public class UserServiceImpl implements UserService {
     public User createUser(User user, UserPassword userPassword) {
         userMapper.insert(new UserDB(user));
         UserPasswordDB db = userPasswordHasher.hash(userPassword);
-        userPasswordMapper.savePassword(db);
+        userPasswordMapper.insert(db);
         return user;
     }
 

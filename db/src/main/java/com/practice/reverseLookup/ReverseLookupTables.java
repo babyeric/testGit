@@ -8,7 +8,7 @@ package com.practice.reverseLookup;
  * To change this template use File | Settings | File Templates.
  */
 public class ReverseLookupTables {
-    public final static String SITE_TAG_TO_ID_LOOKUP = "siteTagToIdLookup";
-    public final static String USER_EMAIL_TO_ID_LOOKUP = "userEmailToIdLookup";
+    public final static String SITE_TAG_TO_ID_LOOKUP = "site_tag_to_id_lookup";
+    public final static String USER_EMAIL_TO_ID_LOOKUP = "user_email_to_id_lookup";
 
 }

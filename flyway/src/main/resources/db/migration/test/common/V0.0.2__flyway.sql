@@ -7,7 +7,7 @@ CREATE TABLE SEQUENCE_ID_NEXT_VALUE
     PRIMARY KEY (SEQUENCE_ID_GROUP, LOGICAL_SHARD_ID, SERVER_ID_FLAG)
 ) ENGINE=INNODB;
 
-DELIMITER //
+DELIMITER $$
 CREATE PROCEDURE GET_SEQUENCE_ID_NEXT_VALUE(
   IN VAR_LOGICAL_SHARD_ID INT,
   IN VAR_SEQUENCE_ID_GROUP SMALLINT,
@@ -43,5 +43,5 @@ BEGIN
   -- this is used for ensure primary and secondary server will not generate duplicate ids
   -- client should be aware of this and get batch values by add 2 every time
   SET VAR_NEXT_VALUE = VAR_NEXT_VALUE + VAR_SERVER_ID_FLAG;
-END//
+END $$
 DELIMITER ;
