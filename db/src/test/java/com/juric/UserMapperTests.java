@@ -17,6 +17,8 @@ import org.springframework.test.context.support.DirtiesContextTestExecutionListe
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.util.CollectionUtils;
 
+import java.util.Date;
+
 /**
  * Created by Eric on 10/8/2015.
  */
@@ -33,6 +35,15 @@ public class UserMapperTests {
         @Test
         public void testInsertUser() {
                 UserDB userDB = new UserDB();
+                userDB.setEmail("test@juric.com");
+                userDB.setBirthday(new Date());
+                userDB.setCountry("US");
+                userDB.setFirstName("juric");
+                userDB.setLastName("chen");
+                userDB.setMobile("600400500");
+                userDB.setModifiedBy("UT");
+                userDB.setCreateDate(new Date());
+                userDB.setModifiedDate(new Date());
                 userMapper.insert(userDB);
         }
 }
