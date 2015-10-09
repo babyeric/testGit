@@ -48,6 +48,6 @@ public class ShardingMapperContext {
     }
 
     public void setSqlSessionHolderKey(String logicalDBName, int shardId) {
-        this.sqlSessionHolderKey = logicalDBName+shardId;
+        this.sqlSessionHolderKey = logicalDBName+"#"+shardId;
     }
 }
