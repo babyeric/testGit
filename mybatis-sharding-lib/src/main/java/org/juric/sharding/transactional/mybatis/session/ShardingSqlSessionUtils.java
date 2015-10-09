@@ -1,13 +1,9 @@
-package org.juric.sharding.session;
+package org.juric.sharding.transactional.mybatis.session;
 
 import org.apache.ibatis.exceptions.PersistenceException;
-import org.apache.ibatis.executor.BaseExecutor;
-import org.apache.ibatis.executor.CachingExecutor;
-import org.apache.ibatis.executor.Executor;
 import org.apache.ibatis.logging.Log;
 import org.apache.ibatis.logging.LogFactory;
 import org.apache.ibatis.mapping.Environment;
-import org.apache.ibatis.plugin.Plugin;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
@@ -19,9 +15,6 @@ import org.springframework.dao.TransientDataAccessResourceException;
 import org.springframework.dao.support.PersistenceExceptionTranslator;
 import org.springframework.jdbc.datasource.DataSourceUtils;
 import org.springframework.transaction.support.TransactionSynchronizationAdapter;
-
-import java.lang.reflect.InvocationHandler;
-import java.lang.reflect.Proxy;
 
 import static org.springframework.transaction.support.TransactionSynchronizationManager.*;
 import static org.springframework.transaction.support.TransactionSynchronizationManager.isActualTransactionActive;

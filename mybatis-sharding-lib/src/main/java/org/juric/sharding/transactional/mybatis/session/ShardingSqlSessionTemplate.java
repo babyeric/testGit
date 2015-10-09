@@ -1,4 +1,4 @@
-package org.juric.sharding.session;
+package org.juric.sharding.transactional.mybatis.session;
 
 import org.apache.ibatis.exceptions.PersistenceException;
 import org.apache.ibatis.executor.BatchResult;

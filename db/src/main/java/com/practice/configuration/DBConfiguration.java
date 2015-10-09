@@ -21,7 +21,7 @@ import org.juric.sharding.datasource.DummyDataSource;
 import org.juric.sharding.datasource.ShardingDataSourceManager;
 import org.juric.sharding.mapper.ShardingMapperFactory;
 import org.juric.sharding.mapper.ShardingMapperUtils;
-import org.juric.sharding.session.ShardingSqlSessionTemplate;
+import org.juric.sharding.transactional.mybatis.session.ShardingSqlSessionTemplate;
 import org.juric.sharding.transactional.mybatis.ShardingSpringManagedTransactionFactory;
 import org.juric.sharding.transactional.spring.ShardingTransactionManager;
 import org.mybatis.spring.SqlSessionFactoryBean;
