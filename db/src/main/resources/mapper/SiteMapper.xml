@@ -60,7 +60,7 @@
     </update>
 
 
-    <select id="getSiteById"  resultType="com.practice.site.SiteDB" resultMap="userDBMap">
+    <select id="getSiteById"  resultType="com.practice.site.SiteDB" resultMap="siteDBMap">
         select
           <include refid="*" />
         from
@@ -69,7 +69,7 @@
           SITE_ID=#{siteId}
     </select>
 
-    <select id="getSiteByTag"  resultType="com.practice.site.SiteDB" resultMap="userDBMap">
+    <select id="getSiteByTag"  resultType="com.practice.site.SiteDB" resultMap="siteDBMap">
         select
           <include refid="*" />
         from
@@ -78,7 +78,7 @@
           SITE_TAG=#{siteTag}
     </select>
 
-    <select id="getSitesByUserId"  resultType="com.practice.site.SiteDB" resultMap="userDBMap">
+    <select id="getSitesByUserId"  resultType="com.practice.site.SiteDB" resultMap="siteDBMap">
         select
           <include refid="*" />
         from
