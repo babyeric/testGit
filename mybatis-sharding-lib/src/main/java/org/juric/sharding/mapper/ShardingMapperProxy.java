@@ -112,6 +112,7 @@ public class ShardingMapperProxy<T> implements InvocationHandler, Serializable {
                 int shardId = input;
                 DataSource dataSource = ShardingMapperUtils.getDataSource(logicalDbName, shardId);
                 ShardingMapperContext.getMapperContext().setDataSource(dataSource);
+                ShardingMapperContext.getMapperContext().setSqlSessionHolderKey(logicalDbName, shardId);
 
                 return mapperMethod.execute(sqlSession, args);
             }

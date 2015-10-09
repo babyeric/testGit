@@ -21,6 +21,7 @@ import org.juric.sharding.datasource.DummyDataSource;
 import org.juric.sharding.datasource.ShardingDataSourceManager;
 import org.juric.sharding.mapper.ShardingMapperFactory;
 import org.juric.sharding.mapper.ShardingMapperUtils;
+import org.juric.sharding.session.ShardingSqlSessionTemplate;
 import org.juric.sharding.transactional.mybatis.ShardingSpringManagedTransactionFactory;
 import org.juric.sharding.transactional.spring.ShardingTransactionManager;
 import org.mybatis.spring.SqlSessionFactoryBean;
@@ -129,7 +130,7 @@ public class DBConfiguration {
 
     @Bean (name="shardingMapperFactory")
     public ShardingMapperFactory shardingMapperFactory() throws Exception {
-        SqlSessionTemplate sessionTemplate = new SqlSessionTemplate(sqlSessionFactory());
+        SqlSessionTemplate sessionTemplate = new ShardingSqlSessionTemplate(sqlSessionFactory());
         ShardingMapperFactory mapperFactory = new ShardingMapperFactory();
         mapperFactory.setSqlSession(sessionTemplate);
         return mapperFactory;
@@ -137,7 +138,7 @@ public class DBConfiguration {
 
     @Bean (name="defMapperFactory")
     public DefMapperFactory defMapperFactory() throws Exception {
-        SqlSessionTemplate sessionTemplate = new SqlSessionTemplate(sqlSessionFactory());
+        SqlSessionTemplate sessionTemplate = new ShardingSqlSessionTemplate(sqlSessionFactory());
         DefMapperFactory mapperFactory = new DefMapperFactory();
         mapperFactory.setSqlSession(sessionTemplate);
         mapperFactory.setDefShardIdGenerator(defShardIdGenerator());

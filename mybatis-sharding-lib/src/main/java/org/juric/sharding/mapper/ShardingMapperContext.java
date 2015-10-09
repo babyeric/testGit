@@ -13,6 +13,7 @@ import java.util.Stack;
 public class ShardingMapperContext {
     private static ThreadLocal<Stack<ShardingMapperContext>> contextStore = new ThreadLocal<Stack<ShardingMapperContext>>();
     private DataSource dataSource;
+    private String sqlSessionHolderKey;
 
     public static ShardingMapperContext newMapperContext() {
         Stack<ShardingMapperContext> contexts = contextStore.get();
@@ -40,5 +41,13 @@ public class ShardingMapperContext {
 
     public DataSource getDataSource() {
         return dataSource;
+    }
+
+    public String getSqlSessionHolderKey() {
+        return sqlSessionHolderKey;
+    }
+
+    public void setSqlSessionHolderKey(String logicalDBName, int shardId) {
+        this.sqlSessionHolderKey = logicalDBName+shardId;
     }
 }
