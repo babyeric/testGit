@@ -91,4 +91,11 @@ public class ArticleDB {
     public Long getSiteId() {
         return article.getSiteId();
     }
+
+    @Override
+    public String toString() {
+        return "ArticleDB{" +
+                "article=" + article +
+                '}';
+    }
 }

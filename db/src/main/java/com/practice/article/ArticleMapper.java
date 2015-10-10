@@ -14,10 +14,10 @@ import java.util.List;
 @LogicalDbName("test")
 public interface ArticleMapper {
     @ShardMethod(IdStrategy.class)
-    ArticleDB selectOne(@ShardParam("articleId") long articleId);
+    ArticleDB getById(@ShardParam("articleId") long articleId);
 
     @ShardMethod(IdStrategy.class)
-    List<ArticleDB> selectBySite(@ShardParam("siteId") long siteId, Date lastDate, Long lastId, int pageSize);
+    List<ArticleDB> getBySite(@ShardParam("siteId") long siteId, Date lastDate, Long lastId, int pageSize);
 
     @ShardMethod(IdStrategy.class)
     int insert(@ShardParam("articleDB") ArticleDB articleDB);

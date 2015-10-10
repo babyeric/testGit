@@ -14,11 +14,12 @@
     </resultMap>
 
     <sql id="*">
-    ARTICLE_ID, VERSION, TITLE, CONTENT, CREATE_DATE, MODIFIED_BY, MODIFIED_DATE, MODIFIED_BY
+    ARTICLE_ID, SITE_ID, VERSION, TITLE, CONTENT, CREATE_DATE, MODIFIED_DATE, MODIFIED_BY
     </sql>
 
     <sql id="values">
     #{articleDB.articleId},
+    #{articleDB.siteId},
     #{articleDB.version},
     #{articleDB.title},
     #{articleDB.content},
@@ -41,7 +42,7 @@
     </insert>
 
 
-    <select id="selectOne"  resultType="com.practice.article.ArticleDB" resultMap="articleDBMap">
+    <select id="getById"  resultType="com.practice.article.ArticleDB" resultMap="articleDBMap">
         select
           <include refid="*" />
         from
@@ -52,7 +53,7 @@
         limit 1
     </select>
 
-    <select id="selectBySite"  resultType="com.practice.article.ArticleDB" resultMap="articleDBMap">
+    <select id="getBySite"  resultType="com.practice.article.ArticleDB" resultMap="articleDBMap">
         select
           <include refid="*" />
         from

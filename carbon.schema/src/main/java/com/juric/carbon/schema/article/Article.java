@@ -57,4 +57,15 @@ public class Article extends BaseSchema {
     public void setSiteId(Long siteId) {
         this.siteId = siteId;
     }
+
+    @Override
+    public String toString() {
+        return "Article{" +
+                "articleId=" + articleId +
+                ", siteId=" + siteId +
+                ", version=" + version +
+                ", title='" + title + '\'' +
+                ", content='" + content + '\'' +
+                '}';
+    }
 }
