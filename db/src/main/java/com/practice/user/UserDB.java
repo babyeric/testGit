@@ -40,7 +40,6 @@ public class UserDB implements Serializable {
         this.user.setUserId(userId);
     }
 
-    @ShardAwareId
     public String getEmail() {
         return user.getEmail();
     }
@@ -111,5 +110,12 @@ public class UserDB implements Serializable {
 
     public void setModifiedBy(String modifiedBy) {
         user.setModifiedBy(modifiedBy);
+    }
+
+    @Override
+    public String toString() {
+        return "UserDB{" +
+                "user=" + user +
+                '}';
     }
 }

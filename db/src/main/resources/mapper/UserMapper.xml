@@ -60,10 +60,13 @@
             <if test="userDB.birthday != null">
                 BIRTHDAY = #{userDB.birthday},
             </if>
+            <if test="userDB.country != null">
+                COUNTRY = #{userDB.country},
+            </if>
             MODIFIED_DATE = #{userDB.modifiedDate},
             MODIFIED_BY = #{userDB.modifiedBy}
         where
-            USER_ID=#{userId}
+            USER_ID=#{userDB.userId}
     </update>
 
 

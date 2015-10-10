@@ -71,4 +71,17 @@ public class User extends BaseSchema {
     public void setUserId(Long userId) {
         this.userId = userId;
     }
+
+    @Override
+    public String toString() {
+        return "User{" +
+                "email='" + email + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", mobile='" + mobile + '\'' +
+                ", birthday=" + birthday +
+                ", country='" + country + '\'' +
+                ", userId=" + userId +
+                '}';
+    }
 }

@@ -14,6 +14,10 @@ import java.lang.reflect.Method;
 public class StrategyUtils {
 
     public static Object resolveComplexType(Object arg, ShardingStrategy.Functor<Object, Boolean> acceptor) {
+        if (acceptor.invoke(arg)) {
+            return arg;
+        }
+
         if (!arg.getClass().isPrimitive()) {
             for(Method m : arg.getClass().getMethods()) {
                 if (m.getReturnType().equals(Void.TYPE)) {

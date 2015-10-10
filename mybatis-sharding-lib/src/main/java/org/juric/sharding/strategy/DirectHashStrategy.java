@@ -31,7 +31,7 @@ public class DirectHashStrategy extends AbstractShardingStrategy {
         if (arg != null) {
             int logicalShardId;
             if (arg instanceof String) {
-                logicalShardId = arg.hashCode() % IdStrategy.LOGICAL_SHARD_COUNT;
+                logicalShardId = Math.abs(arg.hashCode() % IdStrategy.LOGICAL_SHARD_COUNT);
             } else {
                 throw new IllegalArgumentException("type not acceptable");
             }
