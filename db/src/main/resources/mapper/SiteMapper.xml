@@ -41,9 +41,6 @@
     <update id="update" parameterType="com.practice.site.SiteDB">
         update site
         set
-            <if test="siteDB.userId != null">
-                USER_ID = #{siteDB.userId},
-            </if>
             <if test="siteDB.name != null">
                 NAME = #{siteDB.name},
             </if>
@@ -53,10 +50,10 @@
             <if test="siteDB.siteTag != null">
                 SITE_TAG = #{siteDB.siteTag},
             </if>
-            MODIFIED_DATE = #{userDB.modifiedDate},
-            MODIFIED_BY = #{userDB.modifiedBy}
+            MODIFIED_DATE = #{siteDB.modifiedDate},
+            MODIFIED_BY = #{siteDB.modifiedBy}
         where
-            SITE_ID=#{siteId}
+            SITE_ID=#{siteDB.siteId}
     </update>
 
 

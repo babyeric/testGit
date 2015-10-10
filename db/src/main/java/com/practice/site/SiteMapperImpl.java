@@ -5,6 +5,8 @@ import com.practice.reverseLookup.StringToLongLookupMapper;
 import com.practice.user.UserDB;
 import com.practice.utils.MapperUtils;
 import org.juric.sharding.annotation.ShardParam;
+import org.springframework.beans.factory.InitializingBean;
+import org.springframework.util.Assert;
 
 import java.util.List;
 
@@ -15,7 +17,7 @@ import java.util.List;
  * Time: 4:55 PM
  * To change this template use File | Settings | File Templates.
  */
-public class SiteMapperImpl implements SiteMapper{
+public class SiteMapperImpl implements SiteMapper, InitializingBean{
     private StringToLongLookupMapper stringToLongLookupMapper;
     private SiteMapper impl;
 
@@ -69,5 +71,11 @@ public class SiteMapperImpl implements SiteMapper{
     @Override
     public List<SiteDB> getSitesByUserId(@ShardParam("userId") long userId) {
         return impl.getSitesByUserId(userId);
+    }
+
+    @Override
+    public void afterPropertiesSet() throws Exception {
+        Assert.notNull(impl);
+        Assert.notNull(stringToLongLookupMapper);
     }
 }

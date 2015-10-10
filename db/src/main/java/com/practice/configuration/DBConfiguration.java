@@ -7,6 +7,7 @@ import com.practice.reverseLookup.ReverseLookupServiceResolver;
 import com.practice.reverseLookup.StringReverseLookupService;
 import com.practice.reverseLookup.StringToLongLookupMapper;
 import com.practice.site.SiteMapper;
+import com.practice.site.SiteMapperImpl;
 import com.practice.user.UserMapper;
 import com.practice.user.UserMapperImpl;
 import com.practice.user.UserPasswordMapper;
@@ -115,7 +116,10 @@ public class DBConfiguration {
 
     @Bean (name="siteMapper")
     public SiteMapper siteMapper() throws Exception {
-        return defMapperFactory().resolve(SiteMapper.class);
+        SiteMapperImpl siteMapper = new SiteMapperImpl();
+        siteMapper.setSiteMapper(defMapperFactory().resolve(SiteMapper.class));
+        siteMapper.setStringToLongLookupMapper(stringToLongLookupMapper());
+        return siteMapper;
     }
 
     @Bean (name="userPasswordMapper")

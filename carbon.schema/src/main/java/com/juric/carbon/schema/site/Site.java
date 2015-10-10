@@ -51,4 +51,15 @@ public class Site extends BaseSchema {
     public void setSiteTag(String siteTag) {
         this.siteTag = siteTag;
     }
+
+    @Override
+    public String toString() {
+        return "Site{" +
+                "siteId=" + siteId +
+                ", userId=" + userId +
+                ", name='" + name + '\'' +
+                ", siteTag='" + siteTag + '\'' +
+                ", description='" + description + '\'' +
+                '}';
+    }
 }

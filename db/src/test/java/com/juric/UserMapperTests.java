@@ -28,13 +28,7 @@ import java.util.UUID;
 /**
  * Created by Eric on 10/8/2015.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@SpringApplicationConfiguration(classes = {TestApplication.class, DBConfiguration.class}, initializers = ConfigFileApplicationContextInitializer.class)
-@TestExecutionListeners({DependencyInjectionTestExecutionListener.class,
-        DirtiesContextTestExecutionListener.class,
-        TransactionalTestExecutionListener.class})
-@Transactional
-public class UserMapperTests {
+public class UserMapperTests extends AbstractMapperTest {
 
         @Autowired
         UserMapper userMapper;

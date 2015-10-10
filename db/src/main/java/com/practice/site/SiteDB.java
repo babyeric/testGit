@@ -5,6 +5,8 @@ import com.practice.def.ShardGeneratedIdGroup;
 import com.practice.def.annotation.ShardGeneratedId;
 import org.juric.sharding.annotation.ShardAwareId;
 
+import java.util.Date;
+
 /**
  * Created by Eric on 10/5/2015.
  */
@@ -62,5 +64,37 @@ public class SiteDB {
 
     public void setSiteTag(String siteTag) {
         site.setSiteTag(siteTag);
+    }
+
+    public Date getCreateDate() {
+        return site.getCreateDate();
+    }
+
+    public void setCreateDate(Date createDate) {
+        site.setCreateDate(createDate);
+    }
+
+    public Date getModifiedDate() {
+        return site.getModifiedDate();
+    }
+
+    public void setModifiedDate(Date modifiedDate) {
+        site.setModifiedDate(modifiedDate);
+    }
+
+    public String getModifiedBy() {
+        return site.getModifiedBy();
+    }
+
+    public void setModifiedBy(String modifiedBy) {
+        site.setModifiedBy(modifiedBy);
+    }
+
+
+    @Override
+    public String toString() {
+        return "SiteDB{" +
+                "site=" + site +
+                '}';
     }
 }
