@@ -13,10 +13,11 @@
     <delete id="delete">
         delete from ${tableName}
         where LOOKUP_KEY=#{key}
+        and LOOKUP_VALUE=#{value}
     </delete>
 
 
-    <select id="lookup">
+    <select id="lookup" resultType="java.lang.Long">
         select
           LOOKUP_VALUE
         from

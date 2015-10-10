@@ -23,6 +23,7 @@ import org.springframework.util.CollectionUtils;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.UUID;
 
 /**
  * Created by Eric on 10/8/2015.
@@ -71,12 +72,44 @@ public class UserMapperTests {
 
                 UserDB userDB2 = userMapper.getById(userDB.getUserId());
                 Assert.assertEquals(userDB.toString(), userDB2.toString());
+        }
 
+        @Test
+        public void testGetByEmail() {
+                UserDB oldOne = createUserDB();
+                int ret = userMapper.insert(oldOne);
+                Assert.assertEquals(1, ret);
+                Assert.assertNotNull(oldOne.getUserId());
+                UserDB userDB = userMapper.getByEmail(oldOne.getEmail());
+                Assert.assertEquals(oldOne.toString(), userDB.toString());
+
+                userDB = new UserDB();
+                userDB.setUserId(oldOne.getUserId());
+                userDB.setEmail("newEmail@test.com");
+                ret = userMapper.update(userDB);
+                Assert.assertEquals(1, ret);
+                UserDB newOne = userMapper.getByEmail(userDB.getEmail());
+                Assert.assertEquals(oldOne.getUserId(), newOne.getUserId());
+
+                oldOne = userMapper.getByEmail(oldOne.getEmail());
+                Assert.assertNull(oldOne);
+        }
+
+        @Test
+        public void testGetByIdNotExist() {
+                UserDB userDB = userMapper.getById(9999999999L);
+                Assert.assertNull(userDB);
+        }
+
+        @Test
+        public void testGetByEmailNotExist() {
+                UserDB userDB = userMapper.getByEmail("NOT_EXIST@juric.com");
+                Assert.assertNull(userDB);
         }
 
         private UserDB createUserDB() {
                 UserDB userDB = new UserDB();
-                userDB.setEmail("test@juric.com");
+                userDB.setEmail(UUID.randomUUID() +"@juric.com");
                 userDB.setBirthday(DateUtils.parseDate("2000-10-1"));
                 userDB.setCountry("US");
                 userDB.setFirstName("juric");

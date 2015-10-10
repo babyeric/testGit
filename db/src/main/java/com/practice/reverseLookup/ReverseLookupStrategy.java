@@ -4,6 +4,7 @@ import org.juric.sharding.strategy.AbstractShardingStrategy;
 import org.juric.sharding.strategy.StrategyResult;
 
 import java.lang.reflect.Method;
+import java.util.Collection;
 
 /**
  * Created with IntelliJ IDEA.
@@ -23,7 +24,13 @@ public class ReverseLookupStrategy extends AbstractShardingStrategy {
             throw new IllegalArgumentException("shardParam type not supported");
         }
 
+        Class<?> returnType = method.getReturnType();
+        boolean returnMany = Collection.class.isAssignableFrom(returnType) || returnType.isArray();
         int[] logicalShardIds = reverseLookupService.lookup(arg, tableName);
-        return new StrategyResult(logicalShardIds, null);
+        if (logicalShardIds.length > 1 && !returnMany) {
+            return new StrategyResult(new int[]{logicalShardIds[0]}, null);
+        } else {
+            return new StrategyResult(logicalShardIds, null);
+        }
     }
 }

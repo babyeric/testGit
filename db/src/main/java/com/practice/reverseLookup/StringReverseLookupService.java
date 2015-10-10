@@ -15,7 +15,7 @@ public class StringReverseLookupService implements ReverseLookupService{
     private StringToLongLookupMapper stringToLongLookupMapper;
 
     public void setStringToLongLookupMapper(StringToLongLookupMapper stringToLongLookupMapper) {
-        stringToLongLookupMapper = stringToLongLookupMapper;
+        this.stringToLongLookupMapper = stringToLongLookupMapper;
     }
 
     @Override
