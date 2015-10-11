@@ -4,7 +4,6 @@
 
     <resultMap type="com.practice.article.ArticleDB" id="articleDBMap">
         <id property="articleId" column="ARTICLE_ID" jdbcType="BIGINT" />
-        <id property="version" column="VERSION" jdbcType="INTEGER" />
         <result property="siteId" column="SITE_ID" jdbcType="BIGINT" />
         <result property="title" column="TITLE" jdbcType="VARCHAR" />
         <result property="content" column="CONTENT" jdbcType="VARCHAR" />
@@ -14,13 +13,12 @@
     </resultMap>
 
     <sql id="*">
-    ARTICLE_ID, SITE_ID, VERSION, TITLE, CONTENT, CREATE_DATE, MODIFIED_DATE, MODIFIED_BY
+    ARTICLE_ID, SITE_ID, TITLE, CONTENT, CREATE_DATE, MODIFIED_DATE, MODIFIED_BY
     </sql>
 
     <sql id="values">
     #{articleDB.articleId},
     #{articleDB.siteId},
-    #{articleDB.version},
     #{articleDB.title},
     #{articleDB.content},
     #{articleDB.createDate},
@@ -36,7 +34,6 @@
             #{_logicalShardId_},
             <include refid="values" />
         ) on duplicate key update
-          VERSION = #{articleDB.version},
           TITLE = #{articleDB.title},
           CONTENT =  #{articleDB.content},
           MODIFIED_DATE = #{articleDB.modifiedDate},

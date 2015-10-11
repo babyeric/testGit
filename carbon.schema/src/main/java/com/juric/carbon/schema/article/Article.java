@@ -14,7 +14,6 @@ import java.util.Date;
 public class Article extends BaseSchema {
     private Long articleId;
     private Long siteId;
-    private Integer version;
     private String title;
     private String content;
 
@@ -24,14 +23,6 @@ public class Article extends BaseSchema {
 
     public void setArticleId(Long articleId) {
         this.articleId = articleId;
-    }
-
-    public Integer getVersion() {
-        return version;
-    }
-
-    public void setVersion(Integer version) {
-        this.version = version;
     }
 
     public String getTitle() {
@@ -63,7 +54,6 @@ public class Article extends BaseSchema {
         return "Article{" +
                 "articleId=" + articleId +
                 ", siteId=" + siteId +
-                ", version=" + version +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
                 ", createDate='" + getCreateDate() + '\'' +

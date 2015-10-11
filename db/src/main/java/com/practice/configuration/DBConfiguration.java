@@ -1,6 +1,5 @@
 package com.practice.configuration;
 
-import com.practice.article.ArticleHistoryMapper;
 import com.practice.article.ArticleMapper;
 import com.practice.db.DataService;
 import com.practice.def.*;
@@ -108,11 +107,6 @@ public class DBConfiguration {
     @Bean (name="articleMapper")
     public ArticleMapper articleMapper() throws Exception {
         return defMapperFactory().resolve(ArticleMapper.class);
-    }
-
-    @Bean (name="articleHistoryMapper")
-    public ArticleHistoryMapper articleHistoryMapper() throws Exception {
-        return defMapperFactory().resolve(ArticleHistoryMapper.class);
     }
 
     @Bean (name="idGeneratorMapper")

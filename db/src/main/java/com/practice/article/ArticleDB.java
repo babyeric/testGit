@@ -35,14 +35,6 @@ public class ArticleDB {
         article.setArticleId(articleId);
     }
 
-    public Integer getVersion() {
-        return article.getVersion();
-    }
-
-    public void setVersion(Integer version) {
-        article.setVersion(version);
-    }
-
     public String getTitle() {
         return article.getTitle();
     }

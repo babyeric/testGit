@@ -18,23 +18,23 @@ public class ArticleMapperTests extends AbstractMapperTest {
     private ArticleMapper articleMapper;
 
     @Test
-    public void testInsertArticle() {
-        ArticleDB articleDB = articleDB(12345678L, null, 1);
+    public void testSaveArticle() {
+        ArticleDB articleDB = articleDB(12345678L, null);
         int ret = articleMapper.save(articleDB);
         Assert.assertEquals(1, ret);
-        Assert.assertEquals(1, articleDB.getVersion().intValue());
         Assert.assertNotNull(articleDB.getArticleId());
 
         ArticleDB result = articleMapper.getById(articleDB.getArticleId());
         Assert.assertEquals(articleDB.toString(), result.toString());
 
-        articleDB = articleDB(12345678L, null, 2);
+        articleDB.setContent("new content");
+        articleDB.setTitle("new content");
+        articleDB.setModifiedDate(new Date());
+        articleDB.setModifiedBy("UNIT test");
         articleDB.setArticleId(result.getArticleId());
         ret = articleMapper.save(articleDB);
 
         Assert.assertEquals(2, ret);//2 indicates row updated
-        Assert.assertEquals(2, articleDB.getVersion().intValue());
-
         result = articleMapper.getById(articleDB.getArticleId());
         Assert.assertEquals(articleDB.toString(), result.toString());
     }
@@ -45,16 +45,14 @@ public class ArticleMapperTests extends AbstractMapperTest {
         Date d1 = DateUtils.parseDateTime("2010-01-01 06:08:07");
         Date d2 = DateUtils.parseDateTime("2010-01-01 09:08:07");
 
-        ArticleDB articleDB1 = articleDB(siteId, d1, 1);
+        ArticleDB articleDB1 = articleDB(siteId, d1);
         int ret = articleMapper.save(articleDB1);
         Assert.assertEquals(1, ret);
-        Assert.assertEquals(1, articleDB1.getVersion().intValue());
         Assert.assertNotNull(articleDB1.getArticleId());
 
-        ArticleDB articleDB2 = articleDB(siteId, d2, 1);
+        ArticleDB articleDB2 = articleDB(siteId, d2);
         ret = articleMapper.save(articleDB2);
         Assert.assertEquals(1, ret);
-        Assert.assertEquals(1, articleDB2.getVersion().intValue());
         Assert.assertNotNull(articleDB2.getArticleId());
 
         List<ArticleDB> articles = articleMapper.getBySite(siteId, null, null, 1);
@@ -70,16 +68,14 @@ public class ArticleMapperTests extends AbstractMapperTest {
     public void testGetBySiteSameDate() {
         long siteId = 12345678L;
         Date date = DateUtils.parseDateTime("2010-01-01 09:08:07");
-        ArticleDB articleDB1 = articleDB(12345678L, date, 1);
+        ArticleDB articleDB1 = articleDB(12345678L, date);
         int ret = articleMapper.save(articleDB1);
         Assert.assertEquals(1, ret);
-        Assert.assertEquals(1, articleDB1.getVersion().intValue());
         Assert.assertNotNull(articleDB1.getArticleId());
 
-        ArticleDB articleDB2 = articleDB(12345678L, date, 1);
+        ArticleDB articleDB2 = articleDB(12345678L, date);
         ret = articleMapper.save(articleDB2);
         Assert.assertEquals(1, ret);
-        Assert.assertEquals(1, articleDB2.getVersion().intValue());
         Assert.assertNotNull(articleDB2.getArticleId());
 
         if (articleDB1.getArticleId() > articleDB2.getArticleId()) {
@@ -97,10 +93,9 @@ public class ArticleMapperTests extends AbstractMapperTest {
         Assert.assertEquals(articleDB2.toString(), articles.get(0).toString());
     }
 
-    private ArticleDB articleDB(long siteId, Date createDate, int version) {
+    private ArticleDB articleDB(long siteId, Date createDate) {
         ArticleDB articleDB = new ArticleDB();
         articleDB.setTitle("it's a title");
-        articleDB.setVersion(version);
         articleDB.setContent("it's my content");
         articleDB.setSiteId(siteId);
         articleDB.setModifiedBy("UT");
