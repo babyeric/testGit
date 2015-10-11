@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.practice.article.ArticleMapper">
+<mapper namespace="com.practice.article.ArticleHistoryMapper">
 
     <resultMap type="com.practice.article.ArticleDB" id="articleDBMap">
         <id property="articleId" column="ARTICLE_ID" jdbcType="BIGINT" />
@@ -28,45 +28,35 @@
     #{articleDB.modifiedBy}
     </sql>
 
-    <insert id="save" parameterType="com.practice.article.ArticleDB">
+    <insert id="append" parameterType="com.practice.article.ArticleDB">
+        <selectKey keyProperty="articleDB.version" resultType="java.lang.Integer" order="BEFORE">
+            select COALESCE(max(VERSION), 0)+1 from article WHERE ARTICLE_ID=#{articleDB.articleId}
+        </selectKey>
         insert into article (
             LOGICAL_SHARD_ID,
             <include refid="*" />
         ) values (
             #{_logicalShardId_},
             <include refid="values" />
-        ) on duplicate key update
-          VERSION = #{articleDB.version},
-          TITLE = #{articleDB.title},
-          CONTENT =  #{articleDB.content},
-          MODIFIED_DATE = #{articleDB.modifiedDate},
-          MODIFIED_BY =#{articleDB.modifiedBy}
+        )
     </insert>
 
 
-    <select id="getById"  resultType="com.practice.article.ArticleDB" resultMap="articleDBMap">
+    <select id="getHistory"  resultType="com.practice.article.ArticleDB" resultMap="articleDBMap">
         select
           <include refid="*" />
         from
           article
         where
           ARTICLE_ID=#{articleId}
+        <choose>
+            <when test="version != null">
+                and VERSION=#{version}
+            </when>
+            <otherwise>
+                order by VERSION desc
+                limit 1
+            </otherwise>
+        </choose>
     </select>
-
-    <select id="getBySite"  resultType="com.practice.article.ArticleDB" resultMap="articleDBMap">
-        select
-          <include refid="*" />
-        from
-          article
-        where
-          SITE_ID=#{siteId}
-        <if test="lastDate != null and lastId != null">
-            <![CDATA[
-            and (CREATE_DATE > #{lastDate} or (CREATE_DATE = #{lastDate} and ARTICLE_ID > #{lastId}))
-            ]]>
-        </if>
-        order by CREATE_DATE,ARTICLE_ID
-        limit #{pageSize}
-    </select>
-
 </mapper>

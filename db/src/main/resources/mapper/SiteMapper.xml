@@ -8,8 +8,8 @@
         <result property="name" column="NAME" jdbcType="VARCHAR" />
         <result property="description" column="DESCRIPTION" jdbcType="VARCHAR" />
         <result property="siteTag" column="SITE_TAG" jdbcType="VARCHAR" />
-        <result property="createDate" column="CREATE_DATE" jdbcType="DATE" />
-        <result property="modifiedDate" column="MODIFIED_DATE" jdbcType="DATE" />
+        <result property="createDate" column="CREATE_DATE" jdbcType="TIMESTAMP" />
+        <result property="modifiedDate" column="MODIFIED_DATE" jdbcType="TIMESTAMP" />
         <result property="modifiedBy" column="MODIFIED_BY" jdbcType="VARCHAR" />
     </resultMap>
 

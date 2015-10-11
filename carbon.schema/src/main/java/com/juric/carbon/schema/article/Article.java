@@ -66,6 +66,7 @@ public class Article extends BaseSchema {
                 ", version=" + version +
                 ", title='" + title + '\'' +
                 ", content='" + content + '\'' +
+                ", createDate='" + getCreateDate() + '\'' +
                 '}';
     }
 }

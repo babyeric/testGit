@@ -1,5 +1,6 @@
 package com.practice.article;
 
+import org.apache.ibatis.annotations.Param;
 import org.juric.sharding.annotation.LogicalDbName;
 import org.juric.sharding.annotation.ShardMethod;
 import org.juric.sharding.annotation.ShardParam;
@@ -17,8 +18,11 @@ public interface ArticleMapper {
     ArticleDB getById(@ShardParam("articleId") long articleId);
 
     @ShardMethod(IdStrategy.class)
-    List<ArticleDB> getBySite(@ShardParam("siteId") long siteId, Date lastDate, Long lastId, int pageSize);
+    List<ArticleDB> getBySite(@ShardParam("siteId") long siteId,
+                              @Param("lastDate") Date lastDate,
+                              @Param("lastId") Long lastId,
+                              @Param("pageSize") int pageSize);
 
     @ShardMethod(IdStrategy.class)
-    int insert(@ShardParam("articleDB") ArticleDB articleDB);
+    int save(@ShardParam("articleDB") ArticleDB articleDB);
 }

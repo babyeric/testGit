@@ -10,8 +10,8 @@
         <result property="mobile" column="MOBILE" jdbcType="VARCHAR" />
         <result property="country" column="COUNTRY" jdbcType="VARCHAR" />
         <result property="birthday" column="BIRTHDAY" jdbcType="DATE" />
-        <result property="createDate" column="CREATE_DATE" jdbcType="DATE" />
-        <result property="modifiedDate" column="MODIFIED_DATE" jdbcType="DATE" />
+        <result property="createDate" column="CREATE_DATE" jdbcType="TIMESTAMP" />
+        <result property="modifiedDate" column="MODIFIED_DATE" jdbcType="TIMESTAMP" />
         <result property="modifiedBy" column="MODIFIED_BY" jdbcType="VARCHAR" />
     </resultMap>
 
