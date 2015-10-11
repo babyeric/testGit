@@ -26,19 +26,19 @@ public class ArticleServiceImpl extends ArticleServiceSupport implements Article
 
     @Override
     public Article save(Article article) {
-        articleMapper.insert( new ArticleDB(article));
+        articleMapper.save( new ArticleDB(article));
         return article;
     }
 
     @Override
     public Article getById(long articleId) {
-        ArticleDB articleDB = articleMapper.selectOne(articleId);
+        ArticleDB articleDB = articleMapper.getById(articleId);
         return articleDB.getArticle();
     }
 
     @Override
     public List<Article> getArticlesBySite(long siteId, Date lastDate, Long lastId, int pageSize) {
-        List<ArticleDB> articles = articleMapper.selectBySite(siteId, lastDate, lastId, pageSize);
+        List<ArticleDB> articles = articleMapper.getBySite(siteId, lastDate, lastId, pageSize);
         return ListUtils.convert(articles, new Functor<ArticleDB, Article>() {
             @Override
             public Article invoke(ArticleDB articleDB) {

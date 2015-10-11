@@ -1,8 +1,8 @@
 package org.juric.sharding.transactional.mybatis.session;
 
+import org.apache.commons.logging.Log;
 import org.apache.ibatis.exceptions.PersistenceException;
-import org.apache.ibatis.logging.Log;
-import org.apache.ibatis.logging.LogFactory;
+import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.mapping.Environment;
 import org.apache.ibatis.session.ExecutorType;
 import org.apache.ibatis.session.SqlSession;

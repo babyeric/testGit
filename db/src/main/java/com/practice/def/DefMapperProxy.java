@@ -1,8 +1,9 @@
 package com.practice.def;
 
 import com.practice.def.annotation.ShardGeneratedId;
-import org.apache.ibatis.logging.Log;
-import org.apache.ibatis.logging.LogFactory;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.ibatis.mapping.SqlCommandType;
 import org.apache.ibatis.session.SqlSession;
 import org.juric.sharding.annotation.ShardParam;
