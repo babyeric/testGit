@@ -12,10 +12,7 @@ import org.juric.sharding.strategy.IdStrategy;
 @LogicalDbName("test")
 public interface UserPasswordMapper {
     @ShardMethod(IdStrategy.class)
-    void insert(@ShardParam("userPasswordDB") UserPasswordDB userPasswordDB);
-
-    @ShardMethod(IdStrategy.class)
-    void update(@ShardParam("userPasswordDB") UserPasswordDB userPasswordDB);
+    int save(@ShardParam("userPasswordDB") UserPasswordDB userPasswordDB);
 
     @ShardMethod(IdStrategy.class)
     UserPasswordDB getByUserId(@ShardParam("userId") long userId);

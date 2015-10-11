@@ -2,6 +2,7 @@ package com.juric.carbon.service.user;
 
 import com.juric.carbon.api.user.UserPasswordService;
 import com.juric.carbon.api.user.UserService;
+import com.juric.carbon.exception.ValidationException;
 import com.juric.carbon.schema.user.User;
 import com.juric.carbon.schema.user.UserPassword;
 import com.practice.user.UserDB;
@@ -15,22 +16,20 @@ import com.practice.user.UserPasswordMapper;
 public class UserServiceImpl implements UserService {
 
     private UserMapper userMapper;
-    private UserPasswordMapper userPasswordMapper;
-    private UserPasswordHasher userPasswordHasher;
+    private UserPasswordService userPasswordService;
 
     public void setUserMapper(UserMapper userMapper) {
         this.userMapper = userMapper;
     }
 
-    public void setUserPasswordMapper(UserPasswordMapper userPasswordMapper) {
-        this.userPasswordMapper = userPasswordMapper;
+    public void setUserPasswordService(UserPasswordService userPasswordService) {
+        this.userPasswordService = userPasswordService;
     }
 
     @Override
-    public User createUser(User user, UserPassword userPassword) {
+    public User createUser(User user,UserPassword userPassword) {
         userMapper.insert(new UserDB(user));
-        UserPasswordDB db = userPasswordHasher.hash(userPassword);
-        userPasswordMapper.insert(db);
+        userPasswordService.updatePassword(null, userPassword);
         return user;
     }
 
@@ -41,11 +40,19 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User getUserById(long userId) {
-        return userMapper.getById(userId).getUser();
+        UserDB userDB = userMapper.getById(userId);
+        if (userDB == null) {
+            return null;
+        }
+        return userDB.getUser();
     }
 
     @Override
     public User getUserByEmail(String email) {
-        return userMapper.getByEmail(email).getUser();
+        UserDB userDB = userMapper.getByEmail(email);
+        if (userDB == null) {
+            return null;
+        }
+        return userDB.getUser();
     }
 }

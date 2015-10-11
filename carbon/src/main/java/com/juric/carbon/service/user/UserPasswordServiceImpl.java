@@ -8,20 +8,16 @@ import com.practice.user.UserPasswordMapper;
 /**
  * Created by Eric on 10/5/2015.
  */
-public class UserPasswordServiceImpl implements UserPasswordService {
+public class UserPasswordServiceImpl extends UserPasswordServiceSupport implements UserPasswordService {
     private UserPasswordMapper userPasswordMapper;
 
     public void setUserPasswordMapper(UserPasswordMapper userPasswordMapper) {
         this.userPasswordMapper = userPasswordMapper;
     }
 
-    public UserPasswordDB hash(UserPassword userPassword) {
-        return new UserPasswordDB();
-    }
-
     @Override
     public void updatePassword(UserPassword currentPassword, UserPassword newPassword) {
-
+        UserPasswordDB passwordDB = userPasswordMapper.getByUserId(newPassword.getUserId());
     }
 
     @Override

@@ -11,7 +11,7 @@ public class UserPasswordDB {
     private Long userId;
     private String password;
     private String salt;
-    private String version;
+    private int version;
     private Date createDate;
     private Date modifiedDate;
     private String modifiedBy;
@@ -41,11 +41,11 @@ public class UserPasswordDB {
         this.password = password;
     }
 
-    public String getVersion() {
+    public int getVersion() {
         return version;
     }
 
-    public void setVersion(String version) {
+    public void setVersion(int version) {
         this.version = version;
     }
 
@@ -71,5 +71,18 @@ public class UserPasswordDB {
 
     public void setModifiedBy(String modifiedBy) {
         this.modifiedBy = modifiedBy;
+    }
+
+    @Override
+    public String toString() {
+        return "UserPasswordDB{" +
+                "userId=" + userId +
+                ", password='" + password + '\'' +
+                ", salt='" + salt + '\'' +
+                ", version=" + version +
+                ", createDate=" + createDate +
+                ", modifiedDate=" + modifiedDate +
+                ", modifiedBy='" + modifiedBy + '\'' +
+                '}';
     }
 }

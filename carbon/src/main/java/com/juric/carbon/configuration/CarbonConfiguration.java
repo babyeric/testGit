@@ -76,7 +76,7 @@ public class CarbonConfiguration {
     public UserService userService() {
         UserServiceImpl userService = new UserServiceImpl();
         userService.setUserMapper(userMapper);
-        userService.setUserPasswordMapper(userPasswordMapper);
+        userService.setUserPasswordService(userPasswordService());
         return userService;
     }
 

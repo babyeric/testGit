@@ -24,4 +24,12 @@ public class UserPassword extends BaseSchema {
     public void setUserId(Long userId) {
         this.userId = userId;
     }
+
+    @Override
+    public String toString() {
+        return "UserPassword{" +
+                "userId=" + userId +
+                ", password='" + password + '\'' +
+                '}';
+    }
 }
