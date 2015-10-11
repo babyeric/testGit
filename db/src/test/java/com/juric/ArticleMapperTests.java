@@ -32,9 +32,8 @@ public class ArticleMapperTests extends AbstractMapperTest {
         articleDB.setArticleId(result.getArticleId());
         ret = articleMapper.save(articleDB);
 
-        Assert.assertEquals(1, ret);
+        Assert.assertEquals(2, ret);//2 indicates row updated
         Assert.assertEquals(2, articleDB.getVersion().intValue());
-        Assert.assertNotNull(articleDB.getArticleId());
 
         result = articleMapper.getById(articleDB.getArticleId());
         Assert.assertEquals(articleDB.toString(), result.toString());

@@ -1,6 +1,6 @@
 package com.juric.carbon.rest.storage;
 
-import com.practice.rest.AbstractRestController;
+import com.juric.carbon.rest.common.AbstractRestController;
 
 /**
  * Created with IntelliJ IDEA.

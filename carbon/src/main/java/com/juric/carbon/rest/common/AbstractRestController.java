@@ -1,6 +1,6 @@
-package com.practice.rest;
+package com.juric.carbon.rest.common;
 
-import com.practice.exception.ValidationException;
+import com.juric.carbon.exception.ValidationException;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
