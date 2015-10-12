@@ -44,6 +44,10 @@
             <groupId>org.juric</groupId>
             <artifactId>common-lib</artifactId>
         </dependency>
+		<dependency>
+		    <groupId>commons-codec</groupId>
+		    <artifactId>commons-codec</artifactId>
+		</dependency>
 	</dependencies>
 	
 	<build>

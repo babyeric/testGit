@@ -5,6 +5,7 @@ import com.juric.carbon.api.user.UserService;
 import com.juric.carbon.exception.ValidationException;
 import com.juric.carbon.schema.user.User;
 import com.juric.carbon.schema.user.UserPassword;
+import com.juric.carbon.schema.user.UserPasswordUpdate;
 import com.practice.user.UserDB;
 import com.practice.user.UserMapper;
 import com.practice.user.UserPasswordDB;
@@ -29,7 +30,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public User createUser(User user,UserPassword userPassword) {
         userMapper.insert(new UserDB(user));
-        userPasswordService.updatePassword(null, userPassword);
+        UserPasswordUpdate userPasswordUpdate = new UserPasswordUpdate();
+        userPasswordUpdate.setPassword(userPassword);
+        userPasswordService.updatePassword(userPasswordUpdate);
         return user;
     }
 

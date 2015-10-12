@@ -53,6 +53,11 @@
 				<version>2.6</version>
 			</dependency>
 			<dependency>
+				<groupId>commons-codec</groupId>
+				<artifactId>commons-codec</artifactId>
+				<version>1.9</version>
+			</dependency>
+			<dependency>
 				<groupId>org.juric</groupId>
 				<artifactId>common-lib</artifactId>
 				<version>${org.juric.version}</version>
@@ -118,5 +123,12 @@
 				<version>2.5.0</version>
 			</dependency>
 		</dependencies>
-	</dependencyManagement>	
+	</dependencyManagement>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+	</dependencies>
 </project>
