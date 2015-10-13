@@ -93,7 +93,8 @@ public class UserPasswordServiceTests {
         UserPasswordUpdate userPasswordUpdate = new UserPasswordUpdate();
         userPasswordUpdate.setPassword(userPassword);
 
-        userPasswordService.updatePassword(userPasswordUpdate);
+        boolean result = userPasswordService.updatePassword(userPasswordUpdate);
+        Assert.assertEquals(true, result);
         UserPasswordDB userPasswordDB = captor.getValue();
         Assert.assertEquals(0, userPasswordDB.getVersion());
         Assert.assertEquals(12345L, userPasswordDB.getUserId().longValue());
@@ -111,16 +112,104 @@ public class UserPasswordServiceTests {
         userPassword.setPassword("123");
 
         ArgumentCaptor<UserPasswordDB> captor = ArgumentCaptor.forClass(UserPasswordDB.class);
-        when(userPasswordMapper.save(captor.capture())).thenReturn(1);
+        when(userPasswordMapper.getByUserId(12345L)).thenReturn(new UserPasswordDB());
+
+        UserPasswordUpdate userPasswordUpdate = new UserPasswordUpdate();
+        userPasswordUpdate.setPassword(userPassword);
+
+        boolean result = userPasswordService.updatePassword(userPasswordUpdate);
+        Assert.assertEquals(false, result);
     }
 
     @Test
     public void testUpdatePassword() {
+        Date date = new Date();
+        UserPassword userPassword = new UserPassword();
+        userPassword.setUserId(12345L);
+        userPassword.setPassword("123");
+        userPassword.setCreateDate(date);
+        userPassword.setModifiedDate(date);
+        userPassword.setModifiedBy("UT");
 
+        UserPassword currentPassword = new UserPassword();
+        currentPassword.setUserId(12345L);
+        currentPassword.setPassword("123");
+
+        UserPasswordUpdate userPasswordUpdate = new UserPasswordUpdate();
+        userPasswordUpdate.setPassword(userPassword);
+        userPasswordUpdate.setCurrentPassword(currentPassword);
+
+        UserPasswordDB userPasswordDB = new UserPasswordDB();
+        userPasswordDB.setSalt("the salt");
+        userPasswordDB.setPassword("0jqTpezsF+tXGdZD0PjppPoIpAVADeySAXE1Nmc+agdyNeiZ3CHLbzgzbCmhqu396I1+sBEVOYU0b4eLU41n8g==");
+        userPasswordDB.setVersion(0);
+        when(userPasswordMapper.getByUserId(12345L)).thenReturn(userPasswordDB);
+
+        ArgumentCaptor<UserPasswordDB> captor = ArgumentCaptor.forClass(UserPasswordDB.class);
+        when(userPasswordMapper.save(captor.capture())).thenReturn(1);
+
+        boolean result = userPasswordService.updatePassword(userPasswordUpdate);
+        Assert.assertEquals(true, result);
+        userPasswordDB = captor.getValue();
+        Assert.assertEquals(0, userPasswordDB.getVersion());
+        Assert.assertEquals(12345L, userPasswordDB.getUserId().longValue());
+        Assert.assertEquals(date, userPasswordDB.getCreateDate());
+        Assert.assertEquals(date, userPasswordDB.getModifiedDate());
+        Assert.assertEquals("UT", userPasswordDB.getModifiedBy());
+        Assert.assertTrue(!StringUtils.isEmpty(userPasswordDB.getSalt()));
+        Assert.assertTrue(!StringUtils.isEmpty(userPasswordDB.getPassword()));
     }
 
     @Test
     public void testUpdatePasswordFailed() {
+        Date date = new Date();
+        UserPassword userPassword = new UserPassword();
+        userPassword.setUserId(12345L);
+        userPassword.setPassword("123");
 
+        UserPassword currentPassword = new UserPassword();
+        currentPassword.setUserId(12345L);
+        currentPassword.setPassword("123");
+
+        UserPasswordUpdate userPasswordUpdate = new UserPasswordUpdate();
+        userPasswordUpdate.setPassword(userPassword);
+        userPasswordUpdate.setCurrentPassword(currentPassword);
+
+        UserPasswordDB userPasswordDB = new UserPasswordDB();
+        userPasswordDB.setSalt("the salt");
+        userPasswordDB.setPassword("mock password");
+        userPasswordDB.setVersion(0);
+        when(userPasswordMapper.getByUserId(12345L)).thenReturn(userPasswordDB);
+
+        boolean result = userPasswordService.updatePassword(userPasswordUpdate);
+        Assert.assertEquals(false, result);
+    }
+
+    @Test
+    public void testUpdatePasswordUserMissMatch() {
+        UserPassword userPassword = new UserPassword();
+        userPassword.setUserId(12345L);
+
+        UserPassword currentPassword = new UserPassword();
+        currentPassword.setUserId(54321L);
+
+
+        try {
+            UserPasswordUpdate userPasswordUpdate = new UserPasswordUpdate();
+            userPasswordUpdate.setPassword(userPassword);
+            userPasswordUpdate.setCurrentPassword(currentPassword);
+            Assert.assertTrue(false);
+        } catch (IllegalArgumentException e) {
+            Assert.assertTrue(true);
+        }
+
+        try {
+            UserPasswordUpdate userPasswordUpdate = new UserPasswordUpdate();
+            userPasswordUpdate.setCurrentPassword(currentPassword);
+            userPasswordUpdate.setPassword(userPassword);
+            Assert.assertTrue(false);
+        } catch (IllegalArgumentException e) {
+            Assert.assertTrue(true);
+        }
     }
 }
