@@ -15,7 +15,7 @@ import javax.annotation.Resource;
  * To change this template use File | Settings | File Templates.
  */
 @Version("1")
-@RestController()
+@RestController
 public class ArticleController {
     @Resource(name = "articleService")
     private ArticleService articleService;

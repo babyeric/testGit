@@ -1,6 +1,7 @@
 package com.juric.carbon.service.article;
 
 import com.juric.carbon.api.article.ArticleService;
+import com.juric.carbon.exception.ValidationException;
 import com.juric.carbon.schema.article.Article;
 import com.practice.article.ArticleDB;
 import com.practice.article.ArticleMapper;

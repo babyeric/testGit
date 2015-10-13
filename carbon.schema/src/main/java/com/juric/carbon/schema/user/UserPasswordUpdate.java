@@ -16,7 +16,6 @@ public class UserPasswordUpdate {
 
     public void setPassword(UserPassword password) {
         this.password = password;
-        validateUserId();
     }
 
     public UserPassword getCurrentPassword() {
@@ -25,14 +24,14 @@ public class UserPasswordUpdate {
 
     public void setCurrentPassword(UserPassword currentPassword) {
         this.currentPassword = currentPassword;
-        validateUserId();
     }
 
-    private void validateUserId(){
-        if (password != null && currentPassword != null) {
-            if (!password.getUserId().equals(currentPassword.getUserId())) {
-                throw new IllegalArgumentException("userId mismatch");
-            }
+    public boolean validate(){
+        if (password == null ||
+                (currentPassword != null && !password.getUserId().equals(currentPassword.getUserId()))) {
+            return false;
         }
+
+        return true;
     }
 }

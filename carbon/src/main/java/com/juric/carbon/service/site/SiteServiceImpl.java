@@ -1,6 +1,7 @@
 package com.juric.carbon.service.site;
 
 import com.juric.carbon.api.site.SiteService;
+import com.juric.carbon.exception.ValidationException;
 import com.juric.carbon.schema.site.Site;
 import com.practice.function.Functor;
 import com.practice.site.SiteDB;
@@ -28,7 +29,10 @@ public class
 
     @Override
     public void updateSite(Site site) {
-        siteMapper.update(new SiteDB(site));
+        int ret = siteMapper.update(new SiteDB(site));
+        if (ret == 0) {
+            throw new ValidationException("site doesn't exist, siteId=" + site.getSiteId());
+        }
     }
 
     @Override

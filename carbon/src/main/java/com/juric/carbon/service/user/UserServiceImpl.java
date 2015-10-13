@@ -4,6 +4,7 @@ import com.juric.carbon.api.user.UserPasswordService;
 import com.juric.carbon.api.user.UserService;
 import com.juric.carbon.exception.ValidationException;
 import com.juric.carbon.schema.user.User;
+import com.juric.carbon.schema.user.UserCreate;
 import com.juric.carbon.schema.user.UserPassword;
 import com.juric.carbon.schema.user.UserPasswordUpdate;
 import com.practice.user.UserDB;
@@ -28,17 +29,23 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User createUser(User user,UserPassword userPassword) {
-        userMapper.insert(new UserDB(user));
+    public User createUser(UserCreate userCreate) {
+        if (!userCreate.validate()) {
+            throw new ValidationException("invalid userCreate");
+        }
+        userMapper.insert(new UserDB(userCreate.getUser()));
         UserPasswordUpdate userPasswordUpdate = new UserPasswordUpdate();
-        userPasswordUpdate.setPassword(userPassword);
+        userPasswordUpdate.setPassword(userCreate.getUserPassword());
         userPasswordService.updatePassword(userPasswordUpdate);
-        return user;
+        return userCreate.getUser();
     }
 
     @Override
     public void updateUser(User user) {
-        userMapper.update(new UserDB(user));
+        int ret = userMapper.update(new UserDB(user));
+        if (ret == 0) {
+            throw new ValidationException("user doesn't exist, userId="+user.getUserId());
+        }
     }
 
     @Override

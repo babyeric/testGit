@@ -1,5 +1,6 @@
 package com.juric.carbon;
 
+import com.juric.carbon.exception.ValidationException;
 import com.juric.carbon.schema.user.UserPassword;
 import com.juric.carbon.schema.user.UserPasswordUpdate;
 import com.juric.carbon.service.user.password.HashVersion;
@@ -193,23 +194,9 @@ public class UserPasswordServiceTests {
         UserPassword currentPassword = new UserPassword();
         currentPassword.setUserId(54321L);
 
-
-        try {
-            UserPasswordUpdate userPasswordUpdate = new UserPasswordUpdate();
-            userPasswordUpdate.setPassword(userPassword);
-            userPasswordUpdate.setCurrentPassword(currentPassword);
-            Assert.assertTrue(false);
-        } catch (IllegalArgumentException e) {
-            Assert.assertTrue(true);
-        }
-
-        try {
-            UserPasswordUpdate userPasswordUpdate = new UserPasswordUpdate();
-            userPasswordUpdate.setCurrentPassword(currentPassword);
-            userPasswordUpdate.setPassword(userPassword);
-            Assert.assertTrue(false);
-        } catch (IllegalArgumentException e) {
-            Assert.assertTrue(true);
-        }
+        UserPasswordUpdate userPasswordUpdate = new UserPasswordUpdate();
+        userPasswordUpdate.setPassword(userPassword);
+        userPasswordUpdate.setCurrentPassword(currentPassword);
+        Assert.assertEquals(false, userPasswordUpdate.validate());
     }
 }

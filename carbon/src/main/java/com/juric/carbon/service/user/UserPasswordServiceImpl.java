@@ -1,6 +1,7 @@
 package com.juric.carbon.service.user;
 
 import com.juric.carbon.api.user.UserPasswordService;
+import com.juric.carbon.exception.ValidationException;
 import com.juric.carbon.schema.user.UserPassword;
 import com.juric.carbon.schema.user.UserPasswordUpdate;
 import com.practice.user.UserPasswordDB;
@@ -20,6 +21,10 @@ public class UserPasswordServiceImpl extends UserPasswordServiceSupport implemen
 
     @Override
     public boolean updatePassword(UserPasswordUpdate userPasswordUpdate) {
+        if (!userPasswordUpdate.validate()) {
+            throw new ValidationException("invalid userPasswordUpdate");
+        }
+
         if (userPasswordUpdate.getCurrentPassword() !=null) {
             if (!verifyPassword(userPasswordUpdate.getCurrentPassword())) {
                 return false;
