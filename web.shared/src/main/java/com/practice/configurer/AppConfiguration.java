@@ -34,9 +34,14 @@ import java.util.Properties;
 @Configuration
 public class AppConfiguration {
 
+    @Value("${carbon.service.rest.address}")
+    private String carbonRoot;
+
     @Bean(name="articleService")
     public ArticleService articleService() {
-        return new ArticleServiceClientImpl();
+        ArticleServiceClientImpl articleService = new ArticleServiceClientImpl();
+        articleService.setCarbonRoot(carbonRoot);
+        return articleService;
     }
 
     @Bean(name="storagePathService")

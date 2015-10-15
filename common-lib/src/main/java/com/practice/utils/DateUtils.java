@@ -28,4 +28,12 @@ public class DateUtils {
         }
     }
 
+    public final static String formatDate(Date date) {
+        return new SimpleDateFormat(DATE_FORMAT).format(date);
+    }
+
+    public final static String formatDateTime(Date date) {
+        return new SimpleDateFormat(DATE_TIME_FORMAT).format(date);
+    }
+
 }
