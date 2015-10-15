@@ -4,9 +4,7 @@ import com.juric.carbon.api.user.UserService;
 import com.juric.carbon.rest.mvc.Version;
 import com.juric.carbon.schema.user.User;
 import com.juric.carbon.schema.user.UserCreate;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 
@@ -20,7 +18,23 @@ public class UserController {
     @Resource(name="userService")
     private UserService userService;
 
+    @RequestMapping(value = "/users", method = RequestMethod.POST)
     public @ResponseBody User createUser(@RequestBody UserCreate userCreate) {
         return userService.createUser(userCreate);
+    }
+
+    @RequestMapping(value = "/users", method = RequestMethod.PUT)
+    public void upadteUser(@RequestBody User user) {
+        userService.updateUser(user);
+    }
+
+    @RequestMapping(value = "/users/{userId}", method = RequestMethod.GET)
+    public @ResponseBody User getUserById(@PathVariable long userId) {
+        return userService.getUserById(userId);
+    }
+
+    @RequestMapping(value = "/users", method = RequestMethod.GET)
+    public @ResponseBody User searchUserByEmail(@RequestParam String email) {
+        return userService.getUserByEmail(email);
     }
 }

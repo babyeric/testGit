@@ -6,6 +6,8 @@ import com.juric.carbon.schema.article.Article;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -30,5 +32,10 @@ public class ArticleController {
     public Article getArticleById(@PathVariable("articleId") long articleId) {
         Article ret = articleService.getById(articleId);
         return ret;
+    }
+
+    @RequestMapping(value = "/sites/{siteId}/articles", method = RequestMethod.GET)
+    public List<Article> getArticlesBySite(@PathVariable long siteId, @RequestHeader Date lastDate, @RequestHeader Long lastId, @RequestHeader Integer pageSize) {
+        return articleService.getArticlesBySite(siteId, lastDate, lastId, pageSize);
     }
 }
