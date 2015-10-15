@@ -2,8 +2,10 @@ package com.practice.configurer;
 
 import com.juric.carbon.api.article.ArticleService;
 import com.juric.carbon.api.storage.path.StoragePathService;
+import com.juric.carbon.api.user.UserService;
 import com.practice.client.article.ArticleServiceClientImpl;
 import com.practice.client.storage.StoragePathServiceClientImpl;
+import com.practice.client.user.UserServiceClientImpl;
 import org.juric.storage.configurer.StorageConfiguration;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -46,6 +48,15 @@ public class AppConfiguration {
 
     @Bean(name="storagePathService")
     public StoragePathService storagePathServiceClient() {
-        return new StoragePathServiceClientImpl();
+        StoragePathServiceClientImpl storagePathServiceClient = new StoragePathServiceClientImpl();
+        storagePathServiceClient.setCarbonRoot(carbonRoot);
+        return storagePathServiceClient;
+    }
+
+    @Bean (name="userService")
+    public UserService userService() {
+        UserServiceClientImpl userServiceClient = new UserServiceClientImpl();
+        userServiceClient.setCarbonRoot(carbonRoot);
+        return userServiceClient;
     }
 }
