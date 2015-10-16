@@ -1,7 +1,8 @@
-package com.juric.carbon;
+package com.juric.carbon.controller;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.juric.carbon.configuration.CarbonConfiguration;
+import com.juric.carbon.controller.AbstractControllerTest;
 import com.juric.carbon.schema.user.User;
 import com.juric.carbon.schema.user.UserCreate;
 import org.junit.Assert;
@@ -42,7 +43,33 @@ public class UserControllerTests extends AbstractControllerTest {
     }
 
     @Test
-    public void createUser() throws Exception {
+    public void testCreateUser() throws Exception {
+        User user = createUser();
+        Assert.assertNotNull(user.getUserId());
+    }
+
+    @Test
+    public void testUpdateUser() throws Exception {
+        User user = createUser();
+        Assert.assertNotNull(user.getUserId());
+
+        User update = new User();
+        update.setUserId(user.getUserId());
+        update.setEmail("update@email.com");
+        update.setModifiedBy("testUpdateUser");
+
+        ObjectMapper objectMapper = new ObjectMapper();
+        String content = objectMapper.writeValueAsString(update);
+
+        this.mockMvc.perform(put("/1/users")
+                .content(content)
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+
+    }
+
+    private User createUser() throws Exception{
         User user = new User();
         user.setLastName("last name");
         user.setFirstName("first name");
@@ -59,11 +86,11 @@ public class UserControllerTests extends AbstractControllerTest {
         String content = objectMapper.writeValueAsString(userCreate);
         MvcResult mvcResult = this.mockMvc.perform(post("/1/users")
                 .content(content)
-                .contentType(MediaType.APPLICATION_JSON)).andExpect(status().isOk())
+                .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andReturn();
 
         user = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), User.class);
-        Assert.assertNotNull(user.getUserId());
+        return user;
     }
 }

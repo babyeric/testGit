@@ -1,5 +1,6 @@
-package com.juric.carbon;
+package com.juric.carbon.controller;
 
+import com.juric.carbon.TestApplication;
 import com.juric.carbon.configuration.CarbonConfiguration;
 import com.practice.configuration.DBConfiguration;
 import org.junit.runner.RunWith;

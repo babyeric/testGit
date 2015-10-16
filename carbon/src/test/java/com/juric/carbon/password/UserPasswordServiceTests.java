@@ -1,4 +1,4 @@
-package com.juric.carbon;
+package com.juric.carbon.password;
 
 import com.juric.carbon.exception.ValidationException;
 import com.juric.carbon.schema.user.UserPassword;

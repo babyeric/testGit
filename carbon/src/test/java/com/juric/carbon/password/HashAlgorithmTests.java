@@ -1,4 +1,4 @@
-package com.juric.carbon;
+package com.juric.carbon.password;
 
 import com.juric.carbon.service.user.password.HashAlgorithm;
 import com.juric.carbon.service.user.password.HashVersion;
