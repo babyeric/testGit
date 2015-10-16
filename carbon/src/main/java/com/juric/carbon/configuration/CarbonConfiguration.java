@@ -10,6 +10,7 @@ import com.juric.carbon.service.site.SiteServiceImpl;
 import com.juric.carbon.service.storage.StoragePathServiceImpl;
 import com.juric.carbon.service.user.UserPasswordServiceImpl;
 import com.juric.carbon.service.user.UserServiceImpl;
+import com.juric.carbon.service.user.password.HashVersion;
 import com.practice.article.ArticleMapper;
 import com.practice.configuration.DBConfiguration;
 import com.practice.def.DefShardIdGenerator;
@@ -19,6 +20,7 @@ import com.practice.user.UserPasswordMapper;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 import javax.annotation.Resource;
 
@@ -84,6 +86,7 @@ public class CarbonConfiguration {
     public UserPasswordService userPasswordService() {
         UserPasswordServiceImpl userPasswordService = new UserPasswordServiceImpl();
         userPasswordService.setUserPasswordMapper(userPasswordMapper);
+        userPasswordService.setHashVersion(HashVersion.SHA512_1000);
         return userPasswordService;
     }
 }

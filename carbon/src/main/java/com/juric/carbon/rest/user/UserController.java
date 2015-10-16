@@ -4,9 +4,12 @@ import com.juric.carbon.api.user.UserService;
 import com.juric.carbon.rest.mvc.Version;
 import com.juric.carbon.schema.user.User;
 import com.juric.carbon.schema.user.UserCreate;
+import org.springframework.validation.BindingResult;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 
 /**
  * Created by Eric on 10/12/2015.
@@ -19,7 +22,7 @@ public class UserController {
     private UserService userService;
 
     @RequestMapping(value = "/users", method = RequestMethod.POST)
-    public @ResponseBody User createUser(@RequestBody UserCreate userCreate) {
+    public @ResponseBody User createUser(@Valid @RequestBody UserCreate userCreate) {
         return userService.createUser(userCreate);
     }
 

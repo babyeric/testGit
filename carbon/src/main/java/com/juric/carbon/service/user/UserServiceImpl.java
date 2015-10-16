@@ -12,6 +12,8 @@ import com.practice.user.UserMapper;
 import com.practice.user.UserPasswordDB;
 import com.practice.user.UserPasswordMapper;
 
+import java.util.Date;
+
 /**
  * Created by Eric on 10/4/2015.
  */
@@ -30,18 +32,32 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(UserCreate userCreate) {
-        if (!userCreate.validate()) {
-            throw new ValidationException("invalid userCreate");
+        User user = userCreate.getUser();
+        Date now = new Date();
+        user.setCreateDate(now);
+        user.setModifiedDate(now);
+
+        int ret = userMapper.insert(new UserDB(userCreate.getUser()));
+        if (ret  != 1) {
+            throw new IllegalStateException("insert user failed");
         }
-        userMapper.insert(new UserDB(userCreate.getUser()));
+        UserPassword userPassword = new UserPassword();
+        userPassword.setPassword(userCreate.getUserPassword());
+        userPassword.setUserId(userCreate.getUser().getUserId());
         UserPasswordUpdate userPasswordUpdate = new UserPasswordUpdate();
-        userPasswordUpdate.setPassword(userCreate.getUserPassword());
-        userPasswordService.updatePassword(userPasswordUpdate);
+        userPasswordUpdate.setPassword(userPassword);
+        boolean succeed = userPasswordService.updatePassword(userPasswordUpdate);
+        if (!succeed) {
+            throw new IllegalStateException("create password failed");
+        }
         return userCreate.getUser();
     }
 
     @Override
     public void updateUser(User user) {
+        Date now = new Date();
+        user.setModifiedDate(now);
+
         int ret = userMapper.update(new UserDB(user));
         if (ret == 0) {
             throw new ValidationException("user doesn't exist, userId="+user.getUserId());

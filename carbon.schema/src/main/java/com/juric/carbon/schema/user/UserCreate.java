@@ -1,11 +1,18 @@
 package com.juric.carbon.schema.user;
 
+import javax.validation.Valid;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
 /**
  * Created by Eric on 10/12/2015.
  */
 public class UserCreate {
+    @Valid
     private User user;
-    private UserPassword userPassword;
+    @NotNull
+    @Size(min=8, max=30)
+    private String userPassword;
 
     public User getUser() {
         return user;
@@ -15,21 +22,11 @@ public class UserCreate {
         this.user = user;
     }
 
-    public UserPassword getUserPassword() {
+    public String getUserPassword() {
         return userPassword;
     }
 
-    public void setUserPassword(UserPassword userPassword) {
+    public void setUserPassword(String userPassword) {
         this.userPassword = userPassword;
-    }
-
-    public boolean validate() {
-        if (user == null ||
-                userPassword == null ||
-                !user.getUserId().equals(userPassword.getUserId())) {
-            return false;
-        }
-
-        return true;
     }
 }

@@ -1,5 +1,7 @@
 package com.juric.carbon.schema.base;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 /**
@@ -8,6 +10,9 @@ import java.util.Date;
 public class BaseSchema {
     private Date createDate;
     private Date modifiedDate;
+
+    @NotNull
+    @Size(min=2, max=30)
     private String modifiedBy;
 
     public Date getCreateDate() {

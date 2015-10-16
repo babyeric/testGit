@@ -2,17 +2,22 @@ package com.juric.carbon.schema.user;
 
 import com.juric.carbon.schema.base.BaseSchema;
 
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 /**
  * Created by Eric on 10/3/2015.
  */
 public class User extends BaseSchema {
+    @NotNull
     private String email;
+    @NotNull
     private String firstName;
+    @NotNull
     private String lastName;
     private String mobile;
     private Date birthday;
+    @NotNull
     private String country;
     private Long userId;
 
