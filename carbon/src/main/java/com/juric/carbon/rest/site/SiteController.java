@@ -6,6 +6,7 @@ import com.juric.carbon.schema.site.Site;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 import java.util.List;
 
 /**
@@ -20,12 +21,12 @@ public class SiteController {
 
     @RequestMapping(value = "/sites", method = RequestMethod.POST)
     public @ResponseBody
-    Site createSite(@RequestBody Site site) {
+    Site createSite(@Valid @RequestBody Site site) {
         return  siteService.createSite(site);
     }
 
     @RequestMapping(value = "/sites", method = RequestMethod.PUT)
-    public void updateSite( @RequestBody Site site) {
+    public void updateSite(@RequestBody Site site) {
         siteService.updateSite(site);
     }
 

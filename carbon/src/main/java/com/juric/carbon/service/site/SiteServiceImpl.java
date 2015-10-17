@@ -8,6 +8,7 @@ import com.practice.site.SiteDB;
 import com.practice.site.SiteMapper;
 import com.practice.utils.ListUtils;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -23,12 +24,16 @@ public class
 
     @Override
     public Site createSite(Site site) {
+        Date now = new Date();
+        site.setCreateDate(now);
+        site.setModifiedDate(now);
         siteMapper.insert(new SiteDB(site));
         return site;
     }
 
     @Override
     public void updateSite(Site site) {
+        site.setModifiedDate(new Date());
         int ret = siteMapper.update(new SiteDB(site));
         if (ret == 0) {
             throw new ValidationException("site doesn't exist, siteId=" + site.getSiteId());

@@ -2,13 +2,18 @@ package com.juric.carbon.schema.site;
 
 import com.juric.carbon.schema.base.BaseSchema;
 
+import javax.validation.constraints.NotNull;
+
 /**
  * Created by Eric on 10/3/2015.
  */
 public class Site extends BaseSchema {
     private Long siteId;
+    @NotNull
     private Long userId;
+    @NotNull
     private String name;
+    @NotNull
     private String siteTag;
     private String description;
 
