@@ -30,7 +30,7 @@ public class ArticleController {
     }
 
     @RequestMapping(value = "/articles", method = RequestMethod.PUT)
-    public void updateArticle(@RequestBody Article article) {
+    public void updateArticle(@Valid @RequestBody Article article) {
         articleService.update(article);
         articleService.getById(article.getArticleId());
     }

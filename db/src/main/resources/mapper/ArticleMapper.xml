@@ -39,12 +39,8 @@
     <update id="update" parameterType="com.practice.article.ArticleDB">
         update article
         set
-          <if test="articleDB.title != null">
-              TITLE = #{articleDB.title},
-          </if>
-          <if test="articleDB.content != null">
-              CONTENT = #{articleDB.content},
-          </if>
+          TITLE = #{articleDB.title},
+          CONTENT = #{articleDB.content},
           MODIFIED_DATE = #{articleDB.modifiedDate},
           MODIFIED_BY = #{articleDB.modifiedBy}
         where

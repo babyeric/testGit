@@ -2,6 +2,8 @@ package com.juric.carbon.schema.article;
 
 import com.juric.carbon.schema.base.BaseSchema;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 import java.util.Date;
 
 /**
@@ -14,7 +16,11 @@ import java.util.Date;
 public class Article extends BaseSchema {
     private Long articleId;
     private Long siteId;
+    @NotNull
+    @Size(max=100)
     private String title;
+    @NotNull
+    @Size(max=4000)
     private String content;
 
     public Long getArticleId() {
