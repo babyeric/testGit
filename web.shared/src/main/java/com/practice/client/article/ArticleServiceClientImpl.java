@@ -49,14 +49,14 @@ public class ArticleServiceClientImpl extends AbstractServiceClient implements A
 
     @Override
     public Article create(Article article) {
-        String url = carbonRoot + "/1/article";
+        String url = carbonRoot + "/1/articles";
         Article ret = restTemplate.postForObject(url, article, Article.class);
         return ret;
     }
 
     @Override
     public void update(Article article) {
-        String url = carbonRoot + "/1/article";
+        String url = carbonRoot + "/1/articles";
         restTemplate.put(url, article);
     }
 
@@ -64,7 +64,7 @@ public class ArticleServiceClientImpl extends AbstractServiceClient implements A
     public Article getById(long articleId) {
         Map<String, Object> pathVaribles = new HashMap<>();
         pathVaribles.put("articleId", articleId);
-        String url = carbonRoot + "/1/article/{articleId}";
+        String url = carbonRoot + "/1/articles/{articleId}";
         Article ret = restTemplate.getForObject(url, Article.class, pathVaribles);
         return ret;
     }

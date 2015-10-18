@@ -13,7 +13,7 @@ public class DataSourceFactoryImpl implements DataSourceFactory{
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
         dataSource.setDriverClassName("com.mysql.jdbc.Driver");
         dataSource.setUsername("root");
-        dataSource.setUrl("jdbc:mysql://" + host + "/" + schema);
+        dataSource.setUrl("jdbc:mysql://" + host + "/" + schema + "?characterEncoding=UTF-8");
         dataSource.setPassword("#Bugsfor$");
         return dataSource;
     }
