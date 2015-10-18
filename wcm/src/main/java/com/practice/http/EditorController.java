@@ -41,7 +41,7 @@ public class EditorController extends EditorControllerSupport{
     String home(@PathVariable long articleId, Model model) {
         Article article = articleService.getById(articleId);
         if (article != null) {
-            model.addAttribute("article", article);
+            model.addAttribute("article", processForEdit(article));
         }
         return "editor";
     }
@@ -75,6 +75,14 @@ public class EditorController extends EditorControllerSupport{
         }
 
         return str;
+    }
+
+    private Article processForEdit(Article article) {
+        Article ret = new Article();
+        ret.setArticleId(article.getArticleId());
+        ret.setTitle(article.getTitle());
+        ret.setContent(article.getContent().replace("\n", "\\\n"));
+        return ret;
     }
 
     private void saveArticle(Long articleId, String title, String content) {

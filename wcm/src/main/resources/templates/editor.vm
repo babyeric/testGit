@@ -105,6 +105,6 @@
         'text-field': 'idSubmission',
         'seperate-binary': false
     }
-}).html("#if ($article) ${article.content} #end");</script>
+}).html('#if ($article) ${article.content} #end');</script>
 
 </html>
