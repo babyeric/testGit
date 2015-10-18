@@ -1,5 +1,6 @@
 package com.juric.carbon.controller;
 
+import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.juric.carbon.schema.site.Site;
 import com.juric.carbon.schema.user.User;
@@ -12,6 +13,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.web.context.WebApplicationContext;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 import static org.springframework.test.web.servlet.setup.MockMvcBuilders.*;
@@ -34,13 +37,13 @@ public class SiteControllerTests extends AbstractControllerTest  {
 
     @Test
     public void testCreateSite() throws Exception {
-        Site site = createSite();
+        Site site = createSite(null);
         Assert.assertNotNull(site.getSiteId());
     }
 
     @Test
     public void testUpdateSite() throws Exception {
-        Site site = createSite();
+        Site site = createSite(null);
         Assert.assertNotNull(site.getSiteId());
 
         Site update = new Site();
@@ -50,10 +53,10 @@ public class SiteControllerTests extends AbstractControllerTest  {
         update.setDescription("new desc");
         update.setModifiedBy("testUpdateSite");
         String content = objectMapper.writeValueAsString(update);
-        MvcResult mvcResult = mockMvc.perform(put("/1/sites")
+       mockMvc.perform(put("/1/sites")
                 .content(content)
                 .contentType(MediaType.APPLICATION_JSON))
-                //.andExpect(status().isOk())
+                .andExpect(status().isOk())
                 .andReturn();
 
         site = getSiteById(update.getSiteId());
@@ -61,6 +64,37 @@ public class SiteControllerTests extends AbstractControllerTest  {
         Assert.assertEquals(update.getName(), site.getName());
         Assert.assertEquals(update.getDescription(), site.getDescription());
         Assert.assertEquals(update.getModifiedBy(), site.getModifiedBy());
+    }
+
+    @Test
+    public void testSearchSiteByTag() throws Exception {
+        Site site = createSite(null);
+        Assert.assertNotNull(site.getSiteId());
+
+        MvcResult mvcResult = mockMvc.perform(get("/1/sites?siteTag=" + site.getSiteTag())
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+        Site result = objectMapper.readValue(mvcResult.getResponse().getContentAsString(), Site.class);
+        Assert.assertEquals(site.toString(), result.toString());
+    }
+
+    @Test
+    public void testGetSitesByUserId() throws Exception {
+        List<Site> sites = new ArrayList<Site>();
+        long userId = Math.abs(new Random().nextLong()) ;
+        sites.add(createSite(userId));
+        sites.add(createSite(userId));
+
+        MvcResult mvcResult = mockMvc.perform(get("/1/users/" + userId + "/sites")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andReturn();
+        List<Site> result =  objectMapper.readValue(mvcResult.getResponse().getContentAsString(), new TypeReference<List<Site>>(){});
+        Assert.assertEquals(2, result.size());
+        for (int i=0; i<2; ++i) {
+            Assert.assertEquals(sites.get(i).toString(), result.get(i).toString());
+        }
     }
 
     private Site getSiteById(long siteId) throws Exception {
@@ -73,9 +107,9 @@ public class SiteControllerTests extends AbstractControllerTest  {
         return site;
     }
 
-    private Site createSite() throws Exception {
+    private Site createSite(Long userId) throws Exception {
         Site site = new Site();
-        site.setUserId(123456789L);
+        site.setUserId(userId==null?123456789L : userId);
         site.setName("test name");
         site.setSiteTag("siteTag" + new Random().nextLong());
         site.setDescription("site description");

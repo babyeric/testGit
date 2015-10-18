@@ -22,13 +22,13 @@ public class ArticleController {
     @Resource(name = "articleService")
     private ArticleService articleService;
 
-    @RequestMapping(value = "/article", method = RequestMethod.POST)
+    @RequestMapping(value = "/articles", method = RequestMethod.POST)
     public Article saveArticle(@RequestBody Article article) {
         Article ret = articleService.save(article);
         return ret;
     }
 
-    @RequestMapping(value = "/article/{articleId}", method = RequestMethod.GET)
+    @RequestMapping(value = "/articles/{articleId}", method = RequestMethod.GET)
     public Article getArticleById(@PathVariable("articleId") long articleId) {
         Article ret = articleService.getById(articleId);
         return ret;

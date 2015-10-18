@@ -4,6 +4,7 @@ import com.juric.carbon.api.site.SiteService;
 import com.juric.carbon.schema.site.Site;
 import com.juric.carbon.schema.user.User;
 import com.practice.client.common.AbstractServiceClient;
+import org.springframework.util.CollectionUtils;
 import org.springframework.web.util.UriComponentsBuilder;
 
 import java.util.HashMap;
@@ -52,6 +53,7 @@ public class SiteServiceClientImpl extends AbstractServiceClient implements Site
         pathVaribles.put("userId", userId);
 
         String url = carbonRoot + "/1/users/{userId}/sites";
-        return restTemplate.getForObject(url, List.class, pathVaribles);
+        Site[] result = restTemplate.getForObject(url, Site[].class, pathVaribles);
+        return CollectionUtils.arrayToList(result);
     }
 }

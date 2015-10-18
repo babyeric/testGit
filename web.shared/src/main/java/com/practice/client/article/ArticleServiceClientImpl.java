@@ -4,6 +4,7 @@ import com.juric.carbon.api.article.ArticleService;
 import com.juric.carbon.schema.article.Article;
 import com.practice.client.common.AbstractServiceClient;
 import com.practice.utils.DateUtils;
+import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
@@ -49,7 +50,7 @@ public class ArticleServiceClientImpl extends AbstractServiceClient implements A
 
         HttpEntity entity = new HttpEntity(headers);
         String url = carbonRoot + "/sites/{siteId}/articles";
-        ResponseEntity<List> ret = restTemplate.exchange(url, HttpMethod.GET, entity,  List.class, pathVaribles);
+        ResponseEntity<List<Article>> ret = restTemplate.exchange(url, HttpMethod.GET, entity,  new ParameterizedTypeReference<List<Article>>() {}, pathVaribles);
 
         return ret.getBody();
     }
