@@ -13,7 +13,8 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public interface ArticleService {
-    Article save(Article article);
+    Article create(Article article);
+    void update(Article article);
     Article getById(long articleId);
     List<Article> getArticlesBySite(long siteId, Date lastDate, Long lastId, int pageSize);
 }

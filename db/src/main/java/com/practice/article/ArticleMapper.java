@@ -24,5 +24,8 @@ public interface ArticleMapper {
                               @Param("pageSize") int pageSize);
 
     @ShardMethod(IdStrategy.class)
-    int save(@ShardParam("articleDB") ArticleDB articleDB);
+    int insert(@ShardParam("articleDB") ArticleDB articleDB);
+
+    @ShardMethod(IdStrategy.class)
+    int update(@ShardParam("articleDB") ArticleDB articleDB);
 }

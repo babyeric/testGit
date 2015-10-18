@@ -26,19 +26,30 @@
     #{articleDB.modifiedBy}
     </sql>
 
-    <insert id="save" parameterType="com.practice.article.ArticleDB">
+    <insert id="insert" parameterType="com.practice.article.ArticleDB">
         insert into article (
             LOGICAL_SHARD_ID,
             <include refid="*" />
         ) values (
             #{_logicalShardId_},
             <include refid="values" />
-        ) on duplicate key update
-          TITLE = #{articleDB.title},
-          CONTENT =  #{articleDB.content},
-          MODIFIED_DATE = #{articleDB.modifiedDate},
-          MODIFIED_BY =#{articleDB.modifiedBy}
+        )
     </insert>
+
+    <update id="update" parameterType="com.practice.article.ArticleDB">
+        update article
+        set
+          <if test="articleDB.title != null">
+              TITLE = #{articleDB.title},
+          </if>
+          <if test="articleDB.content != null">
+              CONTENT = #{articleDB.content},
+          </if>
+          MODIFIED_DATE = #{articleDB.modifiedDate},
+          MODIFIED_BY = #{articleDB.modifiedBy}
+        where
+          ARTICLE_ID=#{articleDB.articleId}
+    </update>
 
 
     <select id="getById"  resultType="com.practice.article.ArticleDB" resultMap="articleDBMap">

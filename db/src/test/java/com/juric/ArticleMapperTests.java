@@ -20,7 +20,7 @@ public class ArticleMapperTests extends AbstractMapperTest {
     @Test
     public void testSaveArticle() {
         ArticleDB articleDB = articleDB(12345678L, null);
-        int ret = articleMapper.save(articleDB);
+        int ret = articleMapper.insert(articleDB);
         Assert.assertEquals(1, ret);
         Assert.assertNotNull(articleDB.getArticleId());
 
@@ -32,9 +32,9 @@ public class ArticleMapperTests extends AbstractMapperTest {
         articleDB.setModifiedDate(new Date());
         articleDB.setModifiedBy("UNIT test");
         articleDB.setArticleId(result.getArticleId());
-        ret = articleMapper.save(articleDB);
+        ret = articleMapper.update(articleDB);
 
-        Assert.assertEquals(2, ret);//2 indicates row updated
+        Assert.assertEquals(1, ret);
         result = articleMapper.getById(articleDB.getArticleId());
         Assert.assertEquals(articleDB.toString(), result.toString());
     }
@@ -46,12 +46,12 @@ public class ArticleMapperTests extends AbstractMapperTest {
         Date d2 = DateUtils.parseDateTime("2010-01-01 09:08:07");
 
         ArticleDB articleDB1 = articleDB(siteId, d1);
-        int ret = articleMapper.save(articleDB1);
+        int ret = articleMapper.insert(articleDB1);
         Assert.assertEquals(1, ret);
         Assert.assertNotNull(articleDB1.getArticleId());
 
         ArticleDB articleDB2 = articleDB(siteId, d2);
-        ret = articleMapper.save(articleDB2);
+        ret = articleMapper.insert(articleDB2);
         Assert.assertEquals(1, ret);
         Assert.assertNotNull(articleDB2.getArticleId());
 
@@ -69,12 +69,12 @@ public class ArticleMapperTests extends AbstractMapperTest {
         long siteId = 12345678L;
         Date date = DateUtils.parseDateTime("2010-01-01 09:08:07");
         ArticleDB articleDB1 = articleDB(12345678L, date);
-        int ret = articleMapper.save(articleDB1);
+        int ret = articleMapper.insert(articleDB1);
         Assert.assertEquals(1, ret);
         Assert.assertNotNull(articleDB1.getArticleId());
 
         ArticleDB articleDB2 = articleDB(12345678L, date);
-        ret = articleMapper.save(articleDB2);
+        ret = articleMapper.insert(articleDB2);
         Assert.assertEquals(1, ret);
         Assert.assertNotNull(articleDB2.getArticleId());
 

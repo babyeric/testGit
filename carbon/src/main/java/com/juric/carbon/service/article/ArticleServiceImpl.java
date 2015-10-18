@@ -26,14 +26,18 @@ public class ArticleServiceImpl extends ArticleServiceSupport implements Article
     }
 
     @Override
-    public Article save(Article article) {
+    public Article create(Article article) {
         Date now = new Date();
-        if (article.getArticleId() == null) {
-            article.setCreateDate(now);
-        }
+        article.setCreateDate(now);
         article.setModifiedDate(now);
-        articleMapper.save( new ArticleDB(article));
+        articleMapper.insert(new ArticleDB(article));
         return article;
+    }
+
+    @Override
+    public void update(Article article) {
+        article.setModifiedDate(new Date());
+        articleMapper.update(new ArticleDB(article));
     }
 
     @Override

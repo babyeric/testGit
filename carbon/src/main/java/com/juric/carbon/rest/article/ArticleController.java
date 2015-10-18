@@ -6,6 +6,7 @@ import com.juric.carbon.schema.article.Article;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
+import javax.validation.Valid;
 import java.util.Date;
 import java.util.List;
 
@@ -23,9 +24,15 @@ public class ArticleController {
     private ArticleService articleService;
 
     @RequestMapping(value = "/articles", method = RequestMethod.POST)
-    public Article saveArticle(@RequestBody Article article) {
-        Article ret = articleService.save(article);
+    public Article createArticle(@Valid @RequestBody Article article) {
+        Article ret = articleService.create(article);
         return ret;
+    }
+
+    @RequestMapping(value = "/articles", method = RequestMethod.PUT)
+    public void updateArticle(@RequestBody Article article) {
+        articleService.update(article);
+        articleService.getById(article.getArticleId());
     }
 
     @RequestMapping(value = "/articles/{articleId}", method = RequestMethod.GET)
@@ -35,7 +42,7 @@ public class ArticleController {
     }
 
     @RequestMapping(value = "/sites/{siteId}/articles", method = RequestMethod.GET)
-    public List<Article> getArticlesBySite(@PathVariable long siteId, @RequestHeader Date lastDate, @RequestHeader Long lastId, @RequestHeader Integer pageSize) {
+    public List<Article> getArticlesBySite(@PathVariable long siteId, @RequestHeader(required = false) Date lastDate, @RequestHeader(required = false) Long lastId, @RequestHeader Integer pageSize) {
         return articleService.getArticlesBySite(siteId, lastDate, lastId, pageSize);
     }
 }

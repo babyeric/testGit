@@ -26,14 +26,6 @@ import java.util.Map;
 public class ArticleServiceClientImpl extends AbstractServiceClient implements ArticleService {
 
     @Override
-    public Article save(Article article) {
-
-        String url = carbonRoot + "/1/article";
-        Article ret = restTemplate.postForObject(url, article, Article.class);
-        return ret;
-    }
-
-    @Override
     public List<Article> getArticlesBySite(long siteId, Date lastDate, Long lastId, int pageSize) {
 
         Map<String, Object> pathVaribles = new HashMap<>();
@@ -53,6 +45,19 @@ public class ArticleServiceClientImpl extends AbstractServiceClient implements A
         ResponseEntity<List<Article>> ret = restTemplate.exchange(url, HttpMethod.GET, entity,  new ParameterizedTypeReference<List<Article>>() {}, pathVaribles);
 
         return ret.getBody();
+    }
+
+    @Override
+    public Article create(Article article) {
+        String url = carbonRoot + "/1/article";
+        Article ret = restTemplate.postForObject(url, article, Article.class);
+        return ret;
+    }
+
+    @Override
+    public void update(Article article) {
+        String url = carbonRoot + "/1/article";
+        restTemplate.put(url, article);
     }
 
     @Override
