@@ -2,17 +2,26 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity3">
 <head>
-    <title>Spring Security Example </title>
+    <title>wcm login</title>
+    <link href="/css/bootstrap.min.css" rel="stylesheet"/>
+    <link href="/css/login.css" rel="stylesheet"/>
 </head>
 <body>
-#if ($message)
-    ${message}
-#end
-<form action="/login" method="post">
-    <div><label> User Name : <input type="text" name="username"/> </label></div>
-    <div><label> Password: <input type="password" name="password"/> </label></div>
-    <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
-    <div><input type="submit" value="Sign In"/></div>
-</form>
+<div class="container">
+
+    <form class="form-signin" action="/login" method="post">
+        <h2 class="form-signin-heading">Please sign in</h2>
+        <label for="inputEmail" class="sr-only">Email address</label>
+        <input type="email" name="username" id="inputEmail" class="form-control" placeholder="Email address" required autofocus>
+        <label for="inputPassword" class="sr-only">Password</label>
+        <input type="password" id="inputPassword" name="password"  class="form-control" placeholder="Password" required>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        #if ($message)
+            <h4>${message}</h4>
+        #end
+        <button class="btn btn-lg btn-primary btn-block" type="submit">Sign in</button>
+    </form>
+</div>
+
 </body>
 </html>
