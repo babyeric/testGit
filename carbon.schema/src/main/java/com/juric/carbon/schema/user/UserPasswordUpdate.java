@@ -3,11 +3,16 @@ package com.juric.carbon.schema.user;
 import org.springframework.util.StringUtils;
 import sun.security.validator.ValidatorException;
 
+import javax.validation.Valid;
+
 /**
  * Created by Eric on 10/11/2015.
  */
 public class UserPasswordUpdate {
+    @Valid
     private UserPassword password;
+
+    @Valid
     private UserPassword currentPassword;
 
     public UserPassword getPassword() {

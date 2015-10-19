@@ -86,6 +86,7 @@ public class CarbonConfiguration {
     public UserPasswordService userPasswordService() {
         UserPasswordServiceImpl userPasswordService = new UserPasswordServiceImpl();
         userPasswordService.setUserPasswordMapper(userPasswordMapper);
+        userPasswordService.setUserMapper(userMapper);
         userPasswordService.setHashVersion(HashVersion.SHA512_1000);
         return userPasswordService;
     }
