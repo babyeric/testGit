@@ -23,7 +23,7 @@ public class UserPasswordController {
         userPasswordService.updatePassword(userPasswordUpdate);
     }
 
-    @RequestMapping(value = "/auth", method = RequestMethod.PUT)
+    @RequestMapping(value = "/auth", method = RequestMethod.GET)
     public @ResponseBody
     User authticate(@RequestParam String username, @RequestParam String password) {
         return userPasswordService.authticate(username, password);
