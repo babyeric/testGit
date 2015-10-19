@@ -80,6 +80,8 @@ public class UserMapperTests extends AbstractMapperTest {
                 userDB = new UserDB();
                 userDB.setUserId(oldOne.getUserId());
                 userDB.setEmail("newEmail@test.com");
+                userDB.setModifiedDate(new Date());
+                userDB.setModifiedBy("testGetByEmail");
                 ret = userMapper.update(userDB);
                 Assert.assertEquals(1, ret);
                 UserDB newOne = userMapper.getByEmail(userDB.getEmail());

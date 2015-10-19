@@ -1,6 +1,7 @@
 package com.practice.client.user;
 
 import com.juric.carbon.api.user.UserPasswordService;
+import com.juric.carbon.schema.user.Auth;
 import com.juric.carbon.schema.user.User;
 import com.juric.carbon.schema.user.UserPassword;
 import com.juric.carbon.schema.user.UserPasswordUpdate;
@@ -25,11 +26,8 @@ public class UserPasswordServiceClient extends AbstractServiceClient implements 
     }
 
     @Override
-    public User authticate(String email, String password) {
+    public User authticate(Auth auth) {
         String url = carbonRoot + "/1/auth";
-        UriComponentsBuilder builder = UriComponentsBuilder.fromHttpUrl(url)
-                .queryParam("username", email)
-                .queryParam("password", password);
-        return restTemplate.getForObject(builder.toUriString(), User.class);
+        return restTemplate.postForObject(url, auth, User.class);
     }
 }

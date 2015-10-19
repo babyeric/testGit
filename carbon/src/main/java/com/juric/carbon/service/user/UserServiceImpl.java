@@ -44,6 +44,9 @@ public class UserServiceImpl implements UserService {
         UserPassword userPassword = new UserPassword();
         userPassword.setPassword(userCreate.getUserPassword());
         userPassword.setUserId(userCreate.getUser().getUserId());
+        userPassword.setCreateDate(now);
+        userPassword.setModifiedDate(now);
+        userPassword.setModifiedBy(user.getModifiedBy());
         UserPasswordUpdate userPasswordUpdate = new UserPasswordUpdate();
         userPasswordUpdate.setPassword(userPassword);
         boolean succeed = userPasswordService.updatePassword(userPasswordUpdate);

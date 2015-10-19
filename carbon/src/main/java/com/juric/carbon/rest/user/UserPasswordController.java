@@ -2,6 +2,7 @@ package com.juric.carbon.rest.user;
 
 import com.juric.carbon.api.user.UserPasswordService;
 import com.juric.carbon.rest.mvc.Version;
+import com.juric.carbon.schema.user.Auth;
 import com.juric.carbon.schema.user.User;
 import com.juric.carbon.schema.user.UserPasswordUpdate;
 import org.springframework.web.bind.annotation.*;
@@ -23,9 +24,9 @@ public class UserPasswordController {
         userPasswordService.updatePassword(userPasswordUpdate);
     }
 
-    @RequestMapping(value = "/auth", method = RequestMethod.GET)
+    @RequestMapping(value = "/auth", method = RequestMethod.POST)
     public @ResponseBody
-    User authticate(@RequestParam String username, @RequestParam String password) {
-        return userPasswordService.authticate(username, password);
+    User authticate(@Valid @RequestBody Auth auth) {
+        return userPasswordService.authticate(auth);
     }
 }

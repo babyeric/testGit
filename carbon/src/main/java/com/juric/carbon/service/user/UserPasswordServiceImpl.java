@@ -3,6 +3,7 @@ package com.juric.carbon.service.user;
 import com.juric.carbon.api.user.UserPasswordService;
 import com.juric.carbon.exception.NotFoundException;
 import com.juric.carbon.exception.ValidationException;
+import com.juric.carbon.schema.user.Auth;
 import com.juric.carbon.schema.user.User;
 import com.juric.carbon.schema.user.UserPassword;
 import com.juric.carbon.schema.user.UserPasswordUpdate;
@@ -64,20 +65,12 @@ public class UserPasswordServiceImpl extends UserPasswordServiceSupport implemen
     }
 
     @Override
-    public User authticate(String username, String password) {
-        if (StringUtils.isEmpty(username)) {
-            throw new ValidationException("Invalid username");
-        }
-
-        if (StringUtils.isEmpty(password)) {
-            throw new ValidationException("Invalid password");
-        }
-
-        UserDB userDB = userMapper.getByEmail(username);
+    public User authticate(Auth auth) {
+        UserDB userDB = userMapper.getByEmail(auth.getUsername());
         if (userDB != null) {
             UserPassword userPassword = new UserPassword();
             userPassword.setUserId(userDB.getUserId());
-            userPassword.setPassword(password);
+            userPassword.setPassword(auth.getPassword());
             if (verifyPassword(userPassword)) {
                 return userDB.getUser();
             } else {

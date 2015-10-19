@@ -83,7 +83,7 @@ public class UserPasswordServiceTests {
 
         UserPassword userPassword = new UserPassword();
         userPassword.setUserId(12345L);
-        userPassword.setPassword("123");
+        userPassword.setPassword("#Bugsfor$");
         userPassword.setCreateDate(date);
         userPassword.setModifiedDate(date);
         userPassword.setModifiedBy("UT");

@@ -1,5 +1,6 @@
 package com.juric.carbon.api.user;
 
+import com.juric.carbon.schema.user.Auth;
 import com.juric.carbon.schema.user.User;
 import com.juric.carbon.schema.user.UserPassword;
 import com.juric.carbon.schema.user.UserPasswordUpdate;
@@ -10,5 +11,5 @@ import com.juric.carbon.schema.user.UserPasswordUpdate;
 public interface UserPasswordService {
     boolean updatePassword(UserPasswordUpdate userPasswordUpdate);
     boolean verifyPassword(UserPassword userPassword);
-    User authticate(String email, String password);
+    User authticate(Auth auth);
 }
