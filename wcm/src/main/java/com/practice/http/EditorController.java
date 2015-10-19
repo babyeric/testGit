@@ -8,6 +8,7 @@ import com.practice.function.ChainedMethod;
 import com.practice.wysiwyg.Doc;
 import com.practice.wysiwyg.media.Image;
 import org.springframework.http.MediaType;
+import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -47,7 +48,7 @@ public class EditorController extends EditorControllerSupport{
     }
 
     @RequestMapping("/editor")
-    String home(Model model) {
+    String home() {
         return "editor";
     }
 

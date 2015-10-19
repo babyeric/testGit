@@ -24,6 +24,12 @@
 <body>
 <div class="container">
     <h1>Simple HTML Editor</h1>
+    <form action="/logout" method="post">
+        <input type="submit" value="Sign Out"/>
+        <input type="hidden"
+               name="${_csrf.parameterName}"
+               value="${_csrf.token}"/>
+    </form>
     <div class="btn-toolbar" data-role="editor-toolbar"
          data-target="#editor">
         <div class="btn-group">
