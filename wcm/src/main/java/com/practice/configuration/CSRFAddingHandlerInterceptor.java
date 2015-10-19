@@ -1,4 +1,4 @@
-package com.practice.http;
+package com.practice.configuration;
 
 import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Component;
