@@ -39,7 +39,7 @@ public class EditorController extends EditorControllerSupport{
     ArticleService articleService;
 
     @RequestMapping("/editor/{articleId}")
-    String home(@PathVariable long articleId, Model model) {
+    String editor(@PathVariable long articleId, Model model) {
         Article article = articleService.getById(articleId);
         if (article != null) {
             model.addAttribute("article", processForEdit(article));
