@@ -23,7 +23,7 @@ import java.util.Map;
  * Time: 2:51 PM
  * To change this template use File | Settings | File Templates.
  */
-public class ArticleServiceClientImpl extends AbstractServiceClient implements ArticleService {
+public class ArticleServiceClient extends AbstractServiceClient implements ArticleService {
 
     @Override
     public List<Article> getArticlesBySite(long siteId, Date lastDate, Long lastId, int pageSize) {

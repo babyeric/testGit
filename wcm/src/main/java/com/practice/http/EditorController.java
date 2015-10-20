@@ -2,13 +2,9 @@ package com.practice.http;
 
 import com.juric.carbon.api.article.ArticleService;
 import com.juric.carbon.schema.article.Article;
-import com.practice.article.ArticleDB;
-import com.practice.article.ArticleMapper;
 import com.practice.function.ChainedMethod;
 import com.practice.wysiwyg.Doc;
-import com.practice.wysiwyg.media.Image;
 import org.springframework.http.MediaType;
-import org.springframework.security.web.csrf.CsrfToken;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.StringUtils;
@@ -20,15 +16,12 @@ import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.util.Date;
-import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Eric on 9/24/2015.
  */
 @Controller
-public class EditorController extends EditorControllerSupport{
+public class EditorController extends ControllerSupport {
     private final static String PARAM_ARTICLE_ID = "articleId";
     private final static String PARAM_ARTICLE_TITLE = "articleTitle";
 

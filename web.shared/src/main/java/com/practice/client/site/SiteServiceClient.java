@@ -14,7 +14,7 @@ import java.util.Map;
 /**
  * Created by Eric on 10/15/2015.
  */
-public class SiteServiceClientImpl extends AbstractServiceClient implements SiteService {
+public class SiteServiceClient extends AbstractServiceClient implements SiteService {
     String url = carbonRoot + "/1/sites";
 
     @Override

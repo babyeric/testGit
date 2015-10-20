@@ -1,32 +1,18 @@
 package com.practice.configurer;
 
 import com.juric.carbon.api.article.ArticleService;
+import com.juric.carbon.api.site.SiteService;
 import com.juric.carbon.api.storage.path.StoragePathService;
 import com.juric.carbon.api.user.UserPasswordService;
 import com.juric.carbon.api.user.UserService;
-import com.practice.client.article.ArticleServiceClientImpl;
-import com.practice.client.storage.StoragePathServiceClientImpl;
+import com.practice.client.article.ArticleServiceClient;
+import com.practice.client.site.SiteServiceClient;
+import com.practice.client.storage.StoragePathServiceClient;
 import com.practice.client.user.UserPasswordServiceClient;
 import com.practice.client.user.UserServiceClientImpl;
-import org.juric.storage.configurer.StorageConfiguration;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.boot.autoconfigure.AutoConfigureAfter;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnClass;
-import org.springframework.boot.autoconfigure.velocity.VelocityAutoConfiguration;
-import org.springframework.boot.autoconfigure.velocity.VelocityProperties;
-import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Import;
-import org.springframework.ui.velocity.SpringResourceLoader;
-import org.springframework.ui.velocity.VelocityEngineFactory;
-import org.springframework.web.servlet.view.velocity.VelocityConfigurer;
-
-import javax.annotation.PostConstruct;
-import javax.annotation.Resource;
-import java.util.Properties;
 
 /**
  * Created with IntelliJ IDEA.
@@ -43,14 +29,14 @@ public class AppConfiguration {
 
     @Bean(name="articleService")
     public ArticleService articleService() {
-        ArticleServiceClientImpl articleService = new ArticleServiceClientImpl();
+        ArticleServiceClient articleService = new ArticleServiceClient();
         articleService.setCarbonRoot(carbonRoot);
         return articleService;
     }
 
     @Bean(name="storagePathService")
     public StoragePathService storagePathServiceClient() {
-        StoragePathServiceClientImpl storagePathServiceClient = new StoragePathServiceClientImpl();
+        StoragePathServiceClient storagePathServiceClient = new StoragePathServiceClient();
         storagePathServiceClient.setCarbonRoot(carbonRoot);
         return storagePathServiceClient;
     }
@@ -67,5 +53,12 @@ public class AppConfiguration {
         UserPasswordServiceClient userPasswordServiceClient = new UserPasswordServiceClient();
         userPasswordServiceClient.setCarbonRoot(carbonRoot);
         return userPasswordServiceClient;
+    }
+
+    @Bean (name="siteService")
+    public SiteService siteService() {
+        SiteServiceClient siteServiceClient = new SiteServiceClient();
+        siteServiceClient.setCarbonRoot(carbonRoot);
+        return siteServiceClient;
     }
 }

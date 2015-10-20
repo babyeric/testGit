@@ -49,7 +49,7 @@ public class UserAuthenticationProvider implements AuthenticationProvider, Initi
 
         if (user != null) {
             Collection<GrantedAuthority> authorityList = new ArrayList<>();
-            return new UsernamePasswordAuthenticationToken(name, password, authorityList);
+            return new UsernamePasswordAuthenticationToken(user, null, authorityList);
         } else {
             throw new BadCredentialsException("Unable to auth user " + name);
         }

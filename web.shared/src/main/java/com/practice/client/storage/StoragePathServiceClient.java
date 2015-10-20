@@ -15,7 +15,7 @@ import org.springframework.web.util.UriComponentsBuilder;
 /**
  * Created by Eric on 9/28/2015.
  */
-public class StoragePathServiceClientImpl extends AbstractServiceClient implements StoragePathService {
+public class StoragePathServiceClient extends AbstractServiceClient implements StoragePathService {
 
     @Override
     public StoragePath generatePath(EnumRepository repo, EnumSchema schema, Long shardParam, String ext) {
