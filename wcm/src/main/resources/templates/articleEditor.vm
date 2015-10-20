@@ -79,7 +79,7 @@
         </div>
     </div>
 
-    <form action="/update" method="post" enctype="multipart/form-data" id='submitForm'>
+    <form action="/articles/edit" method="post" enctype="multipart/form-data" id='submitForm'>
         <input type="hidden" name="articleId" value="#if ($article) ${article.articleId} #end">
         <input type="text" name="articleTitle" class="form-control" placeholder="Input title here" value="#if ($article) ${article.title} #end">
         <br>

@@ -41,7 +41,7 @@ public class ArticleServiceClient extends AbstractServiceClient implements Artic
         headers.set("pageSize", String.valueOf(pageSize));
 
         HttpEntity entity = new HttpEntity(headers);
-        String url = carbonRoot + "/sites/{siteId}/articles";
+        String url = carbonRoot + "/1/sites/{siteId}/articles";
         ResponseEntity<List<Article>> ret = restTemplate.exchange(url, HttpMethod.GET, entity,  new ParameterizedTypeReference<List<Article>>() {}, pathVaribles);
 
         return ret.getBody();

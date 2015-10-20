@@ -8,26 +8,30 @@
 
     <title>wcm sites list</title>
     <link href="/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="/css/login.css" rel="stylesheet"/>
 </head>
 <body>
 <div class="container">
     <li class = "list-group-item active">
         Choose site
-        <a href="another_django_url" class="icon pull-right">
+        <a href="/sites/edit" class="icon pull-right">
             <span class="glyphicon glyphicon-plus"></span>
         </a>
     </li>
 
     #foreach( $site in $sites )
-        <a href = "#" class = "list-group-item">
-            <h4 class = "list-group-item-heading">
-                ${site.siteTag}
-            </h4>
-            <p class = "list-group-item-text">
-                ${site.description}
-            </p>
-        </a>
+        <li href="#" class="list-group-item">
+            <a href="/sites/edit/${site.siteId}" class="icon pull-right">
+                <span class="glyphicon glyphicon-pencil"></span>
+            </a>
+            <a href="/sites/${site.siteTag}/articles">
+                <h4 class = "list-group-item-heading">
+                    ${site.siteTag}
+                </h4>
+                <p class = "list-group-item-text">
+                    ${site.description}
+                </p>
+            </a>
+        </li>
     #end
 </div>
 </body>

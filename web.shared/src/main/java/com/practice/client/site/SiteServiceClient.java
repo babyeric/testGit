@@ -15,10 +15,10 @@ import java.util.Map;
  * Created by Eric on 10/15/2015.
  */
 public class SiteServiceClient extends AbstractServiceClient implements SiteService {
-    String url = carbonRoot + "/1/sites";
 
     @Override
     public Site createSite(Site site) {
+        String url = carbonRoot + "/1/sites";
         Site ret = restTemplate.postForObject(url, site, Site.class);
         return ret;
     }

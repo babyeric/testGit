@@ -1,7 +1,9 @@
 package com.practice.http;
 
 import com.juric.carbon.api.article.ArticleService;
+import com.juric.carbon.api.site.SiteService;
 import com.juric.carbon.schema.article.Article;
+import com.juric.carbon.schema.site.Site;
 import com.practice.function.ChainedMethod;
 import com.practice.wysiwyg.Doc;
 import org.springframework.http.MediaType;
@@ -16,12 +18,13 @@ import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.List;
 
 /**
  * Created by Eric on 9/24/2015.
  */
 @Controller
-public class EditorController extends ControllerSupport {
+public class ArticleController extends ControllerSupport {
     private final static String PARAM_ARTICLE_ID = "articleId";
     private final static String PARAM_ARTICLE_TITLE = "articleTitle";
 
@@ -31,35 +34,37 @@ public class EditorController extends ControllerSupport {
     @Resource(name="articleService")
     ArticleService articleService;
 
-    @RequestMapping("/editor/{articleId}")
-    String editor(@PathVariable long articleId, Model model) {
+    @Resource(name="siteService")
+    SiteService siteService;
+
+    @RequestMapping("/articles/edit/{articleId}")
+    String articleEditView(@PathVariable long articleId, Model model) {
         Article article = articleService.getById(articleId);
         if (article != null) {
             model.addAttribute("article", processForEdit(article));
         }
-        return "editor";
+        return "articleEditor";
     }
 
-    @RequestMapping("/editor")
-    String home() {
-        return "editor";
+    @RequestMapping("/articles/edit")
+    String articleCreateView() {
+        return "articleEditor";
     }
 
-    @RequestMapping(value = "/update", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    @RequestMapping("/sites/{siteTag}/articles")
+    String articleListView(@PathVariable String siteTag, Model model) {
+        Site site = siteService.getSiteByTag(siteTag);
+        List<Article> articles = articleService.getArticlesBySite(site.getSiteId(), null, null, 10);
+        model.addAttribute("articles", articles);
+        return "articleList";
+    }
+
+    @RequestMapping(value = "/articles/edit", method = RequestMethod.POST, consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     String handleUpdate(HttpServletRequest request) throws IOException, ServletException {
         Doc doc = new Doc(request);
         mediaProcessors.invoke("process", doc);
-        saveArticle(getArticleId(request), getTitle(request), doc.html());
-        return "redirect:editor";
-    }
-
-    private Long getArticleId(HttpServletRequest request) {
-        String str = request.getParameter(PARAM_ARTICLE_ID);
-        if (!StringUtils.isEmpty(str)) {
-            return Long.parseLong(str.trim());
-        } else {
-            return null;
-        }
+        saveArticle(parseLongParam(request, PARAM_ARTICLE_ID), getTitle(request), doc.html());
+        return "redirect:articleEditor";
     }
 
     private String getTitle(HttpServletRequest request) {

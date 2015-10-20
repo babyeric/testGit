@@ -8,11 +8,26 @@
 
     <title>wcm sites list</title>
     <link href="/css/bootstrap.min.css" rel="stylesheet"/>
-    <link href="/css/login.css" rel="stylesheet"/>
 </head>
 <body>
 <div class="container">
-
+    <form role="form" method="post" action="/sites/edit">
+        <div class="form-group">
+            <label for="name">Name:</label>
+            <input type="text" class="form-control" id="name" name="name" value="#if($site.name) ${site.name} #end" placeholder="Input site name..."/>
+        </div>
+        <div class="form-group">
+            <label for="siteTag">Site Tag:</label>
+            <input type="text" class="form-control" id="siteTag" name="siteTag" value="#if($site.siteTag) ${site.siteTag} #end" placeholder="Input site tag..."/>
+        </div>
+        <div class="form-group">
+            <label for="description">Description:</label>
+            <textarea rows="5" class="form-control" id="description" name="description" placeholder="Input description...">#if($site.description) ${site.description} #end</textarea>
+        </div>
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        <input type="hidden" name="siteId" value="#if($site.siteId) ${site.siteId} #end"/>
+        <button type="submit" class="btn btn-default">#if($site.siteId) Update #else Create #end</button>
+    </form>
 </div>
 </body>
 
