@@ -3,6 +3,9 @@ package com.juric.carbon.rest.article;
 import com.juric.carbon.api.article.ArticleService;
 import com.juric.carbon.rest.mvc.Version;
 import com.juric.carbon.schema.article.Article;
+import com.juric.carbon.schema.article.ArticlePagerResult;
+import com.practice.utils.DateUtils;
+import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -42,7 +45,10 @@ public class ArticleController {
     }
 
     @RequestMapping(value = "/sites/{siteId}/articles", method = RequestMethod.GET)
-    public List<Article> getArticlesBySite(@PathVariable long siteId, @RequestHeader(required = false) Date lastDate, @RequestHeader(required = false) Long lastId, @RequestHeader Integer pageSize) {
-        return articleService.getArticlesBySite(siteId, lastDate, lastId, pageSize);
+    public ArticlePagerResult getArticlesBySite(@PathVariable long siteId, @RequestHeader(required = false) String lastDate,
+                                           @RequestHeader(required = false) Long lastId,
+                                           @RequestHeader boolean forward ,
+                                           @RequestHeader int pageSize) {
+        return articleService.getArticlesBySite(siteId, StringUtils.isEmpty(lastDate) ? null : DateUtils.parseDateTime(lastDate), lastId, forward, pageSize);
     }
 }

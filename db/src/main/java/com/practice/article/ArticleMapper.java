@@ -21,6 +21,7 @@ public interface ArticleMapper {
     List<ArticleDB> getBySite(@ShardParam("siteId") long siteId,
                               @Param("lastDate") Date lastDate,
                               @Param("lastId") Long lastId,
+                              @Param("forward") boolean forward,
                               @Param("pageSize") int pageSize);
 
     @ShardMethod(IdStrategy.class)

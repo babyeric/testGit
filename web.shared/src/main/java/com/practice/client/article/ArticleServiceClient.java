@@ -2,6 +2,7 @@ package com.practice.client.article;
 
 import com.juric.carbon.api.article.ArticleService;
 import com.juric.carbon.schema.article.Article;
+import com.juric.carbon.schema.article.ArticlePagerResult;
 import com.practice.client.common.AbstractServiceClient;
 import com.practice.utils.DateUtils;
 import org.springframework.core.ParameterizedTypeReference;
@@ -26,7 +27,7 @@ import java.util.Map;
 public class ArticleServiceClient extends AbstractServiceClient implements ArticleService {
 
     @Override
-    public List<Article> getArticlesBySite(long siteId, Date lastDate, Long lastId, int pageSize) {
+    public ArticlePagerResult getArticlesBySite(long siteId, Date lastDate, Long lastId, boolean forward, int pageSize) {
 
         Map<String, Object> pathVaribles = new HashMap<>();
         pathVaribles.put("siteId", siteId);
@@ -38,11 +39,12 @@ public class ArticleServiceClient extends AbstractServiceClient implements Artic
         if (lastId != null) {
             headers.set("lastId", lastId.toString());
         }
+        headers.set("forward", String.valueOf(forward));
         headers.set("pageSize", String.valueOf(pageSize));
 
         HttpEntity entity = new HttpEntity(headers);
         String url = carbonRoot + "/1/sites/{siteId}/articles";
-        ResponseEntity<List<Article>> ret = restTemplate.exchange(url, HttpMethod.GET, entity,  new ParameterizedTypeReference<List<Article>>() {}, pathVaribles);
+        ResponseEntity<ArticlePagerResult> ret = restTemplate.exchange(url, HttpMethod.GET, entity,  ArticlePagerResult.class, pathVaribles);
 
         return ret.getBody();
     }

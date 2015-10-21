@@ -55,11 +55,15 @@ public class ArticleMapperTests extends AbstractMapperTest {
         Assert.assertEquals(1, ret);
         Assert.assertNotNull(articleDB2.getArticleId());
 
-        List<ArticleDB> articles = articleMapper.getBySite(siteId, null, null, 1);
+        List<ArticleDB> articles = articleMapper.getBySite(siteId, null, null, true, 1);
+        Assert.assertEquals(1, articles.size());
+        Assert.assertEquals(articleDB2.toString(), articles.get(0).toString());
+
+        articles = articleMapper.getBySite(siteId, articleDB1.getCreateDate(), articles.get(0).getArticleId(), true, 1);
         Assert.assertEquals(1, articles.size());
         Assert.assertEquals(articleDB1.toString(), articles.get(0).toString());
 
-        articles = articleMapper.getBySite(siteId, articleDB1.getCreateDate(), articleDB1.getArticleId(), 1);
+        articles = articleMapper.getBySite(siteId, articleDB1.getCreateDate(), articles.get(0).getArticleId(), false, 1);
         Assert.assertEquals(1, articles.size());
         Assert.assertEquals(articleDB2.toString(), articles.get(0).toString());
     }
@@ -84,11 +88,16 @@ public class ArticleMapperTests extends AbstractMapperTest {
             articleDB2 = temp;
         }
 
-        List<ArticleDB> articles = articleMapper.getBySite(siteId, null, null, 1);
+        List<ArticleDB> articles = articleMapper.getBySite(siteId, null, null, true, 1);
+        Assert.assertEquals(1, articles.size());
+        Assert.assertEquals(articleDB2.toString(), articles.get(0).toString());
+
+        articles = articleMapper.getBySite(siteId, articleDB1.getCreateDate(), articles.get(0).getArticleId(), true, 1);
         Assert.assertEquals(1, articles.size());
         Assert.assertEquals(articleDB1.toString(), articles.get(0).toString());
 
-        articles = articleMapper.getBySite(siteId, articleDB1.getCreateDate(), articleDB1.getArticleId(), 1);
+
+        articles = articleMapper.getBySite(siteId, articleDB1.getCreateDate(), articles.get(0).getArticleId(), false, 1);
         Assert.assertEquals(1, articles.size());
         Assert.assertEquals(articleDB2.toString(), articles.get(0).toString());
     }

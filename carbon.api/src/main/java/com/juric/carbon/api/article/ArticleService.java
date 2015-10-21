@@ -1,6 +1,7 @@
 package com.juric.carbon.api.article;
 
 import com.juric.carbon.schema.article.Article;
+import com.juric.carbon.schema.article.ArticlePagerResult;
 
 import java.util.Date;
 import java.util.List;
@@ -16,5 +17,5 @@ public interface ArticleService {
     Article create(Article article);
     void update(Article article);
     Article getById(long articleId);
-    List<Article> getArticlesBySite(long siteId, Date lastDate, Long lastId, int pageSize);
+    ArticlePagerResult getArticlesBySite(long siteId, Date lastDate, Long lastId, boolean forward, int pageSize);
 }

@@ -3,6 +3,7 @@ package com.practice.http;
 import com.juric.carbon.api.article.ArticleService;
 import com.juric.carbon.api.site.SiteService;
 import com.juric.carbon.schema.article.Article;
+import com.juric.carbon.schema.article.ArticlePagerResult;
 import com.juric.carbon.schema.site.Site;
 import com.practice.function.ChainedMethod;
 import com.practice.wysiwyg.Doc;
@@ -24,6 +25,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -67,11 +69,33 @@ public class ArticleController extends ControllerSupport {
     }
 
     @RequestMapping("/sites/{siteTag}/articles")
-    String articleListView(HttpServletRequest request, @PathVariable String siteTag, Model model) {
+    String articleListView(HttpServletRequest request, @PathVariable String siteTag,
+                           @RequestParam(required = false) String pivot,
+                           @RequestParam(required = false) Boolean forward,
+                           Model model) {
         Site site = siteService.getSiteByTag(siteTag);
-        List<Article> articles = articleService.getArticlesBySite(site.getSiteId(), null, null, 10);
-        model.addAttribute("articles", articles);
+        if (forward == null) {
+            forward = true;
+        }
+        Date lastDate = null;
+        Long lastId = null;
+        if (!StringUtils.isEmpty(pivot)) {
+            String[] parts = pivot.split(",");
+            lastDate = new Date(Long.parseLong(parts[0]));
+            lastId = Long.parseLong(parts[1]);
+        }
+        ArticlePagerResult result = articleService.getArticlesBySite(site.getSiteId(), lastDate, lastId, forward, 1);
+        model.addAttribute("articles", result.getArticles());
+        if (result.getForwardDate() != null) {
+            model.addAttribute("fPivot", result.getForwardDate().getTime()+","+ result.getForwardId());
+        }
+
+        if (result.getBackwardDate() != null) {
+            model.addAttribute("bPivot", result.getBackwardDate().getTime()+","+ result.getBackwardId());
+        }
+
         model.addAttribute("thisUrl", thisUrl(request));
+        model.addAttribute("uri", request.getRequestURI());
         return "articleList";
     }
 
