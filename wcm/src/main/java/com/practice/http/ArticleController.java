@@ -84,7 +84,7 @@ public class ArticleController extends ControllerSupport {
             lastDate = new Date(Long.parseLong(parts[0]));
             lastId = Long.parseLong(parts[1]);
         }
-        ArticlePagerResult result = articleService.getArticlesBySite(site.getSiteId(), lastDate, lastId, forward, 1);
+        ArticlePagerResult result = articleService.getArticlesBySite(site.getSiteId(), lastDate, lastId, forward, 2);
         model.addAttribute("articles", result.getArticles());
         if (result.getForwardDate() != null) {
             model.addAttribute("fPivot", result.getForwardDate().getTime()+","+ result.getForwardId());

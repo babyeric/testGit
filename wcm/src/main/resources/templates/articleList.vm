@@ -44,18 +44,20 @@
 </body>
 <script src="/js/jquery-1.11.3.js"></script>
 <script src="/js/masonry.min.js"></script>
+<script src="/js/imagesLoaded.min.js"></script>
 <script>
     $( document ).ready(function() {
         $("#content img").each(function() {
             $(this).addClass("img-responsive");
         }) ;
-
-        $('#content').masonry({
-            // set itemSelector so .grid-sizer is not used in layout
-            itemSelector: '.col-sm-3',
-            // use element for option
-            columnWidth: '.col-sm-3',
-            percentPosition: true
+        content.imagesLoaded( function() {
+            content.masonry({
+                // set itemSelector so .grid-sizer is not used in layout
+                itemSelector: '.col-sm-3',
+                // use element for option
+                columnWidth: '.col-sm-3',
+                percentPosition: true
+            });
         });
     });
 
