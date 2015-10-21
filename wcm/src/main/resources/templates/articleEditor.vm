@@ -92,6 +92,7 @@
         <div id="editor" class="lead" data-placeholder="Input content here"></div>
         <a class="btn btn-large btn-default jumbo" href="#!" onClick="$('#idSubmission').val($('#editor').cleanHtml(true));$('#submitForm').submit();">Submit</a>
         <input type='hidden' name='submission' id='idSubmission'/>
+        <input type="hidden" name="redirectUrl" value="${redirectUrl}">
     </form>
 </div>
 

@@ -17,6 +17,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
 import javax.servlet.ServletException;
@@ -33,6 +34,7 @@ public class ArticleController extends ControllerSupport {
     private final static String PARAM_ARTICLE_ID = "articleId";
     private final static String PARAM_SITE_ID = "siteId";
     private final static String PARAM_ARTICLE_TITLE = "articleTitle";
+    private final static String PARAM_REDIRECT_URL = "redirectUrl";
 
     @Resource(name="mediaProcessors")
     ChainedMethod<Doc> mediaProcessors;
@@ -44,30 +46,32 @@ public class ArticleController extends ControllerSupport {
     SiteService siteService;
 
     @RequestMapping("/articles/edit/{articleId}")
-    String articleEditView(@PathVariable long articleId, Model model) {
+    String articleEditView(@PathVariable long articleId, Model model, @RequestParam String redirectUrl) {
         Article article = articleService.getById(articleId);
         if (article != null) {
             model.addAttribute("article", processForEdit(article));
+            model.addAttribute(PARAM_REDIRECT_URL, redirectUrl);
         }
         return "articleEditor";
     }
 
     @RequestMapping("/sites/{siteTag}/articles/create")
-    String articleCreateView(@PathVariable String siteTag, Model model) {
+    String articleCreateView(@PathVariable String siteTag, Model model, @RequestParam String redirectUrl) {
         model.addAttribute("siteTag", siteTag);
         Site site = siteService.getSiteByTag(siteTag);
         Article article = new Article();
         article.setSiteId(site.getSiteId());
         model.addAttribute("article", article);
+        model.addAttribute(PARAM_REDIRECT_URL, redirectUrl) ;
         return "articleEditor";
     }
 
     @RequestMapping("/sites/{siteTag}/articles")
-    String articleListView(@PathVariable String siteTag, Model model) {
+    String articleListView(HttpServletRequest request, @PathVariable String siteTag, Model model) {
         Site site = siteService.getSiteByTag(siteTag);
         List<Article> articles = articleService.getArticlesBySite(site.getSiteId(), null, null, 10);
         model.addAttribute("articles", articles);
-        model.addAttribute("siteTag", siteTag);
+        model.addAttribute("thisUrl", thisUrl(request));
         return "articleList";
     }
 
@@ -76,7 +80,8 @@ public class ArticleController extends ControllerSupport {
         Doc doc = new Doc(request);
         mediaProcessors.invoke("process", doc);
         saveArticle(parseLongParam(request, PARAM_ARTICLE_ID), parseLongParam(request, PARAM_SITE_ID), getTitle(request), doc.html());
-        return "redirect:articleEditor";
+        String redirectUrl = request.getParameter(PARAM_REDIRECT_URL);
+        return "redirect:" + redirectUrl;
     }
 
     private String getTitle(HttpServletRequest request) {

@@ -28,4 +28,14 @@ public class ControllerSupport {
             return null;
         }
     }
+
+    public String thisUrl(HttpServletRequest request) {
+        String url = request.getRequestURI().toString();
+        String query = request.getQueryString();
+        if (!StringUtils.isEmpty(query)) {
+            url = url + "?" + query;
+        }
+
+        return url;
+    }
 }

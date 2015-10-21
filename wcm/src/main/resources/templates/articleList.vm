@@ -11,30 +11,47 @@
 </head>
 <body>
 <div class="container">
-    <div class='row'>
-        <div class="col-sm-3">
-            <a href="/sites/${siteTag}/articles/create" class="btn btn-default btn-lg">
+        <div class="col-md-12">
+            <div class="row">
+            <div class="col-sm-1">
+            <a href="/sites/${siteTag}/articles/create?redirectUrl=${thisUrl}" class="btn btn-default">
                 <span class="glyphicon glyphicon-plus"></span>
             </a>
-        </div>
-        </div>
-        <div id='content' class='row'>
+            </div>
+            </div>
+      <div id='content' class = "row">
         #foreach( $article in $articles )
             <div class="col-sm-3" >
                 <div class="thumbnail">
-                    <h3>${article.title}</h3>
+                    <a href="/articles/edit/${article.articleId}?redirectUrl=${thisUrl}" class="btn btn-sm pull-right">
+                        <span class="glyphicon glyphicon-pencil"></span>
+                    </a>
+                    <h4>${article.title}</h4>
                     <article><hr>${article.content}</article>
                 </div>
             </div>
         #end
+    </div>
         </div>
 </div>
 </body>
+<script src="/js/jquery-1.11.3.js"></script>
+<script src="/js/masonry.min.js"></script>
 <script>
     $( document ).ready(function() {
         $("#content img").each(function() {
             $(this).addClass("img-responsive");
-        })
+        }) ;
+
+        $('#content').masonry({
+            // set itemSelector so .grid-sizer is not used in layout
+            itemSelector: '.col-sm-3',
+            // use element for option
+            columnWidth: '.col-sm-3',
+            percentPosition: true
+        });
     });
+
+
 </script>
 </html>
