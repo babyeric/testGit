@@ -9,6 +9,8 @@ import java.util.regex.Pattern;
  */
 public class Image implements Media {
     public final static String ATTRIBUTE_SOURCE = "src";
+    public final static String ATTRIBUTE_CLASS = "class";
+    public final static String IMAGE_RESPONSIVE = "img-responsive";
 
     private Element element;
     private String content;
@@ -24,6 +26,7 @@ public class Image implements Media {
 
     public void setSource(String source) {
         element.attr(ATTRIBUTE_SOURCE, source);
+        element.attr(ATTRIBUTE_CLASS, IMAGE_RESPONSIVE);
     }
 
     @Override

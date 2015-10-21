@@ -23,7 +23,7 @@ public class ControllerSupport {
     Long parseLongParam(HttpServletRequest request, String name) {
         String value = request.getParameter(name);
         if (!StringUtils.isEmpty(value)) {
-            return Long.parseLong(value);
+            return Long.parseLong(value.trim());
         } else {
             return null;
         }

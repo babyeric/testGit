@@ -80,8 +80,14 @@
     </div>
 
     <form action="/articles/edit" method="post" enctype="multipart/form-data" id='submitForm'>
-        <input type="hidden" name="articleId" value="#if ($article) ${article.articleId} #end">
-        <input type="text" name="articleTitle" class="form-control" placeholder="Input title here" value="#if ($article) ${article.title} #end">
+        #if($article.articleId)
+            <input type="hidden" name="articleId" value="${article.articleId}">
+        #end
+        #if($article.siteId)
+            <input type="hidden" name="siteId" value="${article.siteId}">
+        #end
+        <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}"/>
+        <input type="text" name="articleTitle" class="form-control" placeholder="Input title here" value="#if($article.title)${article.title}#end">
         <br>
         <div id="editor" class="lead" data-placeholder="Input content here"></div>
         <a class="btn btn-large btn-default jumbo" href="#!" onClick="$('#idSubmission').val($('#editor').cleanHtml(true));$('#submitForm').submit();">Submit</a>
@@ -111,6 +117,6 @@
         'text-field': 'idSubmission',
         'seperate-binary': false
     }
-}).html('#if ($article) ${article.content} #end');</script>
+}).html('#if($article.content)${article.content}#end');</script>
 
 </html>

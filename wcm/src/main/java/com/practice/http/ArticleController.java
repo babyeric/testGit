@@ -6,6 +6,10 @@ import com.juric.carbon.schema.article.Article;
 import com.juric.carbon.schema.site.Site;
 import com.practice.function.ChainedMethod;
 import com.practice.wysiwyg.Doc;
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,6 +22,7 @@ import javax.annotation.Resource;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -26,6 +31,7 @@ import java.util.List;
 @Controller
 public class ArticleController extends ControllerSupport {
     private final static String PARAM_ARTICLE_ID = "articleId";
+    private final static String PARAM_SITE_ID = "siteId";
     private final static String PARAM_ARTICLE_TITLE = "articleTitle";
 
     @Resource(name="mediaProcessors")
@@ -46,8 +52,13 @@ public class ArticleController extends ControllerSupport {
         return "articleEditor";
     }
 
-    @RequestMapping("/articles/edit")
-    String articleCreateView() {
+    @RequestMapping("/sites/{siteTag}/articles/create")
+    String articleCreateView(@PathVariable String siteTag, Model model) {
+        model.addAttribute("siteTag", siteTag);
+        Site site = siteService.getSiteByTag(siteTag);
+        Article article = new Article();
+        article.setSiteId(site.getSiteId());
+        model.addAttribute("article", article);
         return "articleEditor";
     }
 
@@ -55,7 +66,12 @@ public class ArticleController extends ControllerSupport {
     String articleListView(@PathVariable String siteTag, Model model) {
         Site site = siteService.getSiteByTag(siteTag);
         List<Article> articles = articleService.getArticlesBySite(site.getSiteId(), null, null, 10);
-        model.addAttribute("articles", articles);
+        List<Article> processed = new ArrayList<>();
+        for (Article article : articles) {
+            processed.add(processForDisplay(article));
+        }
+        model.addAttribute("articles", processed);
+        model.addAttribute("siteTag", siteTag);
         return "articleList";
     }
 
@@ -63,7 +79,7 @@ public class ArticleController extends ControllerSupport {
     String handleUpdate(HttpServletRequest request) throws IOException, ServletException {
         Doc doc = new Doc(request);
         mediaProcessors.invoke("process", doc);
-        saveArticle(parseLongParam(request, PARAM_ARTICLE_ID), getTitle(request), doc.html());
+        saveArticle(parseLongParam(request, PARAM_ARTICLE_ID), parseLongParam(request, PARAM_SITE_ID), getTitle(request), doc.html());
         return "redirect:articleEditor";
     }
 
@@ -84,13 +100,27 @@ public class ArticleController extends ControllerSupport {
         return ret;
     }
 
-    private void saveArticle(Long articleId, String title, String content) {
+    private Article processForDisplay(Article article) {
+        Article ret = new Article();
+        ret.setArticleId(article.getArticleId());
+        ret.setTitle(article.getTitle());
+        ret.setContent(article.getContent().replace("\n", "\\\n"));
+        Document doc = Jsoup.parse(article.getContent());
+        Elements elements = doc.getElementsByTag("img");
+        for (Element ele : elements) {
+            ele.attr("class", "img-responsive");
+        }
+        ret.setContent(doc.body().html());
+        return ret;
+    }
+
+    private void saveArticle(Long articleId, Long siteId, String title, String content) {
         Article article = new Article();
         article.setContent(content);
         article.setTitle(title);
         article.setModifiedBy("dev");
-        article.setSiteId(1234567L);
         if (articleId == null) {
+            article.setSiteId(siteId);
             articleService.create(article);
         } else {
             article.setArticleId(articleId);

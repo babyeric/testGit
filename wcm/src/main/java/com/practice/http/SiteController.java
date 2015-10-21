@@ -58,9 +58,9 @@ public class SiteController extends ControllerSupport {
     @RequestMapping(value = "/sites/edit", method = RequestMethod.POST)
     String handlePost(HttpServletRequest request) {
         Site site = new Site();
-        site.setName(request.getParameter(PARAM_NAME));
-        site.setDescription(request.getParameter(PARAM_DESCRIPTION));
-        site.setSiteTag(request.getParameter(PARAM_SITE_TAG));
+        site.setName(request.getParameter(PARAM_NAME).trim());
+        site.setDescription(request.getParameter(PARAM_DESCRIPTION).trim());
+        site.setSiteTag(request.getParameter(PARAM_SITE_TAG).trim());
         site.setSiteId(parseLongParam(request, PARAM_SITE_ID));
         site.setModifiedBy("WCM");
         if (site.getSiteId() == null) {
