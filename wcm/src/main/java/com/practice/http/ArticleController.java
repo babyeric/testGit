@@ -66,11 +66,7 @@ public class ArticleController extends ControllerSupport {
     String articleListView(@PathVariable String siteTag, Model model) {
         Site site = siteService.getSiteByTag(siteTag);
         List<Article> articles = articleService.getArticlesBySite(site.getSiteId(), null, null, 10);
-        List<Article> processed = new ArrayList<>();
-        for (Article article : articles) {
-            processed.add(processForDisplay(article));
-        }
-        model.addAttribute("articles", processed);
+        model.addAttribute("articles", articles);
         model.addAttribute("siteTag", siteTag);
         return "articleList";
     }
@@ -99,21 +95,6 @@ public class ArticleController extends ControllerSupport {
         ret.setContent(article.getContent().replace("\n", "\\\n"));
         return ret;
     }
-
-    private Article processForDisplay(Article article) {
-        Article ret = new Article();
-        ret.setArticleId(article.getArticleId());
-        ret.setTitle(article.getTitle());
-        ret.setContent(article.getContent().replace("\n", "\\\n"));
-        Document doc = Jsoup.parse(article.getContent());
-        Elements elements = doc.getElementsByTag("img");
-        for (Element ele : elements) {
-            ele.attr("class", "img-responsive");
-        }
-        ret.setContent(doc.body().html());
-        return ret;
-    }
-
     private void saveArticle(Long articleId, Long siteId, String title, String content) {
         Article article = new Article();
         article.setContent(content);

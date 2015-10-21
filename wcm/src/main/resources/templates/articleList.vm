@@ -11,19 +11,30 @@
 </head>
 <body>
 <div class="container">
-    <div id='content' class='row-fluid'>
-    <div class="col-sm-3">
-        <a href="/sites/${siteTag}/articles/create" class="btn btn-default btn-lg">
-            <span class="glyphicon glyphicon-plus"></span>
-        </a>
-    </div>
-#foreach( $article in $articles )
-    <div class="col-sm-3">
-        <h2>${article.title}</h2>
-        <article><hr>${article.content}</article>
-    </div>
-#end
+    <div class='row'>
+        <div class="col-sm-3">
+            <a href="/sites/${siteTag}/articles/create" class="btn btn-default btn-lg">
+                <span class="glyphicon glyphicon-plus"></span>
+            </a>
+        </div>
+        </div>
+        <div id='content' class='row'>
+        #foreach( $article in $articles )
+            <div class="col-sm-3" >
+                <div class="thumbnail">
+                    <h3>${article.title}</h3>
+                    <article><hr>${article.content}</article>
+                </div>
+            </div>
+        #end
         </div>
 </div>
 </body>
+<script>
+    $( document ).ready(function() {
+        $("#content img").each(function() {
+            $(this).addClass("img-responsive");
+        })
+    });
+</script>
 </html>
