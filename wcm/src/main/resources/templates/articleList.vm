@@ -34,8 +34,8 @@
     </div>
             <nav>
                 <ul class="pager">
-                    <li class="previous #if(!$fPivot)disabled#end"><a href="#if($fPivot)${uri}?forward=true&pivot=${fPivot}#end"><span aria-hidden="true">&larr;</span> Older</a></li>
-                    <li class="next #if(!$bPivot)disabled#end"><a href="#if($bPivot)${uri}?forward=false&pivot=${bPivot}#end">Newer <span aria-hidden="true">&rarr;</span></a></li>
+                    <li class="previous #if(!$fPivot)disabled#end"><a href="#if($fPivot)${uri}?forward=true&pivot=${fPivot}#else # #end"><span aria-hidden="true">&larr;</span> Older</a></li>
+                    <li class="next #if(!$bPivot)disabled#end"><a href="#if($bPivot)${uri}?forward=false&pivot=${bPivot}#else # #end">Newer <span aria-hidden="true">&rarr;</span></a></li>
 
                 </ul>
             </nav>
