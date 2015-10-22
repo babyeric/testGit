@@ -6,6 +6,7 @@ import com.juric.carbon.schema.article.Article;
 import com.juric.carbon.schema.article.ArticlePagerResult;
 import com.juric.carbon.schema.site.Site;
 import com.practice.function.ChainedMethod;
+import com.practice.model.NavItem;
 import com.practice.wysiwyg.Doc;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -47,13 +48,20 @@ public class ArticleController extends ControllerSupport {
     @Resource(name="siteService")
     SiteService siteService;
 
-    @RequestMapping("/articles/edit/{articleId}")
-    String articleEditView(@PathVariable long articleId, Model model, @RequestParam String redirectUrl) {
+    @RequestMapping("/sites/{siteTag}/articles/edit/{articleId}")
+    String articleEditView(@PathVariable String siteTag, @PathVariable long articleId, Model model, @RequestParam String redirectUrl) {
         Article article = articleService.getById(articleId);
         if (article != null) {
             model.addAttribute("article", processForEdit(article));
             model.addAttribute(PARAM_REDIRECT_URL, redirectUrl);
         }
+
+        List<NavItem> navItems = new ArrayList<>();
+        navItems.add(new NavItem("Sites", "/sites"));
+        navItems.add(new NavItem(siteTag, "/sites/"+siteTag+"/articles"));
+        navItems.add(new NavItem("edit", null));
+        model.addAttribute("navItems", navItems);
+
         return "articleEditor";
     }
 
@@ -64,7 +72,14 @@ public class ArticleController extends ControllerSupport {
         Article article = new Article();
         article.setSiteId(site.getSiteId());
         model.addAttribute("article", article);
-        model.addAttribute(PARAM_REDIRECT_URL, redirectUrl) ;
+        model.addAttribute(PARAM_REDIRECT_URL, redirectUrl);
+
+        List<NavItem> navItems = new ArrayList<>();
+        navItems.add(new NavItem("Sites", "/sites"));
+        navItems.add(new NavItem(siteTag, "/sites/"+siteTag+"/articles"));
+        navItems.add(new NavItem("create", null));
+        model.addAttribute("navItems", navItems);
+
         return "articleEditor";
     }
 
@@ -96,6 +111,12 @@ public class ArticleController extends ControllerSupport {
 
         model.addAttribute("thisUrl", thisUrl(request));
         model.addAttribute("uri", request.getRequestURI());
+
+        List<NavItem> navItems = new ArrayList<>();
+        navItems.add(new NavItem("Sites", "/sites"));
+        navItems.add(new NavItem(siteTag, null));
+        model.addAttribute("navItems", navItems);
+
         return "articleList";
     }
 

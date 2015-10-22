@@ -10,7 +10,9 @@
     <link href="/css/bootstrap.min.css" rel="stylesheet"/>
 </head>
 <body>
+
 <div class="container">
+    #parse("navbar.vm")
     <li class = "list-group-item active">
         Choose site
         <a href="/sites/edit" class="icon pull-right">
@@ -35,5 +37,8 @@
     #end
 </div>
 </body>
-
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+<script src="/js/jquery-1.11.3.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="/js/bootstrap.js"></script>
 </html>

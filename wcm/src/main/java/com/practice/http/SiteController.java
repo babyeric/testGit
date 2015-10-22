@@ -4,6 +4,7 @@ import com.juric.carbon.api.site.SiteService;
 import com.juric.carbon.schema.article.Article;
 import com.juric.carbon.schema.site.Site;
 import com.juric.carbon.schema.user.User;
+import com.practice.model.NavItem;
 import com.sun.org.apache.xpath.internal.operations.Mod;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -34,10 +36,13 @@ public class SiteController extends ControllerSupport {
     private SiteService siteService;
 
     @RequestMapping({"/", "/sites"})
-    String siteListView(Model model) {
+    String siteListView( Model model) {
         User user = currentUser();
         List<Site> sites = siteService.getSitesByUserId(user.getUserId());
         model.addAttribute("sites", sites);
+        List<NavItem> navItems = new ArrayList<>();
+        navItems.add(new NavItem("Sites", null));
+        model.addAttribute("navItems", navItems);
         return "siteList";
     }
 
@@ -45,6 +50,10 @@ public class SiteController extends ControllerSupport {
     String siteCreateView(Model model) {
         Site site = new Site();
         model.addAttribute("site", site);
+        List<NavItem> navItems = new ArrayList<>();
+        navItems.add(new NavItem("Sites", "/sites"));
+        navItems.add(new NavItem("create", null));
+        model.addAttribute("navItems", navItems);
         return "siteEditor";
     }
 
@@ -52,6 +61,11 @@ public class SiteController extends ControllerSupport {
     String siteEditView(@PathVariable long siteId, Model model) {
         Site site = siteService.getSiteById(siteId);
         model.addAttribute("site", site);
+        List<NavItem> navItems = new ArrayList<>();
+        navItems.add(new NavItem("Sites", "/sites"));
+        navItems.add(new NavItem("edit", null));
+        model.addAttribute("navItems", navItems);
+
         return "siteEditor";
     }
 

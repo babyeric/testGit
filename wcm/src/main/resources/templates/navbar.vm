@@ -1,0 +1,27 @@
+    <div class='navbar navbar-default bs-docs-nav'>
+        <div class="navbar-header">
+            <button class="navbar-toggle" type="button" data-toggle="collapse" data-target=".bs-navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a href="/" class="navbar-brand">WCM</a>
+        </div>
+        <nav class="collapse navbar-collapse bs-navbar-collapse" role="navigation">
+            <form action="/logout" method="post" class="navbar-form navbar-right">
+                <input type="submit" value="Sign Out" class="btn btn-sm"/>
+                <input type="hidden"
+                       name="${_csrf.parameterName}"
+                       value="${_csrf.token}"/>
+            </form>
+            #if($navItems)
+                <ul class="nav navbar-nav">
+                    #foreach($navItem in $navItems)
+                        <li #if(!$navItem.uri)class="active"#end><a href="#if($navItem.uri)${navItem.uri}#else # #end">${navItem.caption}</a></li>
+                    #end
+                </ul>
+            #end
+        </nav>
+    </div>
+

@@ -11,6 +11,7 @@
 </head>
 <body>
 <div class="container">
+    #parse("navbar.vm")
   <div class="col-md-12">
      <div class="row">
         <div class="col-sm-1">
@@ -23,7 +24,7 @@
         #foreach( $article in $articles )
             <div class="col-sm-3" >
                 <div class="thumbnail">
-                    <a href="/articles/edit/${article.articleId}?redirectUrl=${thisUrl}" class="btn btn-sm pull-right">
+                    <a href="/sites/${siteTag}/articles/edit/${article.articleId}?redirectUrl=${thisUrl}" class="btn btn-sm pull-right">
                         <span class="glyphicon glyphicon-pencil"></span>
                     </a>
                     <h4>${article.title}</h4>
@@ -43,6 +44,8 @@
 </div>
 </body>
 <script src="/js/jquery-1.11.3.js"></script>
+<!-- Include all compiled plugins (below), or include individual files as needed -->
+<script src="/js/bootstrap.js"></script>
 <script src="/js/masonry.min.js"></script>
 <script src="/js/imagesLoaded.min.js"></script>
 <script>
