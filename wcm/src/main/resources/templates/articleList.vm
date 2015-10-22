@@ -50,8 +50,8 @@
         $("#content img").each(function() {
             $(this).addClass("img-responsive");
         }) ;
-        content.imagesLoaded( function() {
-            content.masonry({
+        $("#content").imagesLoaded( function() {
+            $("#content").masonry({
                 // set itemSelector so .grid-sizer is not used in layout
                 itemSelector: '.col-sm-3',
                 // use element for option
