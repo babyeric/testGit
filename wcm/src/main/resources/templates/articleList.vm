@@ -13,13 +13,21 @@
 <div class="container">
     #parse("navbar.vm")
   <div class="col-md-12">
-     <div class="row">
-        <div class="col-sm-1">
-            <a href="/sites/${siteTag}/articles/create?redirectUrl=${thisUrl}" class="btn btn-default">
-                <span class="glyphicon glyphicon-plus"></span>
-            </a>
-        </div>
-     </div>
+
+
+          <div class="btn-toolbar row" role="toolbar" aria-label="...">
+              <div class="btn-group" role="group" aria-label="..."><a href="/sites/${siteTag}/articles/create?redirectUrl=${thisUrl}" class="btn btn-sm btn-primary">
+                  Create New
+              </a></div>
+              <div class="btn-group" role="group" aria-label="..."><a href="#if($bPivot)${uri}?forward=false&pivot=${bPivot}#else # #end" class="btn btn-sm btn-primary #if(!$bPivot)disabled#end">
+                  Backward
+              </a>
+                  <a href="#if($fPivot)${uri}?forward=true&pivot=${fPivot}#else # #end" class="btn btn-sm btn-primary #if(!$fPivot)disabled#end">
+                  Forward
+                  </a>
+              </div>
+          </div>
+
       <div id='content' class = "row">
         #foreach( $article in $articles )
             <div class="col-sm-3" >
@@ -33,13 +41,6 @@
             </div>
         #end
     </div>
-            <nav>
-                <ul class="pager">
-                    <li class="previous #if(!$fPivot)disabled#end"><a href="#if($fPivot)${uri}?forward=true&pivot=${fPivot}#else # #end"><span aria-hidden="true">&larr;</span> Older</a></li>
-                    <li class="next #if(!$bPivot)disabled#end"><a href="#if($bPivot)${uri}?forward=false&pivot=${bPivot}#else # #end">Newer <span aria-hidden="true">&rarr;</span></a></li>
-
-                </ul>
-            </nav>
   </div>
 </div>
 </body>

@@ -13,12 +13,11 @@
 
 <div class="container">
     #parse("navbar.vm")
-    <li class = "list-group-item active">
-        Choose site
-        <a href="/sites/edit" class="icon pull-right">
-            <span class="glyphicon glyphicon-plus"></span>
-        </a>
-    </li>
+    <div class="btn-toolbar row" role="toolbar" aria-label="...">
+        <div class="btn-group" role="group" aria-label="..."><a href="/sites/edit" class="btn btn-sm btn-primary">
+            Create New
+        </a></div>
+    </div>
 
     #foreach( $site in $sites )
         <li href="#" class="list-group-item">
